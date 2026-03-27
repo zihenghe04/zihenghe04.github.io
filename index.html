@@ -302,9 +302,8 @@
       color: var(--text-3); font-size: .8rem;
     }
 
-    /* reveal */
-    .rv { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
-    .rv.on { opacity: 1; transform: translateY(0); }
+    /* reveal (animation removed — content visible by default) */
+    .rv { }
 
     /* lang */
     [data-lang="en"] [lang="zh"],
@@ -566,10 +565,6 @@ function ul(lang){
     a.textContent=lang==='en'?a.dataset.en:a.dataset.zh;
   });
 }
-const io=new IntersectionObserver(es=>{
-  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});
-},{threshold:.1});
-document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
 // particles
 const cv=document.getElementById('cvs');
