@@ -4,1355 +4,753 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ziheng He | 何子恒</title>
-  <meta name="description" content="Ziheng He (何子恒), PhD student at Southeast University. Embodied Intelligence and World Models." />
+  <meta name="description" content="Ziheng He (何子恒) — Southeast University, School of Software Engineering. Research: Embodied Intelligence, World Models." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
-    /* ═══════════════════════════════════════
-       TOKENS
-    ═══════════════════════════════════════ */
+    /* ── CSS variables ── */
     :root {
-      --font-body: 'Inter', 'Noto Sans SC', sans-serif;
-      --font-serif: 'Source Serif 4', Georgia, serif;
-      --font-mono: 'JetBrains Mono', monospace;
-
-      /* Light theme */
-      --bg:          #ffffff;
-      --bg-alt:      #f8f9fa;
-      --bg-hover:    #f0f4f8;
-      --border:      #e2e8f0;
-      --border-dark: #cbd5e1;
-      --text:        #1a202c;
-      --text-2:      #4a5568;
-      --text-3:      #718096;
-      --accent:      #2563eb;
-      --accent-2:    #0891b2;
-      --accent-hover:#1d4ed8;
-      --tag-bg:      #eff6ff;
-      --tag-text:    #1d4ed8;
-      --tag-border:  #bfdbfe;
-
-      --nav-bg:      rgba(255,255,255,.95);
-      --shadow-sm:   0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
-      --shadow-md:   0 4px 12px rgba(0,0,0,.08);
-
-      --radius:      6px;
-      --radius-lg:   12px;
+      --bg:        #ffffff;
+      --bg-2:      #f8fafc;
+      --bg-3:      #f1f5f9;
+      --border:    #e2e8f0;
+      --border-2:  #cbd5e1;
+      --text:      #0f172a;
+      --text-2:    #475569;
+      --text-3:    #94a3b8;
+      --accent:    #2563eb;
+      --accent-h:  #1d4ed8;
+      --accent-bg: #eff6ff;
+      --sidebar-w: 280px;
+      --t:         .2s ease;
+      --radius:    8px;
     }
-
     [data-theme="dark"] {
-      --bg:          #0f172a;
-      --bg-alt:      #1e293b;
-      --bg-hover:    #263347;
-      --border:      #1e293b;
-      --border-dark: #334155;
-      --text:        #f1f5f9;
-      --text-2:      #94a3b8;
-      --text-3:      #64748b;
-      --accent:      #60a5fa;
-      --accent-2:    #22d3ee;
-      --accent-hover:#93c5fd;
-      --tag-bg:      rgba(96,165,250,.1);
-      --tag-text:    #93c5fd;
-      --tag-border:  rgba(96,165,250,.25);
-      --nav-bg:      rgba(15,23,42,.95);
-      --shadow-sm:   0 1px 3px rgba(0,0,0,.3);
-      --shadow-md:   0 4px 12px rgba(0,0,0,.4);
+      --bg:        #0f172a;
+      --bg-2:      #1e293b;
+      --bg-3:      #293548;
+      --border:    #1e293b;
+      --border-2:  #334155;
+      --text:      #e2e8f0;
+      --text-2:    #94a3b8;
+      --text-3:    #64748b;
+      --accent:    #60a5fa;
+      --accent-h:  #93c5fd;
+      --accent-bg: #1e3a5f;
     }
 
-    /* ═══════════════════════════════════════
-       RESET
-    ═══════════════════════════════════════ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; font-size: 15px; }
     body {
-      font-family: var(--font-body);
+      font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
-      transition: background .3s, color .3s;
+      min-height: 100vh;
+      display: flex;
+      transition: background var(--t), color var(--t);
     }
     a { color: var(--accent); text-decoration: none; }
-    a:hover { color: var(--accent-hover); text-decoration: underline; }
-    ::selection { background: var(--accent); color: #fff; }
+    a:hover { text-decoration: underline; color: var(--accent-h); }
 
-    /* ═══════════════════════════════════════
-       LAYOUT SHELL
-    ═══════════════════════════════════════ */
-    .page-wrap {
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ═══════════════════════════════════════
-       NAVBAR
-    ═══════════════════════════════════════ */
-    .navbar {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: var(--nav-bg);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-    }
-    .nav-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      height: 52px;
+    /* ── Sidebar ── */
+    .sidebar {
+      width: var(--sidebar-w);
+      min-height: 100vh;
+      background: var(--bg-2);
+      border-right: 1px solid var(--border);
+      padding: 48px 28px 32px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-    }
-    .nav-brand {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      font-weight: 600;
-      color: var(--text);
-    }
-    .nav-brand:hover { text-decoration: none; color: var(--accent); }
-
-    .nav-links {
-      display: flex;
-      gap: 2px;
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: .8rem;
-      font-weight: 500;
-      letter-spacing: .04em;
-      color: var(--text-2);
-      padding: 5px 11px;
-      border-radius: var(--radius);
-      transition: all .2s;
-    }
-    .nav-links a:hover, .nav-links a.active {
-      background: var(--bg-hover);
-      color: var(--accent);
-      text-decoration: none;
+      gap: 0;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      overflow-y: auto;
+      transition: background var(--t), border-color var(--t);
     }
 
-    .nav-right {
-      display: flex;
-      gap: 6px;
-    }
-    .nav-btn {
-      font-size: .75rem;
-      font-family: var(--font-mono);
-      font-weight: 500;
-      color: var(--text-3);
-      background: none;
-      border: 1px solid var(--border-dark);
-      border-radius: var(--radius);
-      padding: 4px 10px;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .nav-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--tag-bg); }
-
-    /* ═══════════════════════════════════════
-       PROFILE HEADER
-    ═══════════════════════════════════════ */
-    .profile-section {
-      padding: 52px 0 40px;
-    }
-    .profile-grid {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 44px;
-      align-items: start;
-    }
-
-    .profile-photo {
-      width: 160px;
-      height: 160px;
-      border-radius: var(--radius-lg);
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    /* Profile photo */
+    .s-photo {
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      border: 3px solid var(--border-2);
       overflow: hidden;
-      position: relative;
-      box-shadow: var(--shadow-md);
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(0,0,0,.08);
+      transition: border-color var(--t);
+      flex-shrink: 0;
     }
-    .profile-photo-initials {
-      font-family: var(--font-serif);
-      font-size: 3rem;
-      font-weight: 600;
-      color: var(--accent);
-      opacity: .7;
-    }
-    .profile-photo-label {
-      position: absolute;
-      bottom: 8px;
-      left: 0; right: 0;
-      text-align: center;
-      font-size: .65rem;
-      font-family: var(--font-mono);
-      color: var(--text-3);
-      letter-spacing: .04em;
-    }
+    [data-theme="dark"] .s-photo { box-shadow: 0 4px 16px rgba(0,0,0,.4); }
+    .s-photo svg { display: block; width: 100%; height: 100%; }
 
-    .profile-info {}
-    .profile-name {
-      font-family: var(--font-serif);
-      font-size: 2rem;
-      font-weight: 600;
+    .s-name {
+      font-family: 'Noto Serif', Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 700;
       color: var(--text);
-      letter-spacing: -.01em;
-      line-height: 1.15;
+      text-align: center;
+      margin-bottom: 4px;
+      line-height: 1.3;
     }
-    .profile-name-cn {
-      font-size: 1.1rem;
-      font-weight: 300;
+    .s-name-cn {
+      font-size: .9rem;
       color: var(--text-2);
-      margin-top: 2px;
-      letter-spacing: .06em;
+      text-align: center;
+      margin-bottom: 16px;
+      font-weight: 400;
     }
+    .s-affil {
+      font-size: .8rem;
+      color: var(--text-2);
+      text-align: center;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+      width: 100%;
+    }
+    .s-affil strong { color: var(--text); font-weight: 500; }
 
-    .profile-meta {
+    /* sidebar links */
+    .s-links {
+      list-style: none;
+      width: 100%;
       display: flex;
-      flex-wrap: wrap;
-      gap: 16px;
-      margin-top: 16px;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 24px;
     }
-    .meta-item {
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .s-links a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
       font-size: .82rem;
       color: var(--text-2);
+      transition: background var(--t), color var(--t);
+      text-decoration: none;
     }
-    .meta-icon { font-size: .9rem; opacity: .7; }
+    .s-links a:hover { background: var(--bg-3); color: var(--text); text-decoration: none; }
+    .s-links svg { flex-shrink: 0; opacity: .7; }
 
-    .profile-bio {
-      margin-top: 18px;
-      font-size: .92rem;
-      color: var(--text-2);
-      line-height: 1.85;
-      max-width: 560px;
+    /* research tags in sidebar */
+    .s-tags {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      justify-content: center;
+      margin-bottom: 24px;
+      width: 100%;
     }
-
-    .profile-interests {
-      margin-top: 14px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .interest-tag {
-      font-size: .73rem;
-      font-weight: 500;
-      background: var(--tag-bg);
-      color: var(--tag-text);
-      border: 1px solid var(--tag-border);
+    .s-tag {
+      font-size: .72rem;
       padding: 3px 10px;
       border-radius: 100px;
-      letter-spacing: .02em;
-    }
-
-    .profile-links {
-      display: flex;
-      gap: 10px;
-      margin-top: 20px;
-      flex-wrap: wrap;
-    }
-    .profile-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-size: .78rem;
-      font-weight: 500;
-      color: var(--text-2);
-      border: 1px solid var(--border-dark);
-      background: var(--bg-alt);
-      padding: 5px 12px;
-      border-radius: var(--radius);
-      transition: all .2s;
-    }
-    .profile-link:hover {
-      border-color: var(--accent);
+      background: var(--accent-bg);
       color: var(--accent);
-      background: var(--tag-bg);
-      text-decoration: none;
+      border: 1px solid transparent;
+      font-weight: 500;
     }
 
-    /* ═══════════════════════════════════════
-       TABS
-    ═══════════════════════════════════════ */
-    .tabs-bar {
-      display: flex;
-      gap: 0;
-      border-bottom: 2px solid var(--border);
-      margin: 8px 0 32px;
+    /* controls in sidebar */
+    .s-ctls {
+      display: flex; gap: 8px;
+      margin-top: auto;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      width: 100%;
+      justify-content: center;
+    }
+    .s-btn {
+      font-size: .75rem; padding: 5px 12px;
+      border-radius: 6px; cursor: pointer;
+      border: 1px solid var(--border-2);
+      background: var(--bg);
+      color: var(--text-2);
+      font-family: inherit;
+      transition: background var(--t), color var(--t), border-color var(--t);
+      white-space: nowrap;
+    }
+    .s-btn:hover { background: var(--bg-3); color: var(--text); }
+
+    /* ── Main content ── */
+    .main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      padding: 0;
+      min-height: 100vh;
+    }
+
+    /* Tab nav */
+    .tab-nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 48px;
+      display: flex; gap: 0;
+      transition: background var(--t), border-color var(--t);
     }
     .tab-btn {
-      font-size: .83rem;
-      font-weight: 500;
-      color: var(--text-3);
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -2px;
-      padding: 10px 18px;
+      padding: 16px 20px;
+      font-size: .87rem; font-weight: 500;
+      color: var(--text-2);
       cursor: pointer;
-      transition: all .2s;
-      letter-spacing: .02em;
+      border: none; background: none;
+      font-family: inherit;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color var(--t), border-color var(--t);
     }
-    .tab-btn:hover { color: var(--accent); }
-    .tab-btn.active {
-      color: var(--accent);
-      border-bottom-color: var(--accent);
-      font-weight: 600;
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+    /* Tab panels */
+    .tab-panel { display: none; padding: 48px; max-width: 780px; }
+    .tab-panel.active { display: block; }
+
+    /* Section headings */
+    .sec-title {
+      font-family: 'Noto Serif', Georgia, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
     }
-
-    .tab-pane { display: none; }
-    .tab-pane.active { display: block; }
-
-    /* ═══════════════════════════════════════
-       ABOUT TAB
-    ═══════════════════════════════════════ */
-    .about-cols {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-    }
-
-    .info-block { margin-bottom: 28px; }
-    .info-block h3 {
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
+    .sec-sub {
+      font-size: .85rem;
       color: var(--text-3);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .info-block h3::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--border);
-    }
-
-    .edu-item, .exp-item {
-      display: grid;
-      grid-template-columns: auto 1fr;
-      gap: 12px;
-      padding: 12px 0;
+      margin-bottom: 32px;
+      padding-bottom: 16px;
       border-bottom: 1px solid var(--border);
     }
-    .edu-item:last-child, .exp-item:last-child { border-bottom: none; }
 
-    .edu-icon {
-      width: 36px; height: 36px;
-      border-radius: var(--radius);
-      background: var(--tag-bg);
-      border: 1px solid var(--tag-border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .9rem;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .edu-title { font-size: .88rem; font-weight: 600; color: var(--text); }
-    .edu-inst  { font-size: .8rem; color: var(--text-2); margin-top: 1px; }
-    .edu-year  { font-size: .75rem; font-family: var(--font-mono); color: var(--text-3); margin-top: 3px; }
-
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .skill-chip {
-      font-size: .75rem;
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
+    /* About panel */
+    .about-bio {
+      font-size: .93rem;
       color: var(--text-2);
-      padding: 4px 10px;
-      border-radius: var(--radius);
-    }
-
-    /* ═══════════════════════════════════════
-       PUBLICATIONS TAB
-    ═══════════════════════════════════════ */
-    .pub-filter {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
+      line-height: 1.8;
       margin-bottom: 20px;
     }
-    .filter-btn {
-      font-size: .74rem;
-      font-weight: 500;
-      font-family: var(--font-mono);
-      letter-spacing: .04em;
-      background: none;
-      border: 1px solid var(--border-dark);
-      color: var(--text-3);
-      padding: 4px 12px;
-      border-radius: 100px;
-      cursor: pointer;
-      transition: all .2s;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--tag-bg);
-    }
+    .about-bio strong { color: var(--text); font-weight: 600; }
+    .about-bio a { color: var(--accent); }
 
-    .pub-entry {
-      padding: 20px 0;
-      border-bottom: 1px solid var(--border);
-      display: grid;
-      grid-template-columns: 80px 1fr;
-      gap: 16px;
-      transition: background .15s;
-    }
-    .pub-entry:last-child { border-bottom: none; }
-    .pub-entry:hover { background: none; }
-
-    .pub-thumb {
-      width: 72px;
-      height: 54px;
-      border-radius: var(--radius);
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.4rem;
-      flex-shrink: 0;
-    }
-
-    .pub-main {}
-    .pub-ptitle {
-      font-family: var(--font-serif);
-      font-size: .96rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.45;
-      margin-bottom: 4px;
-    }
-    .pub-ptitle a { color: inherit; }
-    .pub-ptitle a:hover { color: var(--accent); text-decoration: none; }
-
-    .pub-pauthors {
-      font-size: .8rem;
-      color: var(--text-3);
-      margin-bottom: 4px;
-    }
-    .pub-pauthors strong { color: var(--accent-2); font-weight: 600; }
-
-    .pub-pvenue {
-      font-size: .78rem;
-      color: var(--text-3);
-      font-style: italic;
-      margin-bottom: 8px;
-    }
-
-    .pub-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .badge {
-      font-size: .68rem;
-      font-weight: 600;
-      font-family: var(--font-mono);
-      letter-spacing: .04em;
-      padding: 2px 8px;
-      border-radius: var(--radius);
-    }
-    .badge-venue { background: var(--bg-alt); color: var(--text-3); border: 1px solid var(--border); }
-    .badge-preprint { background: rgba(245,158,11,.08); color: #d97706; border: 1px solid rgba(245,158,11,.2); }
-    [data-theme="dark"] .badge-preprint { background: rgba(245,158,11,.1); color: #fbbf24; }
-    .badge-workshop { background: rgba(16,185,129,.08); color: #059669; border: 1px solid rgba(16,185,129,.2); }
-    [data-theme="dark"] .badge-workshop { background: rgba(16,185,129,.1); color: #34d399; }
-    .badge-link {
-      background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--tag-border);
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .badge-link:hover { text-decoration: none; opacity: .8; }
-
-    /* ═══════════════════════════════════════
-       RESEARCH TAB
-    ═══════════════════════════════════════ */
-    .research-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-    }
-    .research-entry {
-      display: grid;
-      grid-template-columns: 48px 1fr;
-      gap: 16px;
-      padding: 20px 16px;
-      border-radius: var(--radius-lg);
-      transition: background .15s;
-    }
-    .research-entry:hover { background: var(--bg-alt); }
-
-    .research-num {
-      font-family: var(--font-serif);
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: var(--accent);
-      opacity: .25;
-      line-height: 1;
-      padding-top: 3px;
-    }
-    .research-content {}
-    .research-title { font-size: .95rem; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-    .research-cn { font-size: .82rem; color: var(--text-3); margin-bottom: 8px; font-style: italic; }
-    .research-desc { font-size: .86rem; color: var(--text-2); line-height: 1.75; margin-bottom: 10px; }
-    .research-kws { display: flex; flex-wrap: wrap; gap: 5px; }
-    .kw {
-      font-size: .7rem;
-      font-family: var(--font-mono);
-      color: var(--text-3);
-      background: var(--bg-alt);
-      border: 1px solid var(--border);
-      padding: 2px 8px;
-      border-radius: var(--radius);
-    }
-
-    /* ═══════════════════════════════════════
-       NEWS TAB
-    ═══════════════════════════════════════ */
-    .news-tl {
-      position: relative;
-      padding-left: 20px;
-    }
-    .news-tl::before {
-      content: '';
-      position: absolute;
-      left: 5px; top: 8px; bottom: 8px;
-      width: 1px;
-      background: var(--border);
-    }
-
-    .news-tl-item {
-      position: relative;
-      padding: 0 0 24px 20px;
-    }
-    .news-tl-item::before {
-      content: '';
-      position: absolute;
-      left: -6px; top: 6px;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--bg);
-      border: 2px solid var(--accent);
-    }
-
-    .news-tl-date {
-      font-family: var(--font-mono);
-      font-size: .72rem;
-      color: var(--text-3);
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .news-tl-badge {
-      font-size: .64rem;
-      font-weight: 600;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-      padding: 1px 7px;
-      border-radius: 100px;
-    }
-    .nbadge-paper { background: rgba(37,99,235,.1); color: #2563eb; border: 1px solid rgba(37,99,235,.2); }
-    .nbadge-award { background: rgba(124,58,237,.1); color: #7c3aed; border: 1px solid rgba(124,58,237,.2); }
-    .nbadge-talk  { background: rgba(6,182,212,.1); color: #0891b2; border: 1px solid rgba(6,182,212,.2); }
-    .nbadge-join  { background: rgba(16,185,129,.1); color: #059669; border: 1px solid rgba(16,185,129,.2); }
-    [data-theme="dark"] .nbadge-paper { background: rgba(96,165,250,.1); color: #60a5fa; border-color: rgba(96,165,250,.2); }
-    [data-theme="dark"] .nbadge-award { background: rgba(167,139,250,.1); color: #a78bfa; border-color: rgba(167,139,250,.2); }
-    [data-theme="dark"] .nbadge-talk  { background: rgba(34,211,238,.1); color: #22d3ee; border-color: rgba(34,211,238,.2); }
-    [data-theme="dark"] .nbadge-join  { background: rgba(52,211,153,.1); color: #34d399; border-color: rgba(52,211,153,.2); }
-
-    .news-tl-text { font-size: .86rem; color: var(--text-2); line-height: 1.65; }
-    .news-tl-text a { color: var(--accent); }
-
-    /* ═══════════════════════════════════════
-       CONTACT TAB
-    ═══════════════════════════════════════ */
-    .contact-cols {
+    .info-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      gap: 12px;
+      margin-top: 28px;
     }
-    .contact-col h3 {
-      font-size: .7rem;
-      font-weight: 600;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      margin-bottom: 14px;
-    }
-    .contact-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: .86rem;
-    }
-    .contact-row:last-child { border-bottom: none; }
-    .contact-row-icon {
-      width: 30px; height: 30px;
-      border-radius: var(--radius);
-      background: var(--bg-alt);
+    .info-card {
+      background: var(--bg-2);
       border: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .85rem;
-      flex-shrink: 0;
-    }
-    .contact-label { font-size: .72rem; color: var(--text-3); }
-    .contact-val { color: var(--text-2); }
-    .contact-val a { color: var(--accent); }
-
-    .collab-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .collab-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
+      border-radius: var(--radius);
+      padding: 16px;
       font-size: .84rem;
-      color: var(--text-2);
+      transition: background var(--t), border-color var(--t);
     }
-    .collab-list li::before {
-      content: '→';
-      color: var(--accent);
-      flex-shrink: 0;
-      font-size: .8rem;
-      margin-top: 2px;
-    }
-
-    /* ═══════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════ */
-    footer {
-      margin-top: 48px;
-      padding: 20px 0;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: .75rem;
-      font-family: var(--font-mono);
+    .info-card-label {
+      font-size: .72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .06em;
       color: var(--text-3);
-      flex-wrap: wrap;
-      gap: 8px;
+      margin-bottom: 4px;
     }
-    footer a { color: var(--accent); }
+    .info-card-val { color: var(--text-2); }
+    .info-card-val strong { color: var(--text); }
 
-    /* ═══════════════════════════════════════
-       LANGUAGE
-    ═══════════════════════════════════════ */
-    [data-lang="en"] .lang-cn { display: none !important; }
-    [data-lang="cn"] .lang-en { display: none !important; }
+    /* Publications panel */
+    .pub-list { display: flex; flex-direction: column; gap: 20px; }
+    .pub-item {
+      display: grid;
+      grid-template-columns: 128px 1fr;
+      gap: 20px;
+      padding: 20px;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      align-items: start;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    .pub-item:hover {
+      border-color: var(--accent);
+      box-shadow: 0 2px 12px rgba(37,99,235,.08);
+    }
+    [data-theme="dark"] .pub-item:hover {
+      box-shadow: 0 2px 12px rgba(96,165,250,.12);
+    }
+    .pub-thumb {
+      width: 128px; height: 88px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .pub-thumb svg { display: block; width: 100%; height: 100%; }
+    .pub-year {
+      display: inline-block;
+      font-size: .72rem; font-weight: 600;
+      color: var(--accent);
+      background: var(--accent-bg);
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-bottom: 8px;
+    }
+    .pub-title {
+      font-size: .93rem; font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .pub-authors {
+      font-size: .82rem;
+      color: var(--text-2);
+      margin-bottom: 4px;
+    }
+    .pub-authors strong { color: var(--accent); font-weight: 600; }
+    .pub-venue {
+      font-size: .8rem;
+      color: var(--text-3);
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+    .pub-links { display: flex; gap: 8px; flex-wrap: wrap; }
+    .pub-link {
+      font-size: .75rem;
+      padding: 3px 10px;
+      border-radius: 5px;
+      border: 1px solid var(--border-2);
+      color: var(--text-2);
+      transition: background var(--t), color var(--t);
+      cursor: pointer;
+    }
+    .pub-link:hover { background: var(--bg-3); color: var(--text); text-decoration: none; }
 
-    /* ═══════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════ */
-    @media (max-width: 680px) {
-      .profile-grid { grid-template-columns: 1fr; }
-      .profile-photo { width: 120px; height: 120px; }
-      .about-cols { grid-template-columns: 1fr; }
-      .contact-cols { grid-template-columns: 1fr; }
-      .pub-entry { grid-template-columns: 1fr; }
+    /* Research panel */
+    .research-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 32px; }
+    .research-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      background: var(--bg-2);
+      transition: border-color var(--t), box-shadow var(--t);
+      position: relative;
+      overflow: hidden;
+    }
+    .research-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--rc-color, var(--accent));
+    }
+    .research-card:hover {
+      border-color: var(--border-2);
+      box-shadow: 0 4px 16px rgba(0,0,0,.06);
+    }
+    [data-theme="dark"] .research-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.3); }
+    .rc-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .rc-title {
+      font-family: 'Noto Serif', Georgia, serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .rc-sub { font-size: .78rem; color: var(--text-3); margin-bottom: 10px; }
+    .rc-desc { font-size: .85rem; color: var(--text-2); line-height: 1.65; }
+    .rc-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 14px; }
+    .rc-tag {
+      font-size: .7rem; padding: 2px 8px; border-radius: 100px;
+      background: var(--bg-3); border: 1px solid var(--border-2);
+      color: var(--text-3);
+    }
+
+    /* News panel */
+    .news-list { display: flex; flex-direction: column; }
+    .news-item {
+      display: flex; gap: 20px; padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .news-item:last-child { border-bottom: none; }
+    .news-date {
+      font-size: .75rem;
+      color: var(--text-3);
+      white-space: nowrap;
+      font-weight: 500;
+      min-width: 70px;
+    }
+    .news-text { font-size: .88rem; color: var(--text-2); flex: 1; }
+    .news-text strong { color: var(--text); }
+    .news-badge {
+      font-size: .68rem;
+      padding: 2px 8px;
+      border-radius: 100px;
+      background: #dcfce7;
+      color: #166534;
+      font-weight: 600;
+      flex-shrink: 0;
+      align-self: center;
+    }
+    [data-theme="dark"] .news-badge {
+      background: rgba(22,163,74,.2);
+      color: #4ade80;
+    }
+
+    /* Footer in main */
+    .main-footer {
+      padding: 24px 48px;
+      border-top: 1px solid var(--border);
+      font-size: .78rem;
+      color: var(--text-3);
+    }
+
+    /* Language toggle — single-language display */
+    [data-lang="en"] .lang-zh { display: none !important; }
+    [data-lang="zh"] .lang-en { display: none !important; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      body { flex-direction: column; }
+      .sidebar {
+        position: relative;
+        width: 100%; min-height: unset;
+        padding: 32px 24px 24px;
+        flex-direction: row; flex-wrap: wrap;
+        align-items: flex-start; gap: 16px;
+        border-right: none; border-bottom: 1px solid var(--border);
+      }
+      .s-photo { width: 100px; height: 100px; margin-bottom: 0; }
+      .s-links { display: none; }
+      .main { margin-left: 0; }
+      .tab-nav { padding: 0 20px; }
+      .tab-panel { padding: 28px 20px; }
+      .research-grid, .info-grid { grid-template-columns: 1fr; }
+      .pub-item { grid-template-columns: 1fr; }
       .pub-thumb { display: none; }
-      .nav-links { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════
-     NAVBAR
-═══════════════════════════════════════ -->
-<nav class="navbar">
-  <div class="nav-inner">
-    <a href="#" class="nav-brand">
-      <span class="lang-en">Ziheng He</span>
-      <span class="lang-cn">何子恒</span>
-    </a>
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<aside class="sidebar">
 
-    <ul class="nav-links">
-      <li><a href="#" data-tab="about">
-        <span class="lang-en">About</span>
-        <span class="lang-cn">关于</span>
-      </a></li>
-      <li><a href="#" data-tab="publications">
-        <span class="lang-en">Publications</span>
-        <span class="lang-cn">论文</span>
-      </a></li>
-      <li><a href="#" data-tab="research">
-        <span class="lang-en">Research</span>
-        <span class="lang-cn">研究</span>
-      </a></li>
-      <li><a href="#" data-tab="news">
-        <span class="lang-en">News</span>
-        <span class="lang-cn">动态</span>
-      </a></li>
-      <li><a href="#" data-tab="contact">
-        <span class="lang-en">Contact</span>
-        <span class="lang-cn">联系</span>
-      </a></li>
-    </ul>
-
-    <div class="nav-right">
-      <button class="nav-btn" id="lang-btn">中/EN</button>
-      <button class="nav-btn" id="theme-btn">◐</button>
-    </div>
-  </div>
-</nav>
-
-<!-- ═══════════════════════════════════════
-     PROFILE HEADER
-═══════════════════════════════════════ -->
-<div class="page-wrap">
-  <div class="profile-section">
-    <div class="profile-grid">
-
-      <!-- Left: photo -->
-      <div>
-        <div class="profile-photo">
-          <div class="profile-photo-initials">ZH</div>
-          <div class="profile-photo-label">Photo coming soon</div>
-        </div>
-      </div>
-
-      <!-- Right: info -->
-      <div class="profile-info">
-        <div class="profile-name lang-en">Ziheng He</div>
-        <div class="profile-name lang-cn" style="font-family:var(--font-serif);font-size:2rem;font-weight:600;color:var(--text);letter-spacing:-.01em;line-height:1.15;">何子恒</div>
-        <div class="profile-name-cn lang-en">何子恒 (hé zǐ héng)</div>
-        <div class="profile-name-cn lang-cn">Ziheng He — PhD Researcher</div>
-
-        <div class="profile-meta">
-          <div class="meta-item">
-            <span class="meta-icon">🎓</span>
-            <span class="lang-en">PhD Student</span>
-            <span class="lang-cn">博士研究生</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-icon">🏛</span>
-            <span class="lang-en">Southeast University</span>
-            <span class="lang-cn">东南大学</span>
-          </div>
-          <div class="meta-item">
-            <span class="meta-icon">📍</span>
-            <span class="lang-en">Nanjing, China</span>
-            <span class="lang-cn">中国南京</span>
-          </div>
-        </div>
-
-        <p class="profile-bio lang-en">
-          I am a PhD student in the School of Software Engineering at
-          <strong>Southeast University</strong>. My research focuses on
-          <strong>Embodied Intelligence</strong> and <strong>World Models</strong>
-          — building autonomous agents that perceive, reason, and act in
-          physical environments through grounded internal representations.
-        </p>
-        <p class="profile-bio lang-cn">
-          我是<strong>东南大学</strong>软件工程学院的博士研究生，研究方向为
-          <strong>具身智能</strong>与<strong>世界模型</strong>——
-          致力于构建通过基础内部表示在物理环境中感知、推理与行动的自主智能体。
-        </p>
-
-        <div class="profile-interests">
-          <span class="interest-tag">Embodied AI</span>
-          <span class="interest-tag">World Models</span>
-          <span class="interest-tag">Robot Learning</span>
-          <span class="interest-tag">Model-Based RL</span>
-          <span class="interest-tag">Vision-Language-Action</span>
-          <span class="interest-tag">Sim-to-Real</span>
-        </div>
-
-        <div class="profile-links">
-          <a href="mailto:ziheng.he@seu.edu.cn" class="profile-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            Email
-          </a>
-          <a href="https://github.com/zihenghe04" target="_blank" rel="noopener" class="profile-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
-            GitHub
-          </a>
-          <a href="https://scholar.google.com" target="_blank" rel="noopener" class="profile-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
-            Google Scholar
-          </a>
-          <a href="https://scholar.google.com" target="_blank" rel="noopener" class="profile-link">
-            <span style="font-family:var(--font-mono);font-size:.7rem;font-weight:700;">ORCID</span>
-          </a>
-          <a href="/files/cv.pdf" class="profile-link">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
-            <span class="lang-en">CV / Resume</span>
-            <span class="lang-cn">简历</span>
-          </a>
-        </div>
-      </div>
-    </div>
+  <!-- Profile photo -->
+  <div class="s-photo">
+    <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <!-- light bg -->
+      <rect width="160" height="160" fill="#dbeafe"/>
+      <!-- body silhouette -->
+      <circle cx="80" cy="60" r="32" fill="#bfdbfe"/>
+      <ellipse cx="80" cy="136" rx="52" ry="36" fill="#bfdbfe"/>
+      <!-- initials -->
+      <text x="80" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="28" font-weight="700" fill="#1d4ed8" letter-spacing="2">ZH</text>
+    </svg>
   </div>
 
-  <!-- ═══════════════════════════════════════
-       TABS
-  ═══════════════════════════════════════ -->
-  <div class="tabs-bar">
-    <button class="tab-btn active" data-target="about">
-      <span class="lang-en">About</span>
-      <span class="lang-cn">关于</span>
-    </button>
-    <button class="tab-btn" data-target="publications">
-      <span class="lang-en">Publications</span>
-      <span class="lang-cn">发表论文</span>
-    </button>
-    <button class="tab-btn" data-target="research">
-      <span class="lang-en">Research</span>
-      <span class="lang-cn">研究方向</span>
-    </button>
-    <button class="tab-btn" data-target="news">
-      <span class="lang-en">News</span>
-      <span class="lang-cn">近期动态</span>
-    </button>
-    <button class="tab-btn" data-target="contact">
-      <span class="lang-en">Contact</span>
-      <span class="lang-cn">联系方式</span>
-    </button>
+  <div class="s-name">Ziheng He</div>
+  <div class="s-name-cn">何子恒</div>
+
+  <div class="s-affil">
+    <span class="lang-en"><strong>School of Software Engineering</strong><br>Southeast University<br>Nanjing, China</span>
+    <span class="lang-zh"><strong>软件工程学院</strong><br>东南大学<br>南京，中国</span>
   </div>
 
-  <!-- ── ABOUT ── -->
-  <div class="tab-pane active" id="tab-about">
-    <div class="about-cols">
-      <div>
-        <div class="info-block">
-          <h3 class="lang-en">Education</h3>
-          <h3 class="lang-cn">教育背景</h3>
+  <ul class="s-links">
+    <li>
+      <a href="mailto:ziheng.he@seu.edu.cn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        ziheng.he@seu.edu.cn
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/zihenghe04" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+    </li>
+    <li>
+      <a href="https://www.seu.edu.cn" target="_blank" rel="noopener">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span class="lang-en">Southeast University</span>
+        <span class="lang-zh">东南大学</span>
+      </a>
+    </li>
+  </ul>
 
-          <div class="edu-item">
-            <div class="edu-icon">🎓</div>
-            <div>
-              <div class="edu-title lang-en">Doctor of Philosophy (PhD)</div>
-              <div class="edu-title lang-cn">博士</div>
-              <div class="edu-inst lang-en">Southeast University · Software Engineering</div>
-              <div class="edu-inst lang-cn">东南大学 · 软件工程学院</div>
-              <div class="edu-year">2024 — Present</div>
-            </div>
-          </div>
-
-          <div class="edu-item">
-            <div class="edu-icon">🏅</div>
-            <div>
-              <div class="edu-title lang-en">Bachelor of Engineering</div>
-              <div class="edu-title lang-cn">工学学士</div>
-              <div class="edu-inst lang-en">Southeast University</div>
-              <div class="edu-inst lang-cn">东南大学</div>
-              <div class="edu-year">2020 — 2024</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-block">
-          <h3 class="lang-en">Research Interests</h3>
-          <h3 class="lang-cn">研究兴趣</h3>
-          <div style="display:flex;flex-direction:column;gap:8px;">
-            <div style="display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:var(--text-2);">
-              <span style="color:var(--accent);margin-top:2px;">•</span>
-              <span class="lang-en">Embodied AI: navigation, manipulation, instruction following</span>
-              <span class="lang-cn">具身AI：导航、操作、指令跟随</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:var(--text-2);">
-              <span style="color:var(--accent);margin-top:2px;">•</span>
-              <span class="lang-en">World Models: latent dynamics, model-based planning</span>
-              <span class="lang-cn">世界模型：潜在动力学、基于模型的规划</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:var(--text-2);">
-              <span style="color:var(--accent);margin-top:2px;">•</span>
-              <span class="lang-en">Vision-Language-Action models for robotics</span>
-              <span class="lang-cn">机器人视觉-语言-动作模型</span>
-            </div>
-            <div style="display:flex;align-items:flex-start;gap:8px;font-size:.85rem;color:var(--text-2);">
-              <span style="color:var(--accent);margin-top:2px;">•</span>
-              <span class="lang-en">Sim-to-real transfer and domain adaptation</span>
-              <span class="lang-cn">仿真到现实迁移与域适应</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="info-block">
-          <h3 class="lang-en">Skills & Tools</h3>
-          <h3 class="lang-cn">技能与工具</h3>
-          <div style="margin-bottom:10px;">
-            <div style="font-size:.73rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;">
-              <span class="lang-en">Languages</span><span class="lang-cn">编程语言</span>
-            </div>
-            <div class="skills-grid">
-              <span class="skill-chip">Python</span>
-              <span class="skill-chip">C++</span>
-              <span class="skill-chip">CUDA</span>
-            </div>
-          </div>
-          <div style="margin-bottom:10px;">
-            <div style="font-size:.73rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;">
-              <span class="lang-en">Frameworks</span><span class="lang-cn">框架</span>
-            </div>
-            <div class="skills-grid">
-              <span class="skill-chip">PyTorch</span>
-              <span class="skill-chip">JAX</span>
-              <span class="skill-chip">ROS2</span>
-              <span class="skill-chip">Isaac Gym</span>
-              <span class="skill-chip">Habitat</span>
-              <span class="skill-chip">HuggingFace</span>
-            </div>
-          </div>
-          <div>
-            <div style="font-size:.73rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-3);margin-bottom:6px;">
-              <span class="lang-en">Research Tools</span><span class="lang-cn">研究工具</span>
-            </div>
-            <div class="skills-grid">
-              <span class="skill-chip">Weights & Biases</span>
-              <span class="skill-chip">LaTeX</span>
-              <span class="skill-chip">Git</span>
-              <span class="skill-chip">Docker</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="info-block">
-          <h3 class="lang-en">Honors & Awards</h3>
-          <h3 class="lang-cn">荣誉与奖项</h3>
-          <div class="edu-item">
-            <div class="edu-icon">🏆</div>
-            <div>
-              <div class="edu-title lang-en">Outstanding Graduation Thesis</div>
-              <div class="edu-title lang-cn">优秀毕业论文</div>
-              <div class="edu-year">2024</div>
-            </div>
-          </div>
-          <div class="edu-item">
-            <div class="edu-icon">🥇</div>
-            <div>
-              <div class="edu-title lang-en">First-Class Academic Scholarship</div>
-              <div class="edu-title lang-cn">一等学业奖学金</div>
-              <div class="edu-inst">Southeast University</div>
-              <div class="edu-year">2022, 2023</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <div class="s-tags">
+    <span class="s-tag"><span class="lang-en">Embodied AI</span><span class="lang-zh">具身智能</span></span>
+    <span class="s-tag"><span class="lang-en">World Models</span><span class="lang-zh">世界模型</span></span>
+    <span class="s-tag"><span class="lang-en">Robotics</span><span class="lang-zh">机器人</span></span>
   </div>
 
-  <!-- ── PUBLICATIONS ── -->
-  <div class="tab-pane" id="tab-publications">
-    <div class="pub-filter">
-      <button class="filter-btn active" data-filter="all">
-        <span class="lang-en">All</span><span class="lang-cn">全部</span>
-      </button>
-      <button class="filter-btn" data-filter="preprint">
-        <span class="lang-en">Preprints</span><span class="lang-cn">预印本</span>
-      </button>
-      <button class="filter-btn" data-filter="workshop">
-        <span class="lang-en">Workshops</span><span class="lang-cn">研讨会</span>
-      </button>
-    </div>
+  <div class="s-ctls">
+    <button class="s-btn" id="lb" onclick="tl()">中文</button>
+    <button class="s-btn" id="tb" onclick="tt()">&#9790; Dark</button>
+  </div>
 
-    <div class="pub-entry" data-type="preprint">
-      <div class="pub-thumb">🌐</div>
-      <div class="pub-main">
-        <div class="pub-ptitle">
-          <a href="#">
-            <span class="lang-en">WorldSim: A Scalable Framework for Learning World Models from Embodied Agent Interactions</span>
-            <span class="lang-cn">WorldSim：从具身智能体交互中学习世界模型的可扩展框架</span>
-          </a>
-        </div>
-        <div class="pub-pauthors">
-          <strong>Ziheng He</strong>, Author B, Author C, et al.
-        </div>
-        <div class="pub-pvenue lang-en">Preprint · Under Review at NeurIPS 2025</div>
-        <div class="pub-pvenue lang-cn">预印本 · 投稿至 NeurIPS 2025 审稿中</div>
-        <div class="pub-badges">
-          <span class="badge badge-preprint">Preprint</span>
-          <a href="#" class="badge badge-link">arXiv</a>
-          <a href="#" class="badge badge-link">PDF</a>
-          <a href="#" class="badge badge-link">Code</a>
-          <a href="#" class="badge badge-link">Project</a>
-        </div>
-      </div>
-    </div>
+</aside>
 
-    <div class="pub-entry" data-type="preprint">
-      <div class="pub-thumb">🤖</div>
-      <div class="pub-main">
-        <div class="pub-ptitle">
-          <a href="#">
-            <span class="lang-en">EmbodiedDreamer: Grounded World Model Representations for Robot Manipulation</span>
-            <span class="lang-cn">EmbodiedDreamer：用于机器人操作的基础世界模型表示</span>
-          </a>
-        </div>
-        <div class="pub-pauthors">
-          <strong>Ziheng He</strong>, Author D, Author E
-        </div>
-        <div class="pub-pvenue lang-en">Preprint · Submitted to ICLR 2026</div>
-        <div class="pub-pvenue lang-cn">预印本 · 投稿至 ICLR 2026</div>
-        <div class="pub-badges">
-          <span class="badge badge-preprint">Preprint</span>
-          <a href="#" class="badge badge-link">arXiv</a>
-          <a href="#" class="badge badge-link">PDF</a>
-          <a href="#" class="badge badge-link">Project</a>
-        </div>
-      </div>
-    </div>
+<!-- ══════════════ MAIN CONTENT ══════════════ -->
+<main class="main">
 
-    <div class="pub-entry" data-type="workshop">
-      <div class="pub-thumb">🔀</div>
-      <div class="pub-main">
-        <div class="pub-ptitle">
-          <a href="#">
-            <span class="lang-en">Sim2RealWM: Bridging the Reality Gap via Adaptive World Model Representations</span>
-            <span class="lang-cn">Sim2RealWM：通过自适应世界模型表示弥合仿真与现实的差距</span>
-          </a>
-        </div>
-        <div class="pub-pauthors">
-          Author A, <strong>Ziheng He</strong>*, Author F* <em style="font-size:.75rem;">(equal contribution)</em>
-        </div>
-        <div class="pub-pvenue lang-en">Workshop on Robot Learning · NeurIPS 2024</div>
-        <div class="pub-pvenue lang-cn">NeurIPS 2024 机器人学习研讨会</div>
-        <div class="pub-badges">
-          <span class="badge badge-workshop">Workshop</span>
-          <span class="badge badge-venue">NeurIPS 2024</span>
-          <a href="#" class="badge badge-link">Paper</a>
-          <a href="#" class="badge badge-link">Poster</a>
-        </div>
-      </div>
-    </div>
+  <!-- Tab navigation -->
+  <nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" onclick="showTab('about', this)" role="tab">
+      <span class="lang-en">About</span><span class="lang-zh">关于</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('publications', this)" role="tab">
+      <span class="lang-en">Publications</span><span class="lang-zh">论文</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('research', this)" role="tab">
+      <span class="lang-en">Research</span><span class="lang-zh">研究</span>
+    </button>
+    <button class="tab-btn" onclick="showTab('news', this)" role="tab">
+      <span class="lang-en">News</span><span class="lang-zh">动态</span>
+    </button>
+  </nav>
 
-    <p style="font-size:.8rem;color:var(--text-3);margin-top:20px;font-style:italic;text-align:center;">
-      <span class="lang-en">More publications coming soon · <a href="#">Google Scholar</a></span>
-      <span class="lang-cn">更多论文即将更新 · <a href="#">谷歌学术</a></span>
+  <!-- ── About ── -->
+  <div class="tab-panel active" id="tab-about">
+    <h1 class="sec-title"><span class="lang-en">About Me</span><span class="lang-zh">关于我</span></h1>
+    <p class="sec-sub">
+      <span class="lang-en">Researcher · Southeast University · School of Software Engineering</span>
+      <span class="lang-zh">研究者 · 东南大学 · 软件工程学院</span>
     </p>
+
+    <p class="about-bio lang-en">
+      I am <strong>Ziheng He (何子恒)</strong>, a researcher at the
+      <strong>School of Software Engineering, Southeast University</strong>.
+      My work sits at the intersection of <strong>embodied intelligence</strong> and
+      <strong>world models</strong> — I study how autonomous agents can build structured,
+      predictive representations of the physical world to act effectively in complex environments.
+    </p>
+    <p class="about-bio lang-zh">
+      我是<strong>何子恒</strong>，就读于<strong>东南大学软件工程学院</strong>。
+      我的研究聚焦于<strong>具身智能</strong>与<strong>世界模型</strong>的交叉领域——
+      探索自主智能体如何通过构建结构化、可预测的世界表征，在复杂物理环境中实现高效决策与行动。
+    </p>
+    <p class="about-bio lang-en">
+      My long-term goal is to build <strong>general-purpose robotic systems</strong>
+      that can reason about the physical world, transfer knowledge across tasks,
+      and collaborate naturally with humans.
+    </p>
+    <p class="about-bio lang-zh">
+      我的长期目标是构建具备通用能力的机器人系统，使其能够推理物理世界、
+      跨任务迁移知识，并与人类自然协作。
+    </p>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-label"><span class="lang-en">Institution</span><span class="lang-zh">机构</span></div>
+        <div class="info-card-val">
+          <span class="lang-en"><strong>Southeast University</strong><br>School of Software Eng.</span>
+          <span class="lang-zh"><strong>东南大学</strong><br>软件工程学院</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label"><span class="lang-en">Location</span><span class="lang-zh">地点</span></div>
+        <div class="info-card-val">
+          <span class="lang-en">Nanjing, China</span>
+          <span class="lang-zh">中国 南京</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label"><span class="lang-en">Research Interests</span><span class="lang-zh">研究方向</span></div>
+        <div class="info-card-val">
+          <span class="lang-en">Embodied Intelligence, World Models, Robot Learning</span>
+          <span class="lang-zh">具身智能、世界模型、机器人学习</span>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-card-label">Email</div>
+        <div class="info-card-val"><a href="mailto:ziheng.he@seu.edu.cn">ziheng.he@seu.edu.cn</a></div>
+      </div>
+    </div>
   </div>
 
-  <!-- ── RESEARCH ── -->
-  <div class="tab-pane" id="tab-research">
-    <div class="research-list">
-      <div class="research-entry">
-        <div class="research-num">01</div>
-        <div class="research-content">
-          <div class="research-title lang-en">Embodied Intelligence</div>
-          <div class="research-title lang-cn">具身智能</div>
-          <div class="research-cn lang-en">具身智能 · Grounded Autonomous Agents</div>
-          <div class="research-cn lang-cn">Embodied Intelligence · Grounded Autonomous Agents</div>
-          <p class="research-desc lang-en">
-            Designing autonomous agents that learn through physical interaction. I study embodied question
-            answering, visual navigation, and dexterous manipulation tasks that demand tight integration
-            between perception and motor control.
-          </p>
-          <p class="research-desc lang-cn">
-            设计通过物理交互学习的自主智能体。研究方向包括具身问答、视觉导航与灵巧操作任务，
-            这些任务需要感知与运动控制的紧密整合。
-          </p>
-          <div class="research-kws">
-            <span class="kw">Sim-to-Real</span>
-            <span class="kw">Visual Navigation</span>
-            <span class="kw">Manipulation</span>
-            <span class="kw">EQA</span>
-            <span class="kw">Habitat</span>
-            <span class="kw">Isaac Gym</span>
+  <!-- ── Publications ── -->
+  <div class="tab-panel" id="tab-publications">
+    <h2 class="sec-title"><span class="lang-en">Publications</span><span class="lang-zh">论文发表</span></h2>
+    <p class="sec-sub">
+      <span class="lang-en">Research papers and preprints</span>
+      <span class="lang-zh">研究论文与预印本</span>
+    </p>
+    <div class="pub-list">
+
+      <div class="pub-item">
+        <!-- Thumbnail: World Models survey -->
+        <div class="pub-thumb">
+          <svg viewBox="0 0 128 88" xmlns="http://www.w3.org/2000/svg">
+            <rect width="128" height="88" fill="#eff6ff"/>
+            <rect x="8" y="10" width="112" height="5" rx="2.5" fill="#2563eb" opacity=".7"/>
+            <rect x="8" y="22" width="88" height="3" rx="1.5" fill="#93c5fd" opacity=".8"/>
+            <rect x="8" y="30" width="100" height="3" rx="1.5" fill="#93c5fd" opacity=".8"/>
+            <rect x="8" y="38" width="72" height="3" rx="1.5" fill="#93c5fd" opacity=".8"/>
+            <rect x="8" y="50" width="50" height="26" rx="4" fill="#dbeafe"/>
+            <rect x="70" y="50" width="50" height="26" rx="4" fill="#dbeafe"/>
+            <text x="33" y="67" text-anchor="middle" font-family="monospace" font-size="9" fill="#2563eb" font-weight="bold">WM</text>
+            <text x="95" y="67" text-anchor="middle" font-family="monospace" font-size="9" fill="#0891b2" font-weight="bold">EA</text>
+            <rect x="8" y="80" width="55" height="2" rx="1" fill="#93c5fd" opacity=".5"/>
+          </svg>
+        </div>
+        <div>
+          <span class="pub-year">2025</span>
+          <div class="pub-title">
+            <span class="lang-en">World Models for Embodied Agents: A Survey of Latent Dynamics and Physical Reasoning</span>
+            <span class="lang-zh">面向具身智能体的世界模型：潜在动态与物理推理综述</span>
+          </div>
+          <div class="pub-authors"><strong>Ziheng He</strong>, et al.</div>
+          <div class="pub-venue"><span class="lang-en">Under Review</span><span class="lang-zh">审稿中</span></div>
+          <div class="pub-links">
+            <span class="pub-link">[Paper]</span>
+            <span class="pub-link">[Project]</span>
           </div>
         </div>
       </div>
 
-      <div class="research-entry">
-        <div class="research-num">02</div>
-        <div class="research-content">
-          <div class="research-title lang-en">World Models</div>
-          <div class="research-title lang-cn">世界模型</div>
-          <div class="research-cn lang-en">世界模型 · Latent Dynamics for Planning</div>
-          <div class="research-cn lang-cn">World Models · Latent Dynamics for Planning</div>
-          <p class="research-desc lang-en">
-            Building latent-space world models that allow agents to predict future states, plan ahead, and
-            reason about action consequences. I explore model-based RL and generative world representations
-            for robot learning.
-          </p>
-          <p class="research-desc lang-cn">
-            构建潜在空间世界模型，使智能体能够预测未来状态、提前规划并推理行动后果。
-            探索基于模型的强化学习与生成式世界表示在机器人学习中的应用。
-          </p>
-          <div class="research-kws">
-            <span class="kw">MBRL</span>
-            <span class="kw">Latent Dynamics</span>
-            <span class="kw">Planning</span>
-            <span class="kw">DreamerV3</span>
-            <span class="kw">RSSM</span>
+      <div class="pub-item">
+        <!-- Thumbnail: Robot Manipulation paper -->
+        <div class="pub-thumb">
+          <svg viewBox="0 0 128 88" xmlns="http://www.w3.org/2000/svg">
+            <rect width="128" height="88" fill="#faf5ff"/>
+            <rect x="8" y="10" width="112" height="5" rx="2.5" fill="#7c3aed" opacity=".7"/>
+            <rect x="8" y="22" width="92" height="3" rx="1.5" fill="#c4b5fd" opacity=".8"/>
+            <rect x="8" y="30" width="76" height="3" rx="1.5" fill="#c4b5fd" opacity=".8"/>
+            <rect x="8" y="38" width="84" height="3" rx="1.5" fill="#c4b5fd" opacity=".8"/>
+            <circle cx="36" cy="65" r="15" fill="#ede9fe" stroke="#7c3aed" stroke-width="1.5"/>
+            <circle cx="36" cy="65" r="7" fill="#ddd6fe" stroke="#7c3aed" stroke-width="1"/>
+            <rect x="66" y="52" width="54" height="30" rx="3" fill="#ede9fe"/>
+            <path d="M70 78 Q80 63 88 68 Q96 73 104 59 Q110 48 120 54" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+            <rect x="8" y="82" width="48" height="2" rx="1" fill="#c4b5fd" opacity=".5"/>
+          </svg>
+        </div>
+        <div>
+          <span class="pub-year">2024</span>
+          <div class="pub-title">
+            <span class="lang-en">Structured Latent Representations for Generalizable Robot Manipulation</span>
+            <span class="lang-zh">面向可泛化机器人操作的结构化潜在表示</span>
+          </div>
+          <div class="pub-authors"><strong>Ziheng He</strong>, et al.</div>
+          <div class="pub-venue"><span class="lang-en">Preprint &middot; arXiv 2024</span><span class="lang-zh">预印本 &middot; arXiv 2024</span></div>
+          <div class="pub-links">
+            <span class="pub-link">[arXiv]</span>
+            <span class="pub-link">[Code]</span>
           </div>
         </div>
       </div>
 
-      <div class="research-entry">
-        <div class="research-num">03</div>
-        <div class="research-content">
-          <div class="research-title lang-en">Vision-Language-Action Models</div>
-          <div class="research-title lang-cn">视觉-语言-动作模型</div>
-          <div class="research-cn lang-en">VLA 视觉语言行动 · Foundation Models for Robotics</div>
-          <div class="research-cn lang-cn">VLA · Foundation Models for Robotics</div>
-          <p class="research-desc lang-en">
-            Connecting large pre-trained vision-language models to robot action generation for
-            open-vocabulary task execution and language-conditioned manipulation.
-          </p>
-          <p class="research-desc lang-cn">
-            将大型预训练视觉语言模型与机器人动作生成相连接，实现开放词汇任务执行与语言条件操作。
-          </p>
-          <div class="research-kws">
-            <span class="kw">Foundation Models</span>
-            <span class="kw">Instruction Following</span>
-            <span class="kw">Grounding</span>
-            <span class="kw">RT-2</span>
-          </div>
+    </div>
+  </div>
+
+  <!-- ── Research ── -->
+  <div class="tab-panel" id="tab-research">
+    <h2 class="sec-title"><span class="lang-en">Research</span><span class="lang-zh">研究方向</span></h2>
+    <p class="sec-sub">
+      <span class="lang-en">Current research themes and directions</span>
+      <span class="lang-zh">当前研究主题与方向</span>
+    </p>
+    <div class="research-grid">
+      <div class="research-card" style="--rc-color:#2563eb;">
+        <div class="rc-icon">&#129302;</div>
+        <div class="rc-title"><span class="lang-en">Embodied Intelligence</span><span class="lang-zh">具身智能</span></div>
+        <div class="rc-sub"><span class="lang-en">具身智能</span><span class="lang-zh">Embodied Intelligence</span></div>
+        <p class="rc-desc lang-en">Developing agents that perceive, reason, and act in the physical world. Research spans sensorimotor integration, hierarchical planning, and learning from interaction.</p>
+        <p class="rc-desc lang-zh">研究能够感知、推理并在物理世界中行动的智能体。涵盖感觉运动整合、层次化规划以及通过交互学习。</p>
+        <div class="rc-tags">
+          <span class="rc-tag">Robot Learning</span>
+          <span class="rc-tag">Manipulation</span>
+          <span class="rc-tag">RL</span>
+          <span class="rc-tag">Sim-to-Real</span>
         </div>
       </div>
-
-      <div class="research-entry">
-        <div class="research-num">04</div>
-        <div class="research-content">
-          <div class="research-title lang-en">Sim-to-Real Transfer</div>
-          <div class="research-title lang-cn">仿真到现实迁移</div>
-          <div class="research-cn lang-en">仿真-现实迁移 · Closing the Reality Gap</div>
-          <div class="research-cn lang-cn">Sim-to-Real · Closing the Reality Gap</div>
-          <p class="research-desc lang-en">
-            Reducing the gap between simulation and the physical world using domain randomization,
-            adaptive representations, and world-model-based transfer to enable robust real-world deployment.
-          </p>
-          <p class="research-desc lang-cn">
-            通过域随机化、自适应表示与基于世界模型的迁移策略，减小仿真与物理世界之间的差距，
-            实现稳健的真实世界部署。
-          </p>
-          <div class="research-kws">
-            <span class="kw">Domain Randomization</span>
-            <span class="kw">Domain Adaptation</span>
-            <span class="kw">Reality Gap</span>
-          </div>
+      <div class="research-card" style="--rc-color:#7c3aed;">
+        <div class="rc-icon">&#127760;</div>
+        <div class="rc-title"><span class="lang-en">World Models</span><span class="lang-zh">世界模型</span></div>
+        <div class="rc-sub"><span class="lang-en">世界模型</span><span class="lang-zh">World Models</span></div>
+        <p class="rc-desc lang-en">Building internal models that capture the structure and dynamics of environments. Focus on latent-space representations and model-based planning.</p>
+        <p class="rc-desc lang-zh">构建能够捕捉环境结构和动态特性的内部模型。研究重点包括潜空间表征和基于模型的规划。</p>
+        <div class="rc-tags">
+          <span class="rc-tag">Latent Dynamics</span>
+          <span class="rc-tag">Model-Based RL</span>
+          <span class="rc-tag">Generalization</span>
+          <span class="rc-tag">Video Prediction</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- ── NEWS ── -->
-  <div class="tab-pane" id="tab-news">
-    <div class="news-tl">
-      <div class="news-tl-item">
-        <div class="news-tl-date">
-          <span>2025.03</span>
-          <span class="news-tl-badge nbadge-paper">Paper</span>
-        </div>
-        <div class="news-tl-text lang-en">New preprint <em>WorldSim</em> submitted to NeurIPS 2025. Scalable world model framework for embodied agents.</div>
-        <div class="news-tl-text lang-cn">新预印本 <em>WorldSim</em> 已投稿至 NeurIPS 2025，可扩展的具身智能体世界模型框架。</div>
+  <!-- ── News ── -->
+  <div class="tab-panel" id="tab-news">
+    <h2 class="sec-title"><span class="lang-en">News</span><span class="lang-zh">最新动态</span></h2>
+    <p class="sec-sub">
+      <span class="lang-en">Recent updates and announcements</span>
+      <span class="lang-zh">最新消息与公告</span>
+    </p>
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">Mar 2025</span>
+        <span class="news-text lang-en"><strong>New preprint</strong> on world models for embodied agents submitted to arXiv.</span>
+        <span class="news-text lang-zh"><strong>新预印本</strong>已提交至arXiv，主题为面向具身智能体的世界模型。</span>
+        <span class="news-badge">New</span>
       </div>
-
-      <div class="news-tl-item">
-        <div class="news-tl-date">
-          <span>2025.01</span>
-          <span class="news-tl-badge nbadge-paper">Paper</span>
-        </div>
-        <div class="news-tl-text lang-en">Submitted <em>EmbodiedDreamer</em> to ICLR 2026 — world-model-guided manipulation with improved sample efficiency.</div>
-        <div class="news-tl-text lang-cn"><em>EmbodiedDreamer</em> 已投稿至 ICLR 2026，世界模型引导的操作任务，显著提升样本效率。</div>
+      <div class="news-item">
+        <span class="news-date">Jan 2025</span>
+        <span class="news-text lang-en">Started new research project on <strong>generalizable robot manipulation</strong> using structured world models.</span>
+        <span class="news-text lang-zh">启动基于结构化世界模型的<strong>可泛化机器人操作</strong>新研究项目。</span>
       </div>
-
-      <div class="news-tl-item">
-        <div class="news-tl-date">
-          <span>2024.12</span>
-          <span class="news-tl-badge nbadge-talk">Talk</span>
-        </div>
-        <div class="news-tl-text lang-en">Presented <em>Sim2RealWM</em> at NeurIPS 2024 Robot Learning Workshop, Vancouver.</div>
-        <div class="news-tl-text lang-cn">在温哥华 NeurIPS 2024 机器人学习研讨会上，汇报了 <em>Sim2RealWM</em>。</div>
-      </div>
-
-      <div class="news-tl-item">
-        <div class="news-tl-date">
-          <span>2024.09</span>
-          <span class="news-tl-badge nbadge-join">Start</span>
-        </div>
-        <div class="news-tl-text lang-en">Started PhD at <strong>Southeast University</strong>, School of Software Engineering.</div>
-        <div class="news-tl-text lang-cn">正式入读<strong>东南大学</strong>软件工程学院博士项目。</div>
-      </div>
-
-      <div class="news-tl-item">
-        <div class="news-tl-date">
-          <span>2024.06</span>
-          <span class="news-tl-badge nbadge-award">Award</span>
-        </div>
-        <div class="news-tl-text lang-en">Received outstanding graduation thesis award for undergraduate research on embodied navigation.</div>
-        <div class="news-tl-text lang-cn">本科毕业论文（具身导航）荣获优秀毕业论文奖。</div>
+      <div class="news-item">
+        <span class="news-date">Sep 2024</span>
+        <span class="news-text lang-en">Joined the research group at <strong>Southeast University, School of Software Engineering</strong>.</span>
+        <span class="news-text lang-zh">加入<strong>东南大学软件工程学院</strong>课题组。</span>
       </div>
     </div>
   </div>
 
-  <!-- ── CONTACT ── -->
-  <div class="tab-pane" id="tab-contact">
-    <div class="contact-cols">
-      <div class="contact-col">
-        <h3 class="lang-en">Contact Info</h3>
-        <h3 class="lang-cn">联系信息</h3>
-
-        <div class="contact-row">
-          <div class="contact-row-icon">✉</div>
-          <div>
-            <div class="contact-label lang-en">Email</div>
-            <div class="contact-label lang-cn">邮箱</div>
-            <div class="contact-val"><a href="mailto:ziheng.he@seu.edu.cn">ziheng.he@seu.edu.cn</a></div>
-          </div>
-        </div>
-
-        <div class="contact-row">
-          <div class="contact-row-icon">🏛</div>
-          <div>
-            <div class="contact-label lang-en">Affiliation</div>
-            <div class="contact-label lang-cn">单位</div>
-            <div class="contact-val lang-en">School of Software Engineering, Southeast University</div>
-            <div class="contact-val lang-cn">东南大学软件工程学院</div>
-          </div>
-        </div>
-
-        <div class="contact-row">
-          <div class="contact-row-icon">📍</div>
-          <div>
-            <div class="contact-label lang-en">Location</div>
-            <div class="contact-label lang-cn">地址</div>
-            <div class="contact-val lang-en">Nanjing, Jiangsu, China</div>
-            <div class="contact-val lang-cn">中国江苏南京</div>
-          </div>
-        </div>
-
-        <div class="contact-row">
-          <div class="contact-row-icon">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:var(--text-3)"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
-          </div>
-          <div>
-            <div class="contact-label">GitHub</div>
-            <div class="contact-val"><a href="https://github.com/zihenghe04" target="_blank" rel="noopener">github.com/zihenghe04</a></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="contact-col">
-        <h3 class="lang-en">Open to Collaboration</h3>
-        <h3 class="lang-cn">欢迎合作</h3>
-        <p style="font-size:.84rem;color:var(--text-2);margin-bottom:14px;line-height:1.7;">
-          <span class="lang-en">I am always happy to discuss research ideas or potential collaborations in:</span>
-          <span class="lang-cn">我非常欢迎就以下方向讨论研究想法或潜在合作：</span>
-        </p>
-        <ul class="collab-list">
-          <li>
-            <span class="lang-en">Embodied AI and robot learning</span>
-            <span class="lang-cn">具身AI与机器人学习</span>
-          </li>
-          <li>
-            <span class="lang-en">World models and model-based RL</span>
-            <span class="lang-cn">世界模型与基于模型的强化学习</span>
-          </li>
-          <li>
-            <span class="lang-en">Vision-language models for control</span>
-            <span class="lang-cn">用于控制的视觉语言模型</span>
-          </li>
-          <li>
-            <span class="lang-en">Sim-to-real transfer</span>
-            <span class="lang-cn">仿真到现实迁移</span>
-          </li>
-        </ul>
-        <div style="margin-top:20px;">
-          <a href="mailto:ziheng.he@seu.edu.cn" class="profile-link" style="font-size:.84rem;padding:8px 16px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            <span class="lang-en">Send an Email</span>
-            <span class="lang-cn">发送邮件</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer>
-    <span>
-      <span class="lang-en">© 2025 Ziheng He · Southeast University</span>
-      <span class="lang-cn">© 2025 何子恒 · 东南大学</span>
-    </span>
-    <span>
-      <a href="mailto:ziheng.he@seu.edu.cn">ziheng.he@seu.edu.cn</a>
-    </span>
+  <footer class="main-footer">
+    <span class="lang-en">&copy; 2025 Ziheng He &middot; Southeast University</span>
+    <span class="lang-zh">&copy; 2025 何子恒 &middot; 东南大学</span>
   </footer>
-</div><!-- /page-wrap -->
+
+</main>
 
 <script>
+// Tab switching
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+  document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Theme toggle — light default for alfolio style
 (function() {
-  'use strict';
-
-  const html = document.documentElement;
-
-  /* ── Theme ── */
-  let theme = 'light';
-  document.getElementById('theme-btn').addEventListener('click', () => {
-    theme = theme === 'light' ? 'dark' : 'light';
-    html.setAttribute('data-theme', theme);
-  });
-
-  /* ── Language ── */
-  let lang = 'en';
-  document.getElementById('lang-btn').addEventListener('click', () => {
-    lang = lang === 'en' ? 'cn' : 'en';
-    html.setAttribute('data-lang', lang);
-  });
-
-  /* ── Tabs ── */
-  function activateTab(name) {
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      b.classList.toggle('active', b.dataset.target === name);
-    });
-    document.querySelectorAll('.tab-pane').forEach(p => {
-      p.classList.toggle('active', p.id === 'tab-' + name);
-    });
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.classList.toggle('active', a.dataset.tab === name);
-    });
-  }
-
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => activateTab(btn.dataset.target));
-  });
-
-  document.querySelectorAll('.nav-links a[data-tab]').forEach(a => {
-    a.addEventListener('click', e => {
-      e.preventDefault();
-      activateTab(a.dataset.tab);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-  });
-
-  /* ── Publication filter ── */
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      document.querySelectorAll('.pub-entry').forEach(entry => {
-        entry.style.display = (filter === 'all' || entry.dataset.type === filter) ? '' : 'none';
-      });
-    });
-  });
-
+  var saved = localStorage.getItem('theme-alfolio') || 'light';
+  document.documentElement.setAttribute('data-theme', saved);
+  var b = document.getElementById('tb');
+  if (b) b.innerHTML = saved === 'light' ? '&#9790; Dark' : '&#9728; Light';
 })();
+
+function tt() {
+  var h = document.documentElement;
+  var next = h.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  h.setAttribute('data-theme', next);
+  localStorage.setItem('theme-alfolio', next);
+  document.getElementById('tb').innerHTML = next === 'light' ? '&#9790; Dark' : '&#9728; Light';
+}
+
+// Language toggle
+(function() {
+  var saved = localStorage.getItem('lang') || 'en';
+  document.documentElement.setAttribute('data-lang', saved);
+  var b = document.getElementById('lb');
+  if (b) b.textContent = saved === 'en' ? '中文' : 'EN';
+})();
+
+function tl() {
+  var h = document.documentElement;
+  var next = h.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+  h.setAttribute('data-lang', next);
+  localStorage.setItem('lang', next);
+  document.getElementById('lb').textContent = next === 'en' ? '中文' : 'EN';
+}
 </script>
 </body>
 </html>
