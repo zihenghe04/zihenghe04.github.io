@@ -113,6 +113,24 @@
         radial-gradient(ellipse 40% 30% at 20% 80%, rgba(167,139,250,.05) 0%, transparent 60%);
     }
     .hc { position: relative; max-width: 680px; text-align: center; }
+
+    /* profile photo */
+    .hphoto {
+      margin: 0 auto 28px;
+      width: 140px; height: 140px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      box-shadow: 0 0 0 6px rgba(88,166,255,.12), 0 8px 32px rgba(88,166,255,.2);
+      overflow: hidden;
+      animation: fu .5s ease both;
+      transition: border-color var(--t), box-shadow var(--t);
+    }
+    [data-theme="light"] .hphoto {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 6px rgba(9,105,218,.1), 0 8px 32px rgba(9,105,218,.15);
+    }
+    .hphoto svg { display: block; width: 100%; height: 100%; }
+
     .badge {
       display: inline-flex; align-items: center; gap: 8px;
       background: var(--bg-card); border: 1px solid var(--border);
@@ -241,7 +259,7 @@
     .pi {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
       padding: 20px 24px;
-      display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: start;
+      display: grid; grid-template-columns: auto 128px 1fr; gap: 16px; align-items: start;
       transition: border-color var(--t), transform .2s;
     }
     .pi:hover { border-color: var(--border-hi); transform: translateX(4px); }
@@ -249,7 +267,20 @@
       font-size: .77rem; font-weight: 600; color: var(--accent);
       background: rgba(88,166,255,.1); border: 1px solid rgba(88,166,255,.2);
       border-radius: 6px; padding: 4px 10px; white-space: nowrap;
+      align-self: start;
     }
+    /* publication thumbnail */
+    .pthumbnail {
+      width: 128px; height: 84px;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      align-self: start;
+      transition: border-color var(--t);
+    }
+    .pi:hover .pthumbnail { border-color: var(--border-hi); }
+    .pthumbnail svg { display: block; width: 100%; height: 100%; }
     .pt { font-size: .93rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
     .pa { font-size: .82rem; color: var(--text-2); margin-bottom: 3px; }
     .pa strong { color: var(--accent); }
@@ -302,17 +333,15 @@
       color: var(--text-3); font-size: .8rem;
     }
 
-    /* reveal (animation removed — content visible by default) */
-    .rv { }
-
-    /* lang */
-    [data-lang="en"] [lang="zh"],
-    [data-lang="zh"] [lang="en"] { display: none \!important; }
+    /* language toggle — single-language display */
+    [data-lang="en"] .lang-zh { display: none !important; }
+    [data-lang="zh"] .lang-en { display: none !important; }
 
     /* responsive */
     @media (max-width: 680px) {
       .ag, .rg { grid-template-columns: 1fr; }
-      .pi { grid-template-columns: 1fr; gap: 6px; }
+      .pi { grid-template-columns: auto 1fr; gap: 10px; }
+      .pthumbnail { display: none; }
       .nav-links { display: none; }
     }
   </style>
@@ -341,31 +370,40 @@
 <section id="hero" style="max-width:unset; padding-top:120px;">
   <div class="hbg"></div>
   <div class="hc">
+    <!-- Profile photo placeholder -->
+    <div class="hphoto">
+      <svg viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+        <rect width="140" height="140" fill="#1a2236"/>
+        <circle cx="70" cy="54" r="28" fill="#243350"/>
+        <ellipse cx="70" cy="118" rx="44" ry="30" fill="#243350"/>
+        <text x="70" y="63" text-anchor="middle" font-family="Georgia,serif" font-size="24" font-weight="700" fill="#58a6ff" letter-spacing="2">ZH</text>
+      </svg>
+    </div>
     <div class="badge">
       <span class="dot"></span>
-      <span lang="en">Open to collaboration &middot; Southeast University</span>
-      <span lang="zh">欢迎合作 &middot; 东南大学</span>
+      <span class="lang-en">Open to collaboration &middot; Southeast University</span>
+      <span class="lang-zh">欢迎合作 &middot; 东南大学</span>
     </div>
     <div class="hname">Ziheng He</div>
     <div class="hname-cn">何子恒</div>
     <div class="haffil">
-      <span lang="en"><strong>School of Software Engineering</strong> &middot; Southeast University</span>
-      <span lang="zh"><strong>软件工程学院</strong> &middot; 东南大学</span>
+      <span class="lang-en"><strong>School of Software Engineering</strong> &middot; Southeast University</span>
+      <span class="lang-zh"><strong>软件工程学院</strong> &middot; 东南大学</span>
     </div>
     <div class="htags">
-      <span class="tag a"><span lang="en">Embodied Intelligence</span><span lang="zh">具身智能</span></span>
-      <span class="tag t"><span lang="en">World Models</span><span lang="zh">世界模型</span></span>
-      <span class="tag p"><span lang="en">Robotics</span><span lang="zh">机器人学</span></span>
-      <span class="tag"><span lang="en">Machine Learning</span><span lang="zh">机器学习</span></span>
+      <span class="tag a"><span class="lang-en">Embodied Intelligence</span><span class="lang-zh">具身智能</span></span>
+      <span class="tag t"><span class="lang-en">World Models</span><span class="lang-zh">世界模型</span></span>
+      <span class="tag p"><span class="lang-en">Robotics</span><span class="lang-zh">机器人学</span></span>
+      <span class="tag"><span class="lang-en">Machine Learning</span><span class="lang-zh">机器学习</span></span>
     </div>
     <div class="hbtns">
       <a href="#publications" class="btn btn-pri">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        <span lang="en">Publications</span><span lang="zh">论文</span>
+        <span class="lang-en">Publications</span><span class="lang-zh">论文</span>
       </a>
       <a href="#contact" class="btn btn-ghost">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        <span lang="en">Contact</span><span lang="zh">联系我</span>
+        <span class="lang-en">Contact</span><span class="lang-zh">联系我</span>
       </a>
     </div>
   </div>
@@ -374,37 +412,37 @@
 <hr class="sep" />
 
 <section id="about">
-  <div class="sh rv"><span class="snum">01</span><h2 class="stitle"><span lang="en">About</span><span lang="zh">关于我</span></h2><div class="sline"></div></div>
-  <div class="ag rv">
+  <div class="sh"><span class="snum">01</span><h2 class="stitle"><span class="lang-en">About</span><span class="lang-zh">关于我</span></h2><div class="sline"></div></div>
+  <div class="ag">
     <div class="at">
-      <p lang="en">I am <strong>Ziheng He (何子恒)</strong>, a researcher at the <strong>School of Software Engineering, Southeast University</strong>. My work sits at the intersection of embodied intelligence and world models — I study how autonomous agents can build structured, predictive representations of the physical world to act effectively in complex environments.</p>
-      <p lang="zh">我是<strong>何子恒</strong>，就读于<strong>东南大学软件工程学院</strong>。我的研究聚焦于具身智能与世界模型的交叉领域——探索自主智能体如何通过构建结构化、可预测的世界表征，在复杂物理环境中实现高效决策与行动。</p>
-      <p lang="en">My long-term goal is to build <strong>general-purpose robotic systems</strong> that can reason about the physical world, transfer knowledge across tasks, and collaborate naturally with humans.</p>
-      <p lang="zh">我的长期目标是构建具备通用能力的机器人系统，使其能够推理物理世界、跨任务迁移知识，并与人类自然协作。</p>
+      <p class="lang-en">I am <strong>Ziheng He (何子恒)</strong>, a researcher at the <strong>School of Software Engineering, Southeast University</strong>. My work sits at the intersection of embodied intelligence and world models — I study how autonomous agents can build structured, predictive representations of the physical world to act effectively in complex environments.</p>
+      <p class="lang-zh">我是<strong>何子恒</strong>，就读于<strong>东南大学软件工程学院</strong>。我的研究聚焦于具身智能与世界模型的交叉领域——探索自主智能体如何通过构建结构化、可预测的世界表征，在复杂物理环境中实现高效决策与行动。</p>
+      <p class="lang-en">My long-term goal is to build <strong>general-purpose robotic systems</strong> that can reason about the physical world, transfer knowledge across tasks, and collaborate naturally with humans.</p>
+      <p class="lang-zh">我的长期目标是构建具备通用能力的机器人系统，使其能够推理物理世界、跨任务迁移知识，并与人类自然协作。</p>
     </div>
     <ul class="alist">
       <li class="ai">
         <span class="ai-icon">&#127979;</span>
         <div>
-          <span class="ai-lbl"><span lang="en">Institution</span><span lang="zh">所在机构</span></span>
-          <span lang="en">Southeast University &middot; School of Software Engineering</span>
-          <span lang="zh">东南大学 &middot; 软件工程学院</span>
+          <span class="ai-lbl"><span class="lang-en">Institution</span><span class="lang-zh">所在机构</span></span>
+          <span class="lang-en">Southeast University &middot; School of Software Engineering</span>
+          <span class="lang-zh">东南大学 &middot; 软件工程学院</span>
         </div>
       </li>
       <li class="ai">
         <span class="ai-icon">&#128300;</span>
         <div>
-          <span class="ai-lbl"><span lang="en">Research Interests</span><span lang="zh">研究方向</span></span>
-          <span lang="en">Embodied Intelligence, World Models, Robot Learning</span>
-          <span lang="zh">具身智能、世界模型、机器人学习</span>
+          <span class="ai-lbl"><span class="lang-en">Research Interests</span><span class="lang-zh">研究方向</span></span>
+          <span class="lang-en">Embodied Intelligence, World Models, Robot Learning</span>
+          <span class="lang-zh">具身智能、世界模型、机器人学习</span>
         </div>
       </li>
       <li class="ai">
         <span class="ai-icon">&#128205;</span>
         <div>
-          <span class="ai-lbl"><span lang="en">Location</span><span lang="zh">所在地</span></span>
-          <span lang="en">Nanjing, China</span>
-          <span lang="zh">中国 南京</span>
+          <span class="ai-lbl"><span class="lang-en">Location</span><span class="lang-zh">所在地</span></span>
+          <span class="lang-en">Nanjing, China</span>
+          <span class="lang-zh">中国 南京</span>
         </div>
       </li>
       <li class="ai">
@@ -421,14 +459,14 @@
 <hr class="sep" />
 
 <section id="research">
-  <div class="sh rv"><span class="snum">02</span><h2 class="stitle"><span lang="en">Research</span><span lang="zh">研究方向</span></h2><div class="sline"></div></div>
+  <div class="sh"><span class="snum">02</span><h2 class="stitle"><span class="lang-en">Research</span><span class="lang-zh">研究方向</span></h2><div class="sline"></div></div>
   <div class="rg">
-    <div class="rc blue rv">
+    <div class="rc blue">
       <div class="ri">&#129302;</div>
-      <div class="rt"><span lang="en">Embodied Intelligence</span><span lang="zh">具身智能</span></div>
-      <div class="rt2"><span lang="en">具身智能</span><span lang="zh">Embodied Intelligence</span></div>
-      <p class="rd" lang="en">Developing agents that perceive, reason, and act in the physical world. Research spans sensorimotor integration, hierarchical planning, and learning from interaction to enable robots to perform complex manipulation and navigation tasks.</p>
-      <p class="rd" lang="zh">研究能够感知、推理并在物理世界中行动的智能体。涵盖感觉运动整合、层次化规划以及通过交互学习，使机器人执行复杂操作和导航任务。</p>
+      <div class="rt"><span class="lang-en">Embodied Intelligence</span><span class="lang-zh">具身智能</span></div>
+      <div class="rt2"><span class="lang-en">具身智能</span><span class="lang-zh">Embodied Intelligence</span></div>
+      <p class="rd lang-en">Developing agents that perceive, reason, and act in the physical world. Research spans sensorimotor integration, hierarchical planning, and learning from interaction to enable robots to perform complex manipulation and navigation tasks.</p>
+      <p class="rd lang-zh">研究能够感知、推理并在物理世界中行动的智能体。涵盖感觉运动整合、层次化规划以及通过交互学习，使机器人执行复杂操作和导航任务。</p>
       <div class="rtags">
         <span class="rtag">Robot Learning</span>
         <span class="rtag">Manipulation</span>
@@ -436,12 +474,12 @@
         <span class="rtag">Sim-to-Real</span>
       </div>
     </div>
-    <div class="rc purple rv">
+    <div class="rc purple">
       <div class="ri">&#127760;</div>
-      <div class="rt"><span lang="en">World Models</span><span lang="zh">世界模型</span></div>
-      <div class="rt2"><span lang="en">世界模型</span><span lang="zh">World Models</span></div>
-      <p class="rd" lang="en">Building internal models that capture the structure and dynamics of environments. Research focuses on latent-space representations, model-based planning, and leveraging world models to improve sample efficiency and generalization.</p>
-      <p class="rd" lang="zh">构建能够捕捉环境结构和动态特性的内部模型。研究重点包括潜空间表征、基于模型的规划，以及利用世界模型提升采样效率和泛化能力。</p>
+      <div class="rt"><span class="lang-en">World Models</span><span class="lang-zh">世界模型</span></div>
+      <div class="rt2"><span class="lang-en">世界模型</span><span class="lang-zh">World Models</span></div>
+      <p class="rd lang-en">Building internal models that capture the structure and dynamics of environments. Research focuses on latent-space representations, model-based planning, and leveraging world models to improve sample efficiency and generalization.</p>
+      <p class="rd lang-zh">构建能够捕捉环境结构和动态特性的内部模型。研究重点包括潜空间表征、基于模型的规划，以及利用世界模型提升采样效率和泛化能力。</p>
       <div class="rtags">
         <span class="rtag">Latent Dynamics</span>
         <span class="rtag">Model-Based RL</span>
@@ -455,49 +493,94 @@
 <hr class="sep" />
 
 <section id="publications">
-  <div class="sh rv"><span class="snum">03</span><h2 class="stitle"><span lang="en">Publications</span><span lang="zh">论文发表</span></h2><div class="sline"></div></div>
+  <div class="sh"><span class="snum">03</span><h2 class="stitle"><span class="lang-en">Publications</span><span class="lang-zh">论文发表</span></h2><div class="sline"></div></div>
   <div class="pl">
-    <div class="pi rv">
+
+    <div class="pi">
       <span class="py">2025</span>
+      <!-- Thumbnail: World Models survey paper -->
+      <div class="pthumbnail">
+        <svg viewBox="0 0 128 84" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="84" fill="#0d1f3c"/>
+          <rect x="8" y="8" width="112" height="4" rx="2" fill="#58a6ff" opacity=".85"/>
+          <rect x="8" y="18" width="88" height="3" rx="1.5" fill="#3a4a60" opacity=".9"/>
+          <rect x="8" y="26" width="100" height="3" rx="1.5" fill="#3a4a60" opacity=".9"/>
+          <rect x="8" y="34" width="72" height="3" rx="1.5" fill="#3a4a60" opacity=".9"/>
+          <rect x="8" y="46" width="50" height="26" rx="4" fill="#142840"/>
+          <rect x="70" y="46" width="50" height="26" rx="4" fill="#142840"/>
+          <text x="33" y="63" text-anchor="middle" font-family="monospace" font-size="9" fill="#2dd4bf" font-weight="bold">WM</text>
+          <text x="95" y="63" text-anchor="middle" font-family="monospace" font-size="9" fill="#58a6ff" font-weight="bold">EA</text>
+          <rect x="8" y="76" width="55" height="2" rx="1" fill="#3a4a60" opacity=".6"/>
+        </svg>
+      </div>
       <div>
-        <div class="pt"><span lang="en">World Models for Embodied Agents: A Survey of Latent Dynamics and Physical Reasoning</span><span lang="zh">面向具身智能体的世界模型：潜在动态与物理推理综述</span></div>
+        <div class="pt">
+          <span class="lang-en">World Models for Embodied Agents: A Survey of Latent Dynamics and Physical Reasoning</span>
+          <span class="lang-zh">面向具身智能体的世界模型：潜在动态与物理推理综述</span>
+        </div>
         <div class="pa"><strong>Ziheng He</strong>, et al.</div>
-        <div class="pv"><span lang="en">Under Review</span><span lang="zh">审稿中</span></div>
-        <div class="plinks"><span class="plink">[Paper]</span><span class="plink">[Project]</span></div>
+        <div class="pv"><span class="lang-en">Under Review</span><span class="lang-zh">审稿中</span></div>
+        <div class="plinks">
+          <span class="plink">[Paper]</span>
+          <span class="plink">[Project]</span>
+        </div>
       </div>
     </div>
-    <div class="pi rv">
+
+    <div class="pi">
       <span class="py">2024</span>
+      <!-- Thumbnail: Robot Manipulation paper -->
+      <div class="pthumbnail">
+        <svg viewBox="0 0 128 84" xmlns="http://www.w3.org/2000/svg">
+          <rect width="128" height="84" fill="#1a0d3c"/>
+          <rect x="8" y="8" width="112" height="4" rx="2" fill="#a78bfa" opacity=".85"/>
+          <rect x="8" y="18" width="92" height="3" rx="1.5" fill="#3a2a60" opacity=".9"/>
+          <rect x="8" y="26" width="76" height="3" rx="1.5" fill="#3a2a60" opacity=".9"/>
+          <rect x="8" y="34" width="84" height="3" rx="1.5" fill="#3a2a60" opacity=".9"/>
+          <circle cx="36" cy="62" r="14" fill="#1e0d40" stroke="#a78bfa" stroke-width="1.5"/>
+          <circle cx="36" cy="62" r="7" fill="#2a1a50" stroke="#a78bfa" stroke-width="1"/>
+          <rect x="66" y="48" width="54" height="30" rx="3" fill="#1e0d40"/>
+          <path d="M70 75 Q80 60 88 65 Q96 70 104 56 Q110 46 120 52" stroke="#a78bfa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <rect x="8" y="76" width="48" height="2" rx="1" fill="#3a2a60" opacity=".6"/>
+        </svg>
+      </div>
       <div>
-        <div class="pt"><span lang="en">Structured Latent Representations for Generalizable Robot Manipulation</span><span lang="zh">面向可泛化机器人操作的结构化潜在表示</span></div>
+        <div class="pt">
+          <span class="lang-en">Structured Latent Representations for Generalizable Robot Manipulation</span>
+          <span class="lang-zh">面向可泛化机器人操作的结构化潜在表示</span>
+        </div>
         <div class="pa"><strong>Ziheng He</strong>, et al.</div>
-        <div class="pv"><span lang="en">Preprint &middot; arXiv 2024</span><span lang="zh">预印本 &middot; arXiv 2024</span></div>
-        <div class="plinks"><span class="plink">[arXiv]</span><span class="plink">[Code]</span></div>
+        <div class="pv"><span class="lang-en">Preprint &middot; arXiv 2024</span><span class="lang-zh">预印本 &middot; arXiv 2024</span></div>
+        <div class="plinks">
+          <span class="plink">[arXiv]</span>
+          <span class="plink">[Code]</span>
+        </div>
       </div>
     </div>
+
   </div>
 </section>
 
 <hr class="sep" />
 
 <section id="news">
-  <div class="sh rv"><span class="snum">04</span><h2 class="stitle"><span lang="en">News</span><span lang="zh">最新动态</span></h2><div class="sline"></div></div>
+  <div class="sh"><span class="snum">04</span><h2 class="stitle"><span class="lang-en">News</span><span class="lang-zh">最新动态</span></h2><div class="sline"></div></div>
   <div class="nl">
-    <div class="nitem rv">
+    <div class="nitem">
       <span class="nd">Mar 2025</span>
-      <span class="nt" lang="en"><strong>New preprint</strong> on world models for embodied agents submitted to arXiv.</span>
-      <span class="nt" lang="zh"><strong>新预印本</strong>已提交至arXiv，主题为面向具身智能体的世界模型。</span>
+      <span class="nt lang-en"><strong>New preprint</strong> on world models for embodied agents submitted to arXiv.</span>
+      <span class="nt lang-zh"><strong>新预印本</strong>已提交至arXiv，主题为面向具身智能体的世界模型。</span>
       <span class="nb">New</span>
     </div>
-    <div class="nitem rv">
+    <div class="nitem">
       <span class="nd">Jan 2025</span>
-      <span class="nt" lang="en">Started new research project on <strong>generalizable robot manipulation</strong> using structured world models.</span>
-      <span class="nt" lang="zh">启动基于结构化世界模型的<strong>可泛化机器人操作</strong>新研究项目。</span>
+      <span class="nt lang-en">Started new research project on <strong>generalizable robot manipulation</strong> using structured world models.</span>
+      <span class="nt lang-zh">启动基于结构化世界模型的<strong>可泛化机器人操作</strong>新研究项目。</span>
     </div>
-    <div class="nitem rv">
+    <div class="nitem">
       <span class="nd">Sep 2024</span>
-      <span class="nt" lang="en">Joined the research group at <strong>Southeast University, School of Software Engineering</strong>.</span>
-      <span class="nt" lang="zh">加入<strong>东南大学软件工程学院</strong>课题组。</span>
+      <span class="nt lang-en">Joined the research group at <strong>Southeast University, School of Software Engineering</strong>.</span>
+      <span class="nt lang-zh">加入<strong>东南大学软件工程学院</strong>课题组。</span>
     </div>
   </div>
 </section>
@@ -505,10 +588,10 @@
 <hr class="sep" />
 
 <section id="contact">
-  <div class="sh rv"><span class="snum">05</span><h2 class="stitle"><span lang="en">Contact</span><span lang="zh">联系方式</span></h2><div class="sline"></div></div>
-  <div class="cc rv">
-    <p lang="en">I am always happy to discuss research ideas, collaborations, or anything about embodied AI and robotics. Feel free to reach out\!</p>
-    <p lang="zh">欢迎就研究想法、合作机会，或有关具身智能与机器人的话题进行交流探讨，期待您的联系！</p>
+  <div class="sh"><span class="snum">05</span><h2 class="stitle"><span class="lang-en">Contact</span><span class="lang-zh">联系方式</span></h2><div class="sline"></div></div>
+  <div class="cc">
+    <p class="lang-en">I am always happy to discuss research ideas, collaborations, or anything about embodied AI and robotics. Feel free to reach out!</p>
+    <p class="lang-zh">欢迎就研究想法、合作机会，或有关具身智能与机器人的话题进行交流探讨，期待您的联系！</p>
     <div class="clinks">
       <a href="mailto:ziheng.he@seu.edu.cn" class="clink">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -520,82 +603,102 @@
       </a>
       <a href="https://www.seu.edu.cn" class="clink" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        <span lang="en">Southeast University</span><span lang="zh">东南大学</span>
+        <span class="lang-en">Southeast University</span><span class="lang-zh">东南大学</span>
       </a>
     </div>
   </div>
 </section>
 
 <footer>
-  <span lang="en">&copy; 2025 Ziheng He &middot; Southeast University</span>
-  <span lang="zh">&copy; 2025 何子恒 &middot; 东南大学</span>
+  <span class="lang-en">&copy; 2025 Ziheng He &middot; Southeast University</span>
+  <span class="lang-zh">&copy; 2025 何子恒 &middot; 东南大学</span>
 </footer>
 
 <script>
-(function(){
-  const saved=localStorage.getItem('theme')||'dark';
-  document.documentElement.setAttribute('data-theme',saved);
-  const b=document.getElementById('tb');
-  if(b) b.innerHTML=saved==='dark'?'&#9728; Light':'&#9790; Dark';
+// Theme toggle — persisted in localStorage
+(function() {
+  var saved = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  var b = document.getElementById('tb');
+  if (b) b.innerHTML = saved === 'dark' ? '&#9728; Light' : '&#9790; Dark';
 })();
-function tt(){
-  const h=document.documentElement;
-  const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
-  h.setAttribute('data-theme',n);
-  localStorage.setItem('theme',n);
-  document.getElementById('tb').innerHTML=n==='dark'?'&#9728; Light':'&#9790; Dark';
+
+function tt() {
+  var h = document.documentElement;
+  var next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  h.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  document.getElementById('tb').innerHTML = next === 'dark' ? '&#9728; Light' : '&#9790; Dark';
 }
-(function(){
-  const saved=localStorage.getItem('lang')||'en';
-  document.documentElement.setAttribute('data-lang',saved);
-  const b=document.getElementById('lb');
-  if(b) b.textContent=saved==='en'?'中文':'EN';
-  ul(saved);
+
+// Language toggle — single language shown at a time
+(function() {
+  var saved = localStorage.getItem('lang') || 'en';
+  document.documentElement.setAttribute('data-lang', saved);
+  var b = document.getElementById('lb');
+  if (b) b.textContent = saved === 'en' ? '中文' : 'EN';
+  updateNavLinks(saved);
 })();
-function tl(){
-  const h=document.documentElement;
-  const n=h.getAttribute('data-lang')==='en'?'zh':'en';
-  h.setAttribute('data-lang',n);
-  localStorage.setItem('lang',n);
-  document.getElementById('lb').textContent=n==='en'?'中文':'EN';
-  ul(n);
+
+function tl() {
+  var h = document.documentElement;
+  var next = h.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
+  h.setAttribute('data-lang', next);
+  localStorage.setItem('lang', next);
+  document.getElementById('lb').textContent = next === 'en' ? '中文' : 'EN';
+  updateNavLinks(next);
 }
-function ul(lang){
-  document.querySelectorAll('.nav-links a[data-en]').forEach(a=>{
-    a.textContent=lang==='en'?a.dataset.en:a.dataset.zh;
+
+function updateNavLinks(lang) {
+  document.querySelectorAll('.nav-links a[data-en]').forEach(function(a) {
+    a.textContent = lang === 'en' ? a.dataset.en : a.dataset.zh;
   });
 }
 
-// particles
-const cv=document.getElementById('cvs');
-const cx=cv.getContext('2d');
-let W,H,pts=[];
-function rsz(){W=cv.width=innerWidth;H=cv.height=innerHeight;}
-function rnd(a,b){return a+Math.random()*(b-a);}
-function init(){pts=Array.from({length:55},()=>({x:Math.random()*W,y:Math.random()*H,r:rnd(.5,2),vx:rnd(-.15,.15),vy:rnd(-.15,.15),a:rnd(.2,.65)}));}
-function draw(){
-  cx.clearRect(0,0,W,H);
-  const dk=document.documentElement.getAttribute('data-theme')\!=='light';
-  const c=dk?'88,166,255':'9,105,218';
-  pts.forEach(p=>{
-    cx.beginPath();cx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    cx.fillStyle=`rgba(${c},${p.a})`;cx.fill();
-    p.x+=p.vx;p.y+=p.vy;
-    if(p.x<0)p.x=W;if(p.x>W)p.x=0;
-    if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+// Particle canvas
+var cv = document.getElementById('cvs');
+var cx = cv.getContext('2d');
+var W, H, pts = [];
+
+function rsz() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
+function rnd(a, b) { return a + Math.random() * (b - a); }
+function init() {
+  pts = Array.from({length: 55}, function() {
+    return {x: Math.random()*W, y: Math.random()*H, r: rnd(.5,2), vx: rnd(-.15,.15), vy: rnd(-.15,.15), a: rnd(.2,.65)};
   });
-  const md=100;
-  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
-    const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.hypot(dx,dy);
-    if(d<md){
-      cx.beginPath();cx.moveTo(pts[i].x,pts[i].y);cx.lineTo(pts[j].x,pts[j].y);
-      cx.strokeStyle=`rgba(${c},${(1-d/md)*.2})`;cx.lineWidth=.5;cx.stroke();
+}
+function draw() {
+  cx.clearRect(0, 0, W, H);
+  var dark = document.documentElement.getAttribute('data-theme') !== 'light';
+  var c = dark ? '88,166,255' : '9,105,218';
+  pts.forEach(function(p) {
+    cx.beginPath();
+    cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    cx.fillStyle = 'rgba(' + c + ',' + p.a + ')';
+    cx.fill();
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+  });
+  var md = 100;
+  for (var i = 0; i < pts.length; i++) {
+    for (var j = i + 1; j < pts.length; j++) {
+      var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+      var d = Math.hypot(dx, dy);
+      if (d < md) {
+        cx.beginPath();
+        cx.moveTo(pts[i].x, pts[i].y);
+        cx.lineTo(pts[j].x, pts[j].y);
+        cx.strokeStyle = 'rgba(' + c + ',' + (1 - d/md) * .2 + ')';
+        cx.lineWidth = .5;
+        cx.stroke();
+      }
     }
   }
   requestAnimationFrame(draw);
 }
-rsz();init();draw();
-window.addEventListener('resize',()=>{rsz();init();});
+rsz(); init(); draw();
+window.addEventListener('resize', function() { rsz(); init(); });
 </script>
 </body>
 </html>
