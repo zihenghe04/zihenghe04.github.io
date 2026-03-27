@@ -26,7 +26,7 @@
       --shadow:     0 8px 32px rgba(0,0,0,.5);
       --radius:     8px;
       --radius-lg:  16px;
-      --t:          .25s ease;
+      --t:          .3s ease;
     }
     [data-theme="light"] {
       --bg:         #ffffff;
@@ -51,28 +51,39 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
+      letter-spacing: .01em;
       overflow-x: hidden;
       transition: background var(--t), color var(--t);
     }
-    a { color: var(--accent); text-decoration: none; transition: opacity var(--t); }
+    a { color: var(--accent); text-decoration: none; transition: all var(--t); }
     a:hover { opacity: .72; }
 
     /* particles */
     #cvs {
       position: fixed; inset: 0;
-      pointer-events: none; z-index: 0; opacity: .35;
+      pointer-events: none; z-index: 0; opacity: .5;
       transition: opacity var(--t);
     }
-    [data-theme="light"] #cvs { opacity: .12; }
+    [data-theme="light"] #cvs { opacity: .18; }
 
     /* nav */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       background: var(--nav-bg);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
-      transition: background var(--t);
+      transition: background var(--t), box-shadow var(--t), border-color var(--t);
+    }
+    nav.scrolled {
+      background: rgba(13,17,23,.97);
+      border-bottom-color: rgba(88,166,255,.18);
+      box-shadow: 0 4px 28px rgba(0,0,0,.45);
+    }
+    [data-theme="light"] nav.scrolled {
+      background: rgba(255,255,255,.98);
+      border-bottom-color: rgba(9,105,218,.15);
+      box-shadow: 0 4px 24px rgba(0,0,0,.08);
     }
     .ni {
       max-width: 940px; margin: 0 auto;
@@ -101,9 +112,9 @@
     /* hero */
     #hero {
       position: relative; z-index: 1;
-      min-height: 78vh;
+      min-height: 74vh;
       display: flex; align-items: center; justify-content: center;
-      padding: 100px 24px 56px;
+      padding: 100px 24px 36px;
     }
     .hbg {
       position: absolute; inset: 0;
@@ -113,8 +124,8 @@
         radial-gradient(ellipse 40% 30% at 20% 80%, rgba(167,139,250,.04) 0%, transparent 60%);
     }
     .hc {
-      position: relative; max-width: 880px; width: 100%;
-      display: flex; align-items: center; gap: 64px;
+      position: relative; max-width: 840px; width: 100%; margin: 0 auto;
+      display: flex; align-items: center; gap: 56px;
     }
     .hleft { flex: 1; }
     .hright { flex-shrink: 0; }
@@ -141,15 +152,17 @@
       font-weight: 700; line-height: 1.1; margin-bottom: 6px;
       background: linear-gradient(135deg, var(--text) 0%, var(--accent) 60%, var(--teal) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      filter: drop-shadow(0 2px 10px rgba(88,166,255,.22));
       animation: fu .6s .1s ease both;
     }
     .hname-cn {
       font-size: 1rem; color: var(--text-2); margin-bottom: 14px;
-      font-weight: 300; letter-spacing: .04em;
+      font-weight: 300; letter-spacing: .06em;
       animation: fu .6s .18s ease both;
     }
     .haffil {
       font-size: .88rem; color: var(--text-2); margin-bottom: 22px;
+      line-height: 1.6;
       animation: fu .6s .25s ease both;
     }
     .haffil strong { color: var(--text); font-weight: 500; }
@@ -160,6 +173,7 @@
     .tag {
       background: var(--bg-card); border: 1px solid var(--border);
       color: var(--text-2); font-size: .76rem; padding: 4px 11px; border-radius: 100px;
+      transition: all var(--t);
     }
     .tag.a { border-color: rgba(88,166,255,.3); color: var(--accent); background: rgba(88,166,255,.06); }
     .tag.t { border-color: rgba(45,212,191,.3); color: var(--teal);   background: rgba(45,212,191,.06); }
@@ -172,19 +186,19 @@
       display: inline-flex; align-items: center; gap: 8px;
       padding: 10px 22px; border-radius: var(--radius);
       font-size: .87rem; font-weight: 500; cursor: pointer; border: none;
-      transition: transform .2s, box-shadow .2s, opacity .2s;
+      transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
     }
     .btn:hover { transform: translateY(-2px); opacity: 1; }
     .btn-pri {
       background: var(--accent); color: #fff;
       box-shadow: 0 4px 16px rgba(88,166,255,.28);
     }
-    .btn-pri:hover { box-shadow: 0 8px 24px rgba(88,166,255,.4); }
+    .btn-pri:hover { box-shadow: 0 8px 28px rgba(88,166,255,.52); }
     .btn-ghost {
       background: var(--bg-card); color: var(--text);
       border: 1px solid var(--border);
     }
-    .btn-ghost:hover { border-color: var(--border-hi); }
+    .btn-ghost:hover { border-color: var(--border-hi); box-shadow: 0 4px 16px rgba(0,0,0,.18); }
     @keyframes fu {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -193,19 +207,26 @@
     /* sections */
     section {
       position: relative; z-index: 1;
-      max-width: 940px; margin: 0 auto; padding: 80px 24px;
+      max-width: 940px; margin: 0 auto; padding: 60px 24px;
     }
     .sh {
-      display: flex; align-items: center; gap: 14px; margin-bottom: 40px;
+      display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
     }
-    .snum { font-size: .73rem; color: var(--accent); opacity: .7; font-weight: 600; letter-spacing: .06em; }
+    .snum {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; color: var(--accent); opacity: .22;
+      font-weight: 700; letter-spacing: .02em; line-height: 1;
+    }
     .stitle { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--text); }
-    .sline { flex: 1; height: 1px; background: var(--border); }
-    hr.sep { border: none; border-top: 1px solid var(--border); max-width: 940px; margin: 0 auto; }
+    .sline { flex: 1; height: 1px; background: var(--border); opacity: .5; }
+    hr.sep {
+      border: none; border-top: 1px solid var(--border);
+      max-width: 940px; margin: 0 auto; opacity: .3;
+    }
 
     /* about */
     .ag { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-    .at p { color: var(--text-2); font-size: .93rem; margin-bottom: 14px; }
+    .at p { color: var(--text-2); font-size: .93rem; margin-bottom: 14px; line-height: 1.75; }
     .at p strong { color: var(--text); }
     .alist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .ai {
@@ -213,7 +234,9 @@
       padding: 12px 16px;
       background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
       font-size: .87rem; color: var(--text-2);
+      transition: border-color var(--t), transform var(--t);
     }
+    .ai:hover { border-color: var(--border-hi); transform: translateX(3px); }
     .ai-icon { font-size: .95rem; flex-shrink: 0; margin-top: 2px; }
     .ai-lbl { font-weight: 500; color: var(--text); display: block; font-size: .8rem; margin-bottom: 2px; }
 
@@ -223,24 +246,41 @@
       background: var(--bg-card); border: 1px solid var(--border);
       border-radius: var(--radius-lg); padding: 28px;
       position: relative; overflow: hidden;
-      transition: border-color var(--t), transform .2s, box-shadow .2s;
+      transition: border-color var(--t), transform .3s ease, box-shadow .3s ease;
     }
     .rc::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
       background: linear-gradient(90deg, var(--ca), var(--cb));
+      opacity: .9;
     }
-    .rc:hover { border-color: var(--border-hi); transform: translateY(-4px); box-shadow: var(--shadow); }
     .rc.blue   { --ca:#58a6ff; --cb:#2dd4bf; }
     .rc.purple { --ca:#a78bfa; --cb:#f472b6; }
+    .rc.blue:hover {
+      border-color: rgba(88,166,255,.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(88,166,255,.14), var(--shadow);
+    }
+    .rc.purple:hover {
+      border-color: rgba(167,139,250,.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(167,139,250,.14), var(--shadow);
+    }
     .ri { font-size: 2rem; margin-bottom: 14px; }
     .rt { font-size: 1.03rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
-    .rt2 { font-size: .8rem; color: var(--text-3); margin-bottom: 12px; }
-    .rd { font-size: .87rem; color: var(--text-2); line-height: 1.65; }
+    .rt2 { font-size: .8rem; color: var(--text-3); margin-bottom: 12px; letter-spacing: .03em; }
+    .rd { font-size: .87rem; color: var(--text-2); line-height: 1.7; }
     .rtags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
     .rtag {
       font-size: .73rem; padding: 3px 9px; border-radius: 100px;
       background: var(--bg-hover); border: 1px solid var(--border); color: var(--text-3);
+      transition: all var(--t);
     }
+    .rtag.t-blue   { background: rgba(88,166,255,.08);  border-color: rgba(88,166,255,.28);  color: var(--accent); }
+    .rtag.t-teal   { background: rgba(45,212,191,.08);  border-color: rgba(45,212,191,.28);  color: var(--teal); }
+    .rtag.t-purple { background: rgba(167,139,250,.08); border-color: rgba(167,139,250,.28); color: var(--purple); }
+    .rtag.t-orange { background: rgba(251,146,60,.08);  border-color: rgba(251,146,60,.28);  color: #fb923c; }
+    .rtag.t-pink   { background: rgba(244,114,182,.08); border-color: rgba(244,114,182,.28); color: #f472b6; }
+    .rtag.t-green  { background: rgba(57,211,83,.08);   border-color: rgba(57,211,83,.28);   color: var(--accent-2); }
 
     /* publications */
     .pl { display: flex; flex-direction: column; gap: 14px; }
@@ -248,16 +288,20 @@
       background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
       padding: 20px 24px;
       display: grid; grid-template-columns: auto 128px 1fr; gap: 16px; align-items: start;
-      transition: border-color var(--t), transform .2s;
+      transition: border-color var(--t), transform .3s ease, box-shadow .3s ease;
     }
-    .pi:hover { border-color: var(--border-hi); transform: translateX(4px); }
+    .pi:hover {
+      border-color: var(--border-hi);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(0,0,0,.22);
+    }
+    [data-theme="light"] .pi:hover { box-shadow: 0 8px 28px rgba(0,0,0,.08); }
     .py {
       font-size: .77rem; font-weight: 600; color: var(--accent);
       background: rgba(88,166,255,.1); border: 1px solid rgba(88,166,255,.2);
       border-radius: 6px; padding: 4px 10px; white-space: nowrap;
       align-self: start;
     }
-    /* publication thumbnail */
     .pthumbnail {
       width: 128px; height: 84px;
       border-radius: 6px;
@@ -265,30 +309,64 @@
       border: 1px solid var(--border);
       flex-shrink: 0;
       align-self: start;
-      transition: border-color var(--t);
+      transition: border-color var(--t), box-shadow .3s ease;
     }
-    .pi:hover .pthumbnail { border-color: var(--border-hi); }
+    .pi:hover .pthumbnail { border-color: var(--border-hi); box-shadow: 0 4px 14px rgba(0,0,0,.25); }
     .pthumbnail svg { display: block; width: 100%; height: 100%; }
-    .pt { font-size: .93rem; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .pt { font-size: .93rem; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
     .pa { font-size: .82rem; color: var(--text-2); margin-bottom: 3px; }
     .pa strong { color: var(--accent); }
     .pv { font-size: .8rem; color: var(--text-3); font-style: italic; }
     .plinks { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
     .plink {
-      font-size: .76rem; padding: 3px 10px; border-radius: 5px;
+      font-size: .76rem; padding: 4px 12px; border-radius: 6px;
       border: 1px solid var(--border); color: var(--text-2);
-      transition: background var(--t), color var(--t);
+      transition: all var(--t); cursor: pointer;
+      font-weight: 500;
     }
-    .plink:hover { background: var(--bg-hover); color: var(--text); opacity: 1; }
+    .plink:hover {
+      background: var(--accent); border-color: var(--accent);
+      color: #fff; opacity: 1;
+      transform: translateY(-1px);
+      box-shadow: 0 3px 10px rgba(88,166,255,.32);
+    }
+    [data-theme="light"] .plink:hover { box-shadow: 0 3px 10px rgba(9,105,218,.25); }
 
-    /* news */
-    .nl { display: flex; flex-direction: column; gap: 0; }
+    /* news timeline */
+    .nl {
+      position: relative;
+      display: flex; flex-direction: column;
+      padding-left: 28px;
+    }
+    .nl::before {
+      content: '';
+      position: absolute; left: 7px; top: 20px; bottom: 20px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--accent), var(--teal), var(--purple));
+      opacity: .3;
+      border-radius: 2px;
+    }
     .nitem {
-      display: flex; gap: 20px; padding: 14px 0;
-      border-bottom: 1px solid var(--border);
+      position: relative;
+      display: flex; gap: 20px; padding: 14px 0 14px 4px;
+      border-bottom: 1px solid rgba(33,38,45,.6);
       font-size: .9rem; align-items: baseline;
     }
     .nitem:last-child { border-bottom: none; }
+    .nitem::before {
+      content: '';
+      position: absolute; left: -28px; top: 50%;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--nd-color, var(--accent));
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px var(--nd-color, var(--accent));
+      transform: translateY(-50%);
+      opacity: .88;
+    }
+    .nitem.nd-teal   { --nd-color: var(--teal); }
+    .nitem.nd-purple { --nd-color: var(--purple); }
+    .nitem.nd-blue   { --nd-color: var(--accent); }
     .nd { font-size: .77rem; color: var(--text-3); white-space: nowrap; font-weight: 500; min-width: 72px; }
     .nt { color: var(--text-2); }
     .nt strong { color: var(--text); }
@@ -301,27 +379,83 @@
     /* contact */
     .cc {
       background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 40px; text-align: center;
+      border-radius: var(--radius-lg); padding: 48px 40px; text-align: center;
+      position: relative; overflow: hidden;
     }
-    .cc p { color: var(--text-2); max-width: 480px; margin: 0 auto 28px; font-size: .93rem; }
+    .cc::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(88,166,255,.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 700; color: var(--text);
+      margin-bottom: 12px;
+    }
+    .cc p {
+      color: var(--text-2); max-width: 500px; margin: 0 auto 32px;
+      font-size: .95rem; line-height: 1.75;
+    }
     .clinks { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .clink {
       display: flex; align-items: center; gap: 8px;
-      padding: 10px 20px;
+      padding: 11px 22px;
       background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
       font-size: .87rem; color: var(--text-2);
-      transition: all var(--t);
+      transition: all var(--t); font-weight: 500;
     }
-    .clink:hover { background: var(--bg-hover); border-color: var(--border-hi); color: var(--text); transform: translateY(-2px); opacity: 1; }
+    .clink:hover {
+      background: var(--bg-hover); border-color: var(--accent);
+      color: var(--accent); transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(88,166,255,.18); opacity: 1;
+    }
+    [data-theme="light"] .clink:hover { box-shadow: 0 8px 24px rgba(9,105,218,.12); }
 
     /* footer */
     footer {
-      position: relative; z-index: 1; text-align: center;
-      padding: 30px 24px; border-top: 1px solid var(--border);
-      color: var(--text-3); font-size: .8rem;
+      position: relative; z-index: 1;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(to bottom, transparent, rgba(88,166,255,.02));
+    }
+    [data-theme="light"] footer {
+      background: linear-gradient(to bottom, transparent, rgba(9,105,218,.02));
+    }
+    .footer-inner {
+      max-width: 940px; margin: 0 auto; padding: 28px 24px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
+    }
+    .footer-left { display: flex; flex-direction: column; gap: 4px; }
+    .footer-info { color: var(--text-3); font-size: .8rem; }
+    .footer-tagline { font-size: .77rem; color: var(--text-3); font-style: italic; letter-spacing: .02em; }
+    .footer-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+    .footer-links a {
+      font-size: .8rem; color: var(--text-3);
+      transition: color var(--t); opacity: 1;
+    }
+    .footer-links a:hover { color: var(--accent); opacity: 1; }
+
+    /* back to top */
+    #btt {
+      position: fixed; bottom: 28px; right: 28px; z-index: 200;
+      width: 42px; height: 42px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-2);
+      box-shadow: 0 4px 16px rgba(0,0,0,.28);
+      opacity: 0; pointer-events: none;
+      transform: translateY(12px);
+      transition: all .3s ease;
+    }
+    #btt.vis { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    #btt:hover {
+      background: var(--accent); border-color: var(--accent);
+      color: #fff; transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(88,166,255,.38);
     }
 
-    /* language toggle — single-language display */
+    /* language toggle */
     [data-lang="en"] .lang-zh { display: none !important; }
     [data-lang="zh"] .lang-en { display: none !important; }
 
@@ -334,6 +468,12 @@
       .hc { flex-direction: column; gap: 28px; text-align: center; }
       .htags, .hbtns { justify-content: center; }
       .hphoto { width: 130px; height: 130px; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      .nl { padding-left: 22px; }
+      .nitem::before { left: -22px; }
+      .nl::before { left: 4px; }
+      .cc { padding: 32px 24px; }
     }
   </style>
 </head>
@@ -341,7 +481,7 @@
 
 <canvas id="cvs"></canvas>
 
-<nav>
+<nav id="nav">
   <div class="ni">
     <div class="logo"><em>ziheng</em>.he</div>
     <ul class="nav-links">
@@ -358,10 +498,9 @@
   </div>
 </nav>
 
-<section id="hero" style="max-width:unset; padding-top:120px;">
+<section id="hero" style="max-width:unset; padding-top:110px; padding-bottom:32px;">
   <div class="hbg"></div>
   <div class="hc">
-    <!-- Profile photo — left side -->
     <div class="hright">
       <div class="hphoto">
         <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
@@ -372,7 +511,6 @@
         </svg>
       </div>
     </div>
-    <!-- Text content — right side -->
     <div class="hleft">
       <div class="hname">Ziheng He</div>
       <div class="hname-cn">何子恒</div>
@@ -459,10 +597,10 @@
       <p class="rd lang-en">Developing agents that perceive, reason, and act in the physical world. Research spans sensorimotor integration, hierarchical planning, and learning from interaction to enable robots to perform complex manipulation and navigation tasks.</p>
       <p class="rd lang-zh">研究能够感知、推理并在物理世界中行动的智能体。涵盖感觉运动整合、层次化规划以及通过交互学习，使机器人执行复杂操作和导航任务。</p>
       <div class="rtags">
-        <span class="rtag">Robot Learning</span>
-        <span class="rtag">Manipulation</span>
-        <span class="rtag">RL</span>
-        <span class="rtag">Sim-to-Real</span>
+        <span class="rtag t-blue">Robot Learning</span>
+        <span class="rtag t-teal">Manipulation</span>
+        <span class="rtag t-orange">RL</span>
+        <span class="rtag t-green">Sim-to-Real</span>
       </div>
     </div>
     <div class="rc purple">
@@ -472,10 +610,10 @@
       <p class="rd lang-en">Building internal models that capture the structure and dynamics of environments. Research focuses on latent-space representations, model-based planning, and leveraging world models to improve sample efficiency and generalization.</p>
       <p class="rd lang-zh">构建能够捕捉环境结构和动态特性的内部模型。研究重点包括潜空间表征、基于模型的规划，以及利用世界模型提升采样效率和泛化能力。</p>
       <div class="rtags">
-        <span class="rtag">Latent Dynamics</span>
-        <span class="rtag">Model-Based RL</span>
-        <span class="rtag">Generalization</span>
-        <span class="rtag">Video Prediction</span>
+        <span class="rtag t-purple">Latent Dynamics</span>
+        <span class="rtag t-blue">Model-Based RL</span>
+        <span class="rtag t-teal">Generalization</span>
+        <span class="rtag t-pink">Video Prediction</span>
       </div>
     </div>
   </div>
@@ -489,19 +627,22 @@
 
     <div class="pi">
       <span class="py">2025</span>
-      <!-- Thumbnail: World Models survey paper -->
       <div class="pthumbnail">
         <svg viewBox="0 0 128 84" xmlns="http://www.w3.org/2000/svg">
           <rect width="128" height="84" fill="#0d1f3c"/>
-          <rect x="8" y="8" width="112" height="4" rx="2" fill="#58a6ff" opacity=".85"/>
-          <rect x="8" y="18" width="88" height="3" rx="1.5" fill="#3a4a60" opacity=".9"/>
-          <rect x="8" y="26" width="100" height="3" rx="1.5" fill="#3a4a60" opacity=".9"/>
-          <rect x="8" y="34" width="72" height="3" rx="1.5" fill="#3a4a60" opacity=".9"/>
-          <rect x="8" y="46" width="50" height="26" rx="4" fill="#142840"/>
-          <rect x="70" y="46" width="50" height="26" rx="4" fill="#142840"/>
-          <text x="33" y="63" text-anchor="middle" font-family="monospace" font-size="9" fill="#2dd4bf" font-weight="bold">WM</text>
-          <text x="95" y="63" text-anchor="middle" font-family="monospace" font-size="9" fill="#58a6ff" font-weight="bold">EA</text>
-          <rect x="8" y="76" width="55" height="2" rx="1" fill="#3a4a60" opacity=".6"/>
+          <rect x="11" y="11" width="106" height="64" rx="3" fill="#0a1928" opacity=".55"/>
+          <rect x="8" y="7" width="106" height="64" rx="3" fill="#111e35"/>
+          <path d="M100 7 L114 7 L114 21 Z" fill="#0a1826"/>
+          <path d="M100 7 L100 21 L114 21" fill="none" stroke="#1e3a5f" stroke-width="1.2"/>
+          <rect x="16" y="16" width="74" height="5" rx="2" fill="#58a6ff" opacity=".9"/>
+          <rect x="16" y="27" width="82" height="2.5" rx="1.2" fill="#2a4060" opacity=".75"/>
+          <rect x="16" y="33" width="66" height="2.5" rx="1.2" fill="#2a4060" opacity=".75"/>
+          <rect x="16" y="39" width="74" height="2.5" rx="1.2" fill="#2a4060" opacity=".75"/>
+          <rect x="16" y="48" width="40" height="18" rx="3" fill="#0e2240"/>
+          <rect x="60" y="48" width="40" height="18" rx="3" fill="#0e2240"/>
+          <text x="36" y="61" text-anchor="middle" font-family="monospace" font-size="8" fill="#2dd4bf" font-weight="bold">WM</text>
+          <text x="80" y="61" text-anchor="middle" font-family="monospace" font-size="8" fill="#58a6ff" font-weight="bold">EA</text>
+          <line x1="56" y1="57" x2="60" y2="57" stroke="#58a6ff" stroke-width="1" opacity=".6"/>
         </svg>
       </div>
       <div>
@@ -520,19 +661,22 @@
 
     <div class="pi">
       <span class="py">2024</span>
-      <!-- Thumbnail: Robot Manipulation paper -->
       <div class="pthumbnail">
         <svg viewBox="0 0 128 84" xmlns="http://www.w3.org/2000/svg">
           <rect width="128" height="84" fill="#1a0d3c"/>
-          <rect x="8" y="8" width="112" height="4" rx="2" fill="#a78bfa" opacity=".85"/>
-          <rect x="8" y="18" width="92" height="3" rx="1.5" fill="#3a2a60" opacity=".9"/>
-          <rect x="8" y="26" width="76" height="3" rx="1.5" fill="#3a2a60" opacity=".9"/>
-          <rect x="8" y="34" width="84" height="3" rx="1.5" fill="#3a2a60" opacity=".9"/>
-          <circle cx="36" cy="62" r="14" fill="#1e0d40" stroke="#a78bfa" stroke-width="1.5"/>
-          <circle cx="36" cy="62" r="7" fill="#2a1a50" stroke="#a78bfa" stroke-width="1"/>
-          <rect x="66" y="48" width="54" height="30" rx="3" fill="#1e0d40"/>
-          <path d="M70 75 Q80 60 88 65 Q96 70 104 56 Q110 46 120 52" stroke="#a78bfa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-          <rect x="8" y="76" width="48" height="2" rx="1" fill="#3a2a60" opacity=".6"/>
+          <rect x="11" y="11" width="106" height="64" rx="3" fill="#130924" opacity=".55"/>
+          <rect x="8" y="7" width="106" height="64" rx="3" fill="#1a1030"/>
+          <path d="M100 7 L114 7 L114 21 Z" fill="#130924"/>
+          <path d="M100 7 L100 21 L114 21" fill="none" stroke="#3d2060" stroke-width="1.2"/>
+          <rect x="16" y="16" width="74" height="5" rx="2" fill="#a78bfa" opacity=".9"/>
+          <rect x="16" y="27" width="82" height="2.5" rx="1.2" fill="#3a2060" opacity=".75"/>
+          <rect x="16" y="33" width="58" height="2.5" rx="1.2" fill="#3a2060" opacity=".75"/>
+          <rect x="16" y="39" width="70" height="2.5" rx="1.2" fill="#3a2060" opacity=".75"/>
+          <circle cx="34" cy="61" r="10" fill="#140a28" stroke="#a78bfa" stroke-width="1.5"/>
+          <circle cx="34" cy="61" r="5" fill="#1e0d40" stroke="#a78bfa" stroke-width="1"/>
+          <line x1="34" y1="56" x2="34" y2="51" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="58" y="49" width="44" height="22" rx="2" fill="#140a28"/>
+          <path d="M62 68 Q70 58 78 62 Q86 66 94 52 Q98 46 102 50" stroke="#a78bfa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
         </svg>
       </div>
       <div>
@@ -557,18 +701,18 @@
 <section id="news">
   <div class="sh"><span class="snum">04</span><h2 class="stitle"><span class="lang-en">News</span><span class="lang-zh">最新动态</span></h2><div class="sline"></div></div>
   <div class="nl">
-    <div class="nitem">
+    <div class="nitem nd-teal">
       <span class="nd">Mar 2025</span>
       <span class="nt lang-en"><strong>New preprint</strong> on world models for embodied agents submitted to arXiv.</span>
       <span class="nt lang-zh"><strong>新预印本</strong>已提交至arXiv，主题为面向具身智能体的世界模型。</span>
       <span class="nb">New</span>
     </div>
-    <div class="nitem">
+    <div class="nitem nd-purple">
       <span class="nd">Jan 2025</span>
       <span class="nt lang-en">Started new research project on <strong>generalizable robot manipulation</strong> using structured world models.</span>
       <span class="nt lang-zh">启动基于结构化世界模型的<strong>可泛化机器人操作</strong>新研究项目。</span>
     </div>
-    <div class="nitem">
+    <div class="nitem nd-blue">
       <span class="nd">Sep 2024</span>
       <span class="nt lang-en">Joined the research group at <strong>Southeast University, School of Software Engineering</strong>.</span>
       <span class="nt lang-zh">加入<strong>东南大学软件工程学院</strong>课题组。</span>
@@ -581,6 +725,8 @@
 <section id="contact">
   <div class="sh"><span class="snum">05</span><h2 class="stitle"><span class="lang-en">Contact</span><span class="lang-zh">联系方式</span></h2><div class="sline"></div></div>
   <div class="cc">
+    <div class="cc-title lang-en">Let's build the future of intelligent systems together.</div>
+    <div class="cc-title lang-zh">期待共同探索智能系统的未来。</div>
     <p class="lang-en">I am always happy to discuss research ideas, collaborations, or anything about embodied AI and robotics. Feel free to reach out!</p>
     <p class="lang-zh">欢迎就研究想法、合作机会，或有关具身智能与机器人的话题进行交流探讨，期待您的联系！</p>
     <div class="clinks">
@@ -592,6 +738,10 @@
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
         GitHub
       </a>
+      <a href="https://scholar.google.com/citations?user=zihenghe04" class="clink" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10H2l10-8 10 8z"/><path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/><path d="M12 22v-6"/></svg>
+        Google Scholar
+      </a>
       <a href="https://www.seu.edu.cn" class="clink" target="_blank" rel="noopener">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         <span class="lang-en">Southeast University</span><span class="lang-zh">东南大学</span>
@@ -601,12 +751,36 @@
 </section>
 
 <footer>
-  <span class="lang-en">&copy; 2025 Ziheng He &middot; Southeast University</span>
-  <span class="lang-zh">&copy; 2025 何子恒 &middot; 东南大学</span>
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-info">
+        <span class="lang-en">&copy; 2025 Ziheng He &middot; Southeast University</span>
+        <span class="lang-zh">&copy; 2025 何子恒 &middot; 东南大学</span>
+      </div>
+      <div class="footer-tagline lang-en">Building intelligent systems that understand and act in the physical world.</div>
+      <div class="footer-tagline lang-zh">构建能够理解并作用于物理世界的智能系统。</div>
+    </div>
+    <div class="footer-links">
+      <a href="#about" class="lang-en">About</a>
+      <a href="#research" class="lang-en">Research</a>
+      <a href="#publications" class="lang-en">Publications</a>
+      <a href="#news" class="lang-en">News</a>
+      <a href="#contact" class="lang-en">Contact</a>
+      <a href="#about" class="lang-zh">关于</a>
+      <a href="#research" class="lang-zh">研究</a>
+      <a href="#publications" class="lang-zh">论文</a>
+      <a href="#news" class="lang-zh">动态</a>
+      <a href="#contact" class="lang-zh">联系</a>
+    </div>
+  </div>
 </footer>
 
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 <script>
-// Theme toggle — persisted in localStorage
+// Theme toggle
 (function() {
   var saved = localStorage.getItem('theme') || 'dark';
   document.documentElement.setAttribute('data-theme', saved);
@@ -622,7 +796,7 @@ function tt() {
   document.getElementById('tb').innerHTML = next === 'dark' ? '&#9728; Light' : '&#9790; Dark';
 }
 
-// Language toggle — single language shown at a time
+// Language toggle
 (function() {
   var saved = localStorage.getItem('lang') || 'en';
   document.documentElement.setAttribute('data-lang', saved);
@@ -646,6 +820,20 @@ function updateNavLinks(lang) {
   });
 }
 
+// Nav scroll glassmorphism + back-to-top
+var nav = document.getElementById('nav');
+var btt = document.getElementById('btt');
+window.addEventListener('scroll', function() {
+  var y = window.scrollY || window.pageYOffset;
+  if (y > 60) {
+    nav.classList.add('scrolled');
+    btt.classList.add('vis');
+  } else {
+    nav.classList.remove('scrolled');
+    btt.classList.remove('vis');
+  }
+}, { passive: true });
+
 // Particle canvas
 var cv = document.getElementById('cvs');
 var cx = cv.getContext('2d');
@@ -654,8 +842,8 @@ var W, H, pts = [];
 function rsz() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
 function rnd(a, b) { return a + Math.random() * (b - a); }
 function init() {
-  pts = Array.from({length: 55}, function() {
-    return {x: Math.random()*W, y: Math.random()*H, r: rnd(.5,2), vx: rnd(-.15,.15), vy: rnd(-.15,.15), a: rnd(.2,.65)};
+  pts = Array.from({length: 90}, function() {
+    return {x: Math.random()*W, y: Math.random()*H, r: rnd(.6,2.2), vx: rnd(-.18,.18), vy: rnd(-.18,.18), a: rnd(.28,.78)};
   });
 }
 function draw() {
@@ -671,7 +859,7 @@ function draw() {
     if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
     if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
   });
-  var md = 100;
+  var md = 120;
   for (var i = 0; i < pts.length; i++) {
     for (var j = i + 1; j < pts.length; j++) {
       var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
@@ -680,8 +868,8 @@ function draw() {
         cx.beginPath();
         cx.moveTo(pts[i].x, pts[i].y);
         cx.lineTo(pts[j].x, pts[j].y);
-        cx.strokeStyle = 'rgba(' + c + ',' + (1 - d/md) * .2 + ')';
-        cx.lineWidth = .5;
+        cx.strokeStyle = 'rgba(' + c + ',' + (1 - d/md) * .32 + ')';
+        cx.lineWidth = .6;
         cx.stroke();
       }
     }
