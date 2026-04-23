@@ -1,883 +1,1623 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark" data-lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ziheng He | 何子恒</title>
-  <meta name="description" content="Ziheng He (何子恒) — Southeast University, School of Software Engineering. Research: Embodied Intelligence, World Models." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,400&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg:         #0d1117;
-      --bg-card:    #161b22;
-      --bg-hover:   #1c2433;
-      --border:     #21262d;
-      --border-hi:  #30363d;
-      --text:       #e6edf3;
-      --text-2:     #8b949e;
-      --text-3:     #6e7681;
-      --accent:     #58a6ff;
-      --accent-2:   #39d353;
-      --teal:       #2dd4bf;
-      --purple:     #a78bfa;
-      --nav-bg:     rgba(13,17,23,.88);
-      --shadow:     0 8px 32px rgba(0,0,0,.5);
-      --radius:     8px;
-      --radius-lg:  16px;
-      --t:          .3s ease;
-    }
-    [data-theme="light"] {
-      --bg:         #ffffff;
-      --bg-card:    #f6f8fa;
-      --bg-hover:   #eef2f6;
-      --border:     #d0d7de;
-      --border-hi:  #b1bac4;
-      --text:       #1f2328;
-      --text-2:     #57606a;
-      --text-3:     #848d97;
-      --accent:     #0969da;
-      --accent-2:   #1a7f37;
-      --teal:       #0891b2;
-      --purple:     #7c3aed;
-      --nav-bg:     rgba(255,255,255,.88);
-      --shadow:     0 8px 32px rgba(0,0,0,.1);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', 'Noto Sans SC', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      letter-spacing: .01em;
-      overflow-x: hidden;
-      transition: background var(--t), color var(--t);
-    }
-    a { color: var(--accent); text-decoration: none; transition: all var(--t); }
-    a:hover { opacity: .72; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dasheng He — PhD Student in AI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a; --bg-soft: #111111; --surface: #161616; --surface-2: #1c1c1c;
+    --border: rgba(255,255,255,0.08); --border-strong: rgba(255,255,255,0.14);
+    --text: #ededed; --text-dim: #9a9a9a; --text-mute: #6a6a6a;
+    --accent: #d4ff3a; --accent-soft: rgba(212, 255, 58, 0.12);
+    --heat-0: #161616;
+    --heat-1: rgba(212, 255, 58, 0.22);
+    --heat-2: rgba(212, 255, 58, 0.45);
+    --heat-3: rgba(212, 255, 58, 0.72);
+    --heat-4: rgba(212, 255, 58, 1);
+  }
+  [data-theme="light"] {
+    --bg: #f5f3ee; --bg-soft: #ebe8e0; --surface: #ffffff; --surface-2: #f9f7f2;
+    --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16);
+    --text: #1a1a1a; --text-dim: #555555; --text-mute: #888888;
+    --accent: #2b5f3e; --accent-soft: rgba(43, 95, 62, 0.1);
+    --heat-0: #ebe8e0;
+    --heat-1: rgba(43, 95, 62, 0.18);
+    --heat-2: rgba(43, 95, 62, 0.4);
+    --heat-3: rgba(43, 95, 62, 0.65);
+    --heat-4: rgba(43, 95, 62, 0.95);
+  }
+  * { -webkit-font-smoothing: antialiased; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'Inter', 'Noto Sans SC', sans-serif;
+    overflow-x: hidden; transition: background 0.5s ease, color 0.5s ease;
+  }
+  .serif { font-family: 'Instrument Serif', 'Noto Serif SC', serif; letter-spacing: -0.01em; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+  #neuralCanvas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.4; }
+  .grain {
+    position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.04;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+  .cursor-glow {
+    position: fixed; width: 400px; height: 400px; border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 60%);
+    pointer-events: none; z-index: 2; transform: translate(-50%, -50%);
+    transition: opacity 0.3s ease; opacity: 0;
+  }
+  @media (min-width: 768px) { .cursor-glow { opacity: 1; } }
+  .content-layer { position: relative; z-index: 3; }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .marquee-track { display: flex; animation: marquee 40s linear infinite; }
+  @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--text); transition: width 0.4s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+  .card { background: var(--surface); border: 1px solid var(--border); transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+  .card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .pub-row { border-top: 1px solid var(--border); transition: all 0.4s ease; position: relative; overflow: hidden; }
+  .pub-row:last-child { border-bottom: 1px solid var(--border); }
+  .pub-row::before {
+    content: ''; position: absolute; inset: 0; background: var(--accent-soft);
+    transform: translateX(-100%); transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .pub-row:hover::before { transform: translateX(0); }
+  .pub-row > * { position: relative; z-index: 1; }
+  .theme-toggle, .lang-toggle, .cmd-btn {
+    border: 1px solid var(--border); background: transparent; color: var(--text);
+    transition: all 0.3s ease; backdrop-filter: blur(10px);
+  }
+  .theme-toggle:hover, .lang-toggle:hover, .cmd-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .accent-text { color: var(--accent); }
+  .accent-dot { background: var(--accent); }
+  .glass-nav {
+    backdrop-filter: blur(20px) saturate(180%);
+    background: color-mix(in srgb, var(--bg) 70%, transparent);
+    border-bottom: 1px solid var(--border);
+  }
+  .tag {
+    font-size: 11px; padding: 3px 10px; border-radius: 100px;
+    border: 1px solid var(--border); color: var(--text-dim);
+    letter-spacing: 0.05em; text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .scroll-indicator {
+    position: fixed; top: 0; left: 0; height: 2px; background: var(--accent);
+    z-index: 100; width: 0; transition: width 0.1s ease;
+  }
+  .section-num { color: var(--text-mute); font-size: 12px; letter-spacing: 0.2em; }
+  .link-arrow { display: inline-flex; align-items: center; gap: 6px; transition: gap 0.3s ease; }
+  .link-arrow:hover { gap: 12px; }
+  .btn-primary {
+    background: var(--accent); color: var(--bg); padding: 14px 28px;
+    border-radius: 100px; font-weight: 500; font-size: 14px;
+    transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--accent-soft); }
+  .note-card {
+    background: var(--surface); border: 1px solid var(--border);
+    transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1); position: relative; overflow: hidden;
+  }
+  .note-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: var(--accent); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .note-card:hover::before { transform: scaleX(1); }
+  .note-card:hover { transform: translateY(-6px); border-color: var(--accent); }
+  .divider { height: 1px; background: var(--border); width: 100%; }
+  .magnetic { transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+  .status-dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+    background: #4ade80; box-shadow: 0 0 10px #4ade80; animation: pulse 2s infinite;
+    margin-right: 8px;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .outlined-text { -webkit-text-stroke: 1px var(--text); color: transparent; }
+  ::selection { background: var(--accent); color: var(--bg); }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 10px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-mute); }
 
-    /* particles */
-    #cvs {
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 0; opacity: .5;
-      transition: opacity var(--t);
-    }
-    [data-theme="light"] #cvs { opacity: .18; }
+  /* ===== SOCIAL ICONS - real brand SVGs ===== */
+  .social-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .social-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim);
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative; overflow: hidden;
+  }
+  .social-icon svg { width: 20px; height: 20px; transition: transform 0.3s ease; position: relative; z-index: 1; }
+  .social-icon:hover {
+    color: var(--bg); border-color: var(--accent); transform: translateY(-3px);
+  }
+  .social-icon:hover::before {
+    content: ''; position: absolute; inset: 0; background: var(--accent); z-index: 0;
+  }
+  .social-icon:hover svg { transform: scale(1.1); }
+  .social-icon .tooltip {
+    position: absolute; bottom: -28px; left: 50%; transform: translateX(-50%);
+    font-size: 10px; font-family: 'JetBrains Mono', monospace; color: var(--text-dim);
+    white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+  }
+  .social-icon:hover .tooltip { opacity: 1; }
 
-    /* nav */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: var(--nav-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      transition: background var(--t), box-shadow var(--t), border-color var(--t);
-    }
-    nav.scrolled {
-      background: rgba(13,17,23,.97);
-      border-bottom-color: rgba(88,166,255,.18);
-      box-shadow: 0 4px 28px rgba(0,0,0,.45);
-    }
-    [data-theme="light"] nav.scrolled {
-      background: rgba(255,255,255,.98);
-      border-bottom-color: rgba(9,105,218,.15);
-      box-shadow: 0 4px 24px rgba(0,0,0,.08);
-    }
-    .ni {
-      max-width: 940px; margin: 0 auto;
-      padding: 0 24px; height: 60px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo { font-size: .92rem; font-weight: 600; color: var(--text); }
-    .logo em { color: var(--accent); font-style: normal; }
-    .nav-links { display: flex; align-items: center; gap: 4px; list-style: none; }
-    .nav-links a {
-      color: var(--text-2); font-size: .83rem; font-weight: 500;
-      padding: 6px 10px; border-radius: 6px;
-      transition: background var(--t), color var(--t);
-    }
-    .nav-links a:hover { color: var(--text); background: var(--bg-hover); opacity: 1; }
-    .ctls { display: flex; gap: 8px; }
-    .cbtn {
-      background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-2); font-size: .77rem; font-weight: 500;
-      padding: 5px 11px; border-radius: 6px; cursor: pointer;
-      transition: background var(--t), color var(--t), border-color var(--t);
-      white-space: nowrap;
-    }
-    .cbtn:hover { background: var(--bg-hover); color: var(--text); border-color: var(--border-hi); }
+  /* ===== TECH STACK - inline brand SVGs ===== */
+  .tech-item {
+    background: var(--surface); border: 1px solid var(--border);
+    aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1); position: relative;
+    overflow: hidden; padding: 12px; gap: 8px;
+  }
+  .tech-item:hover { border-color: var(--accent); transform: translateY(-4px); background: var(--surface-2); }
+  .tech-logo-wrap {
+    width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+    filter: grayscale(1); opacity: 0.7;
+    transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+  }
+  .tech-logo-wrap svg { width: 100%; height: 100%; }
+  .tech-item:hover .tech-logo-wrap { filter: grayscale(0); opacity: 1; transform: scale(1.15); }
+  .tech-name {
+    font-size: 10px; color: var(--text-mute); font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase; letter-spacing: 0.08em; text-align: center;
+    transition: color 0.3s ease;
+  }
+  .tech-item:hover .tech-name { color: var(--text); }
 
-    /* hero */
-    #hero {
-      position: relative; z-index: 1;
-      min-height: 74vh;
-      display: flex; align-items: center; justify-content: center;
-      padding: 100px 24px 36px;
-    }
-    .hbg {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 30% 50%, rgba(88,166,255,.07) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 40% at 80% 70%, rgba(45,212,191,.05) 0%, transparent 60%),
-        radial-gradient(ellipse 40% 30% at 20% 80%, rgba(167,139,250,.04) 0%, transparent 60%);
-    }
-    .hc {
-      position: relative; max-width: 840px; width: 100%; margin: 0 auto;
-      display: flex; align-items: center; gap: 56px;
-    }
-    .hleft { flex: 1; }
-    .hright { flex-shrink: 0; }
+  /* ===== UNI LOGO placeholder ===== */
+  .uni-logo {
+    width: 56px; height: 56px; border-radius: 12px;
+    background: var(--surface-2); border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Instrument Serif', serif; font-size: 28px; color: var(--text);
+    flex-shrink: 0; transition: all 0.3s ease;
+  }
+  .uni-logo.has-img { padding: 0; overflow: hidden; }
+  .uni-logo img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
 
-    /* profile photo */
-    .hphoto {
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      border: 2px solid rgba(88,166,255,.35);
-      box-shadow: 0 0 0 8px rgba(88,166,255,.06), 0 0 48px rgba(88,166,255,.14);
-      overflow: hidden;
-      animation: fu .5s ease both;
-      transition: border-color var(--t), box-shadow var(--t);
-    }
-    [data-theme="light"] .hphoto {
-      border-color: rgba(9,105,218,.35);
-      box-shadow: 0 0 0 8px rgba(9,105,218,.06), 0 0 32px rgba(9,105,218,.12);
-    }
-    .hphoto svg { display: block; width: 100%; height: 100%; }
+  /* ===== HEATMAP ===== */
+  .heatmap-grid {
+    display: grid; grid-template-rows: repeat(7, 1fr);
+    grid-auto-flow: column; grid-auto-columns: 11px;
+    gap: 3px; overflow-x: auto; padding-bottom: 8px;
+  }
+  .heatmap-cell {
+    width: 11px; height: 11px; border-radius: 2px;
+    background: var(--heat-0); transition: all 0.2s ease; cursor: pointer;
+  }
+  .heatmap-cell:hover { transform: scale(1.6); outline: 1px solid var(--accent); z-index: 2; }
+  .heatmap-cell[data-level="1"] { background: var(--heat-1); }
+  .heatmap-cell[data-level="2"] { background: var(--heat-2); }
+  .heatmap-cell[data-level="3"] { background: var(--heat-3); }
+  .heatmap-cell[data-level="4"] { background: var(--heat-4); }
 
-    .hname {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.9rem, 3.2vw, 2.7rem);
-      font-weight: 700; line-height: 1.1; margin-bottom: 6px;
-      background: linear-gradient(135deg, var(--text) 0%, var(--accent) 60%, var(--teal) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-      filter: drop-shadow(0 2px 10px rgba(88,166,255,.22));
-      animation: fu .6s .1s ease both;
-    }
-    .hname-cn {
-      font-size: 1rem; color: var(--text-2); margin-bottom: 14px;
-      font-weight: 300; letter-spacing: .06em;
-      animation: fu .6s .18s ease both;
-    }
-    .haffil {
-      font-size: .88rem; color: var(--text-2); margin-bottom: 22px;
-      line-height: 1.6;
-      animation: fu .6s .25s ease both;
-    }
-    .haffil strong { color: var(--text); font-weight: 500; }
-    .htags {
-      display: flex; flex-wrap: wrap; gap: 7px;
-      margin-bottom: 28px; animation: fu .6s .33s ease both;
-    }
-    .tag {
-      background: var(--bg-card); border: 1px solid var(--border);
-      color: var(--text-2); font-size: .76rem; padding: 4px 11px; border-radius: 100px;
-      transition: all var(--t);
-    }
-    .tag.a { border-color: rgba(88,166,255,.3); color: var(--accent); background: rgba(88,166,255,.06); }
-    .tag.t { border-color: rgba(45,212,191,.3); color: var(--teal);   background: rgba(45,212,191,.06); }
-    .tag.p { border-color: rgba(167,139,250,.3); color: var(--purple); background: rgba(167,139,250,.06); }
-    .hbtns {
-      display: flex; gap: 10px; flex-wrap: wrap;
-      animation: fu .6s .4s ease both;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 10px 22px; border-radius: var(--radius);
-      font-size: .87rem; font-weight: 500; cursor: pointer; border: none;
-      transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
-    }
-    .btn:hover { transform: translateY(-2px); opacity: 1; }
-    .btn-pri {
-      background: var(--accent); color: #fff;
-      box-shadow: 0 4px 16px rgba(88,166,255,.28);
-    }
-    .btn-pri:hover { box-shadow: 0 8px 28px rgba(88,166,255,.52); }
-    .btn-ghost {
-      background: var(--bg-card); color: var(--text);
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover { border-color: var(--border-hi); box-shadow: 0 4px 16px rgba(0,0,0,.18); }
-    @keyframes fu {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  /* ===== TIMELINE ===== */
+  .timeline-item { position: relative; padding-left: 32px; }
+  .timeline-item::before {
+    content: ''; position: absolute; left: 6px; top: 8px; bottom: -24px;
+    width: 1px; background: var(--border);
+  }
+  .timeline-item:last-child::before { display: none; }
+  .timeline-dot {
+    position: absolute; left: 0; top: 4px; width: 13px; height: 13px;
+    border-radius: 50%; background: var(--bg); border: 2px solid var(--accent);
+  }
+  .timeline-dot::after {
+    content: ''; position: absolute; inset: -4px; border-radius: 50%;
+    background: var(--accent); opacity: 0.15;
+  }
 
-    /* sections */
-    section {
-      position: relative; z-index: 1;
-      max-width: 940px; margin: 0 auto; padding: 60px 24px;
-    }
-    .sh {
-      display: flex; align-items: center; gap: 16px; margin-bottom: 36px;
-    }
-    .snum {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.6rem; color: var(--accent); opacity: .22;
-      font-weight: 700; letter-spacing: .02em; line-height: 1;
-    }
-    .stitle { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--text); }
-    .sline { flex: 1; height: 1px; background: var(--border); opacity: .5; }
-    hr.sep {
-      border: none; border-top: 1px solid var(--border);
-      max-width: 940px; margin: 0 auto; opacity: .3;
-    }
+  /* ===== NOW CARD ===== */
+  .now-card {
+    background: linear-gradient(135deg, var(--surface), var(--surface-2));
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .now-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(from 0deg, transparent, var(--accent-soft), transparent);
+    animation: spin 8s linear infinite; opacity: 0.5;
+  }
+  .now-card::after {
+    content: ''; position: absolute; inset: 1px; background: var(--surface); border-radius: inherit;
+  }
+  .now-card > * { position: relative; z-index: 1; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* about */
-    .ag { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-    .at p { color: var(--text-2); font-size: .93rem; margin-bottom: 14px; line-height: 1.75; }
-    .at p strong { color: var(--text); }
-    .alist { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .ai {
-      display: flex; align-items: flex-start; gap: 12px;
-      padding: 12px 16px;
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-      font-size: .87rem; color: var(--text-2);
-      transition: border-color var(--t), transform var(--t);
-    }
-    .ai:hover { border-color: var(--border-hi); transform: translateX(3px); }
-    .ai-icon { font-size: .95rem; flex-shrink: 0; margin-top: 2px; }
-    .ai-lbl { font-weight: 500; color: var(--text); display: block; font-size: .8rem; margin-bottom: 2px; }
+  /* ===== STATS ===== */
+  .stat-box {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 24px; transition: all 0.4s ease; position: relative; overflow: hidden;
+  }
+  .stat-box:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .stat-num { font-family: 'Instrument Serif', serif; font-size: 48px; line-height: 1; color: var(--accent); }
 
-    /* research cards */
-    .rg { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .rc {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 28px;
-      position: relative; overflow: hidden;
-      transition: border-color var(--t), transform .3s ease, box-shadow .3s ease;
-    }
-    .rc::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--ca), var(--cb));
-      opacity: .9;
-    }
-    .rc.blue   { --ca:#58a6ff; --cb:#2dd4bf; }
-    .rc.purple { --ca:#a78bfa; --cb:#f472b6; }
-    .rc.blue:hover {
-      border-color: rgba(88,166,255,.4);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(88,166,255,.14), var(--shadow);
-    }
-    .rc.purple:hover {
-      border-color: rgba(167,139,250,.4);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(167,139,250,.14), var(--shadow);
-    }
-    .ri { font-size: 2rem; margin-bottom: 14px; }
-    .rt { font-size: 1.03rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
-    .rt2 { font-size: .8rem; color: var(--text-3); margin-bottom: 12px; letter-spacing: .03em; }
-    .rd { font-size: .87rem; color: var(--text-2); line-height: 1.7; }
-    .rtags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-    .rtag {
-      font-size: .73rem; padding: 3px 9px; border-radius: 100px;
-      background: var(--bg-hover); border: 1px solid var(--border); color: var(--text-3);
-      transition: all var(--t);
-    }
-    .rtag.t-blue   { background: rgba(88,166,255,.08);  border-color: rgba(88,166,255,.28);  color: var(--accent); }
-    .rtag.t-teal   { background: rgba(45,212,191,.08);  border-color: rgba(45,212,191,.28);  color: var(--teal); }
-    .rtag.t-purple { background: rgba(167,139,250,.08); border-color: rgba(167,139,250,.28); color: var(--purple); }
-    .rtag.t-orange { background: rgba(251,146,60,.08);  border-color: rgba(251,146,60,.28);  color: #fb923c; }
-    .rtag.t-pink   { background: rgba(244,114,182,.08); border-color: rgba(244,114,182,.28); color: #f472b6; }
-    .rtag.t-green  { background: rgba(57,211,83,.08);   border-color: rgba(57,211,83,.28);   color: var(--accent-2); }
+  .lang-hidden { display: none !important; }
+  .kbd {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 2px 6px; border: 1px solid var(--border-strong); border-radius: 4px;
+    background: var(--surface-2); color: var(--text-dim);
+  }
+  .typing-cursor { display: inline-block; width: 10px; height: 1em; background: var(--accent); vertical-align: text-bottom; margin-left: 2px; animation: blink 1s step-end infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
 
-    /* publications */
-    .pl { display: flex; flex-direction: column; gap: 14px; }
-    .pi {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 20px 24px;
-      display: grid; grid-template-columns: auto 128px 1fr; gap: 16px; align-items: start;
-      transition: border-color var(--t), transform .3s ease, box-shadow .3s ease;
-    }
-    .pi:hover {
-      border-color: var(--border-hi);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 28px rgba(0,0,0,.22);
-    }
-    [data-theme="light"] .pi:hover { box-shadow: 0 8px 28px rgba(0,0,0,.08); }
-    .py {
-      font-size: .77rem; font-weight: 600; color: var(--accent);
-      background: rgba(88,166,255,.1); border: 1px solid rgba(88,166,255,.2);
-      border-radius: 6px; padding: 4px 10px; white-space: nowrap;
-      align-self: start;
-    }
-    .pthumbnail {
-      width: 128px; height: 84px;
-      border-radius: 6px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      flex-shrink: 0;
-      align-self: start;
-      transition: border-color var(--t), box-shadow .3s ease;
-    }
-    .pi:hover .pthumbnail { border-color: var(--border-hi); box-shadow: 0 4px 14px rgba(0,0,0,.25); }
-    .pthumbnail svg { display: block; width: 100%; height: 100%; }
-    .pt { font-size: .93rem; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.5; }
-    .pa { font-size: .82rem; color: var(--text-2); margin-bottom: 3px; }
-    .pa strong { color: var(--accent); }
-    .pv { font-size: .8rem; color: var(--text-3); font-style: italic; }
-    .plinks { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-    .plink {
-      font-size: .76rem; padding: 4px 12px; border-radius: 6px;
-      border: 1px solid var(--border); color: var(--text-2);
-      transition: all var(--t); cursor: pointer;
-      font-weight: 500;
-    }
-    .plink:hover {
-      background: var(--accent); border-color: var(--accent);
-      color: #fff; opacity: 1;
-      transform: translateY(-1px);
-      box-shadow: 0 3px 10px rgba(88,166,255,.32);
-    }
-    [data-theme="light"] .plink:hover { box-shadow: 0 3px 10px rgba(9,105,218,.25); }
+  .research-card {
+    background: var(--surface); border: 1px solid var(--border);
+    padding: 32px; transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative; overflow: hidden;
+  }
+  .research-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .research-num {
+    position: absolute; top: 20px; right: 24px;
+    font-family: 'Instrument Serif', serif; font-size: 80px; line-height: 0.8;
+    color: var(--border-strong); transition: color 0.4s ease;
+  }
+  .research-card:hover .research-num { color: var(--accent); }
 
-    /* news timeline */
-    .nl {
-      position: relative;
-      display: flex; flex-direction: column;
-      padding-left: 28px;
-    }
-    .nl::before {
-      content: '';
-      position: absolute; left: 7px; top: 20px; bottom: 20px;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--accent), var(--teal), var(--purple));
-      opacity: .3;
-      border-radius: 2px;
-    }
-    .nitem {
-      position: relative;
-      display: flex; gap: 20px; padding: 14px 0 14px 4px;
-      border-bottom: 1px solid rgba(33,38,45,.6);
-      font-size: .9rem; align-items: baseline;
-    }
-    .nitem:last-child { border-bottom: none; }
-    .nitem::before {
-      content: '';
-      position: absolute; left: -28px; top: 50%;
-      width: 14px; height: 14px;
-      border-radius: 50%;
-      background: var(--nd-color, var(--accent));
-      border: 2px solid var(--bg);
-      box-shadow: 0 0 0 2px var(--nd-color, var(--accent));
-      transform: translateY(-50%);
-      opacity: .88;
-    }
-    .nitem.nd-teal   { --nd-color: var(--teal); }
-    .nitem.nd-purple { --nd-color: var(--purple); }
-    .nitem.nd-blue   { --nd-color: var(--accent); }
-    .nd { font-size: .77rem; color: var(--text-3); white-space: nowrap; font-weight: 500; min-width: 72px; }
-    .nt { color: var(--text-2); }
-    .nt strong { color: var(--text); }
-    .nb {
-      font-size: .7rem; padding: 2px 8px; border-radius: 100px; font-weight: 500; flex-shrink: 0;
-      background: rgba(57,211,83,.1); border: 1px solid rgba(57,211,83,.25); color: var(--accent-2);
-      align-self: center;
-    }
+  /* ===== PUBLICATION THUMBNAIL ===== */
+  .pub-item {
+    display: grid; grid-template-columns: 180px 1fr; gap: 28px;
+    padding: 24px; border: 1px solid var(--border); border-radius: 14px;
+    background: var(--surface); transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    align-items: start;
+  }
+  @media (max-width: 768px) { .pub-item { grid-template-columns: 1fr; } }
+  .pub-item:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .pub-thumb {
+    aspect-ratio: 4/5; border-radius: 8px; overflow: hidden;
+    display: flex; align-items: flex-end; justify-content: flex-start;
+    padding: 16px; font-family: 'Instrument Serif', serif; color: white;
+    position: relative;
+  }
+  .pub-thumb::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.55));
+  }
+  .pub-thumb .pub-thumb-label { position: relative; z-index: 1; font-size: 18px; line-height: 1.2; }
+  .pub-thumb .pub-thumb-tag {
+    position: absolute; top: 14px; right: 14px; z-index: 1;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    padding: 3px 8px; border-radius: 100px;
+    background: rgba(255,255,255,0.2); color: white;
+    backdrop-filter: blur(4px); letter-spacing: 0.1em;
+  }
 
-    /* contact */
-    .cc {
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: var(--radius-lg); padding: 48px 40px; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .cc::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(88,166,255,.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cc-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.25rem; font-weight: 700; color: var(--text);
-      margin-bottom: 12px;
-    }
-    .cc p {
-      color: var(--text-2); max-width: 500px; margin: 0 auto 32px;
-      font-size: .95rem; line-height: 1.75;
-    }
-    .clinks { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .clink {
-      display: flex; align-items: center; gap: 8px;
-      padding: 11px 22px;
-      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius);
-      font-size: .87rem; color: var(--text-2);
-      transition: all var(--t); font-weight: 500;
-    }
-    .clink:hover {
-      background: var(--bg-hover); border-color: var(--accent);
-      color: var(--accent); transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(88,166,255,.18); opacity: 1;
-    }
-    [data-theme="light"] .clink:hover { box-shadow: 0 8px 24px rgba(9,105,218,.12); }
+  /* ===== MONOGRAM (replaces avatar) ===== */
+  .monogram {
+    width: 140px; height: 140px; border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 70%);
+    border: 1px solid var(--border-strong);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .monogram::before {
+    content: ''; position: absolute; inset: -2px; border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent, var(--accent), transparent 30%);
+    animation: spin 6s linear infinite;
+  }
+  .monogram::after {
+    content: ''; position: absolute; inset: 1px; border-radius: 50%; background: var(--surface);
+  }
+  .monogram-text {
+    position: relative; z-index: 1;
+    font-family: 'Instrument Serif', serif; font-size: 64px;
+    color: var(--text); letter-spacing: -0.05em;
+  }
 
-    /* footer */
-    footer {
-      position: relative; z-index: 1;
-      border-top: 1px solid var(--border);
-      background: linear-gradient(to bottom, transparent, rgba(88,166,255,.02));
-    }
-    [data-theme="light"] footer {
-      background: linear-gradient(to bottom, transparent, rgba(9,105,218,.02));
-    }
-    .footer-inner {
-      max-width: 940px; margin: 0 auto; padding: 28px 24px;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px;
-    }
-    .footer-left { display: flex; flex-direction: column; gap: 4px; }
-    .footer-info { color: var(--text-3); font-size: .8rem; }
-    .footer-tagline { font-size: .77rem; color: var(--text-3); font-style: italic; letter-spacing: .02em; }
-    .footer-links { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-    .footer-links a {
-      font-size: .8rem; color: var(--text-3);
-      transition: color var(--t); opacity: 1;
-    }
-    .footer-links a:hover { color: var(--accent); opacity: 1; }
+  /* ===== COMMAND PALETTE ===== */
+  .cmd-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px); z-index: 200;
+    display: none; align-items: flex-start; justify-content: center;
+    padding-top: 15vh;
+  }
+  .cmd-overlay.open { display: flex; }
+  .cmd-panel {
+    width: 90%; max-width: 560px; background: var(--surface);
+    border: 1px solid var(--border-strong); border-radius: 14px; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .cmd-input {
+    width: 100%; padding: 18px 20px; background: transparent;
+    border: none; border-bottom: 1px solid var(--border); color: var(--text);
+    font-family: 'JetBrains Mono', monospace; font-size: 14px; outline: none;
+  }
+  .cmd-list { max-height: 360px; overflow-y: auto; padding: 8px 0; }
+  .cmd-item {
+    display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+    cursor: pointer; transition: background 0.15s ease; color: var(--text-dim);
+  }
+  .cmd-item:hover, .cmd-item.active { background: var(--accent-soft); color: var(--text); }
+  .cmd-item .cmd-icon {
+    width: 28px; height: 28px; border-radius: 6px; background: var(--surface-2);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cmd-hint {
+    padding: 10px 20px; border-top: 1px solid var(--border);
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--text-mute);
+    display: flex; gap: 16px;
+  }
 
-    /* back to top */
-    #btt {
-      position: fixed; bottom: 28px; right: 28px; z-index: 200;
-      width: 42px; height: 42px;
-      background: var(--bg-card); border: 1px solid var(--border);
-      border-radius: 50%; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-2);
-      box-shadow: 0 4px 16px rgba(0,0,0,.28);
-      opacity: 0; pointer-events: none;
-      transform: translateY(12px);
-      transition: all .3s ease;
-    }
-    #btt.vis { opacity: 1; pointer-events: auto; transform: translateY(0); }
-    #btt:hover {
-      background: var(--accent); border-color: var(--accent);
-      color: #fff; transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(88,166,255,.38);
-    }
+  /* ===== READING LIST ===== */
+  .reading-item {
+    display: flex; gap: 16px; padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .reading-item:last-child { border-bottom: none; }
+  .reading-cover {
+    width: 48px; height: 60px; border-radius: 4px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Instrument Serif', serif; color: white; font-size: 20px;
+  }
 
-    /* language toggle */
-    [data-lang="en"] .lang-zh { display: none !important; }
-    [data-lang="zh"] .lang-en { display: none !important; }
-
-    /* responsive */
-    @media (max-width: 680px) {
-      .ag, .rg { grid-template-columns: 1fr; }
-      .pi { grid-template-columns: auto 1fr; gap: 10px; }
-      .pthumbnail { display: none; }
-      .nav-links { display: none; }
-      .hc { flex-direction: column; gap: 28px; text-align: center; }
-      .htags, .hbtns { justify-content: center; }
-      .hphoto { width: 130px; height: 130px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .footer-links { justify-content: center; }
-      .nl { padding-left: 22px; }
-      .nitem::before { left: -22px; }
-      .nl::before { left: 4px; }
-      .cc { padding: 32px 24px; }
-    }
-  </style>
+  /* ===== NOTE READER (Super.so-style in-page Notion reader) ===== */
+  .note-reader {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
+    display: none; align-items: flex-start; justify-content: center;
+    overflow-y: auto; padding: 40px 20px;
+    animation: fadeIn 0.3s ease;
+  }
+  .note-reader.open { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .note-reader-panel {
+    width: 100%; max-width: 760px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 14px;
+    overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    margin: auto;
+  }
+  .note-reader-header {
+    position: sticky; top: 0; z-index: 2;
+    backdrop-filter: blur(20px);
+    background: color-mix(in srgb, var(--bg) 80%, transparent);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .note-reader-crumb {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-mute);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .note-reader-close {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: var(--surface); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim); cursor: pointer; transition: all 0.2s;
+  }
+  .note-reader-close:hover { color: var(--accent); border-color: var(--accent); }
+  .note-cover {
+    height: 180px; display: flex; align-items: flex-end; padding: 40px;
+    position: relative; overflow: hidden;
+  }
+  .note-cover::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.3));
+  }
+  .note-cover-label {
+    position: relative; z-index: 1;
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: white;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    background: rgba(0,0,0,0.4); padding: 4px 12px; border-radius: 100px;
+    backdrop-filter: blur(10px);
+  }
+  .note-body {
+    padding: 40px 48px 60px; color: var(--text);
+    font-size: 16px; line-height: 1.75;
+  }
+  @media (max-width: 640px) { .note-body { padding: 28px 24px 40px; } }
+  .note-body h1 {
+    font-family: 'Instrument Serif', 'Noto Serif SC', serif;
+    font-size: 42px; line-height: 1.1; letter-spacing: -0.02em;
+    margin-bottom: 8px; color: var(--text);
+  }
+  .note-body .note-meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--text-mute);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 32px;
+    padding-bottom: 20px; border-bottom: 1px solid var(--border);
+  }
+  .note-body h2 {
+    font-family: 'Instrument Serif', 'Noto Serif SC', serif;
+    font-size: 28px; line-height: 1.2; margin: 40px 0 16px; color: var(--text);
+  }
+  .note-body h3 {
+    font-family: 'Instrument Serif', 'Noto Serif SC', serif;
+    font-size: 22px; line-height: 1.3; margin: 32px 0 12px; color: var(--text);
+  }
+  .note-body p { margin-bottom: 20px; color: var(--text-dim); }
+  .note-body strong { color: var(--text); font-weight: 600; }
+  .note-body em { font-style: italic; color: var(--text); }
+  .note-body a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  .note-body ul, .note-body ol { margin: 0 0 20px 24px; color: var(--text-dim); }
+  .note-body li { margin-bottom: 8px; }
+  .note-body code {
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    padding: 2px 6px; border-radius: 4px;
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--accent);
+  }
+  .note-body pre {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 20px; margin: 24px 0; overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace; font-size: 13px; line-height: 1.6;
+    color: var(--text);
+  }
+  .note-body pre code { background: transparent; border: none; padding: 0; color: var(--text); font-size: inherit; }
+  .note-body blockquote {
+    border-left: 3px solid var(--accent); padding: 4px 0 4px 20px; margin: 24px 0;
+    color: var(--text); font-style: italic;
+  }
+  .note-body hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  .note-body .math-block {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 20px; margin: 24px 0; text-align: center;
+    font-family: 'Instrument Serif', serif; font-size: 20px; font-style: italic;
+    color: var(--text);
+  }
+  .note-reader-footer {
+    padding: 24px 48px 40px; display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--border); flex-wrap: wrap; gap: 12px;
+  }
+  @media (max-width: 640px) { .note-reader-footer { padding: 20px 24px 32px; } }
+  body.reader-open { overflow: hidden; }
+</style>
 </head>
 <body>
 
-<canvas id="cvs"></canvas>
+<!-- NOTE READER (Super.so-style in-page reader) -->
+<div class="note-reader" id="noteReader">
+  <div class="note-reader-panel" id="noteReaderPanel">
+    <div class="note-reader-header">
+      <div class="note-reader-crumb">
+        <span data-zh="笔记" data-en="Notes">Notes</span> / <span id="noteReaderCrumb"></span>
+      </div>
+      <button class="note-reader-close" id="noteReaderClose" aria-label="close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="note-cover" id="noteReaderCover">
+      <span class="note-cover-label" id="noteReaderCoverLabel"></span>
+    </div>
+    <div class="note-body" id="noteReaderBody"></div>
+    <div class="note-reader-footer">
+      <div class="mono text-xs" style="color: var(--text-mute);">
+        <span data-zh="由 Notion 同步 · Super.so 风格渲染" data-en="Synced from Notion · rendered in Super.so style">Synced from Notion · rendered in Super.so style</span>
+      </div>
+      <a href="#" target="_blank" id="noteReaderNotionLink" class="mono text-xs accent-text link-arrow">
+        <span data-zh="在 Notion 中打开" data-en="Open in Notion">Open in Notion</span> →
+      </a>
+    </div>
+  </div>
+</div>
 
-<nav id="nav">
-  <div class="ni">
-    <div class="logo"><em>ziheng</em>.he</div>
-    <ul class="nav-links">
-      <li><a href="#about"        data-en="About"        data-zh="关于">About</a></li>
-      <li><a href="#research"     data-en="Research"     data-zh="研究">Research</a></li>
-      <li><a href="#publications" data-en="Publications" data-zh="论文">Publications</a></li>
-      <li><a href="#news"         data-en="News"         data-zh="动态">News</a></li>
-      <li><a href="#contact"      data-en="Contact"      data-zh="联系">Contact</a></li>
-    </ul>
-    <div class="ctls">
-      <button class="cbtn" id="lb" onclick="tl()">中文</button>
-      <button class="cbtn" id="tb" onclick="tt()">&#9728; Light</button>
+<canvas id="neuralCanvas"></canvas>
+<div class="grain"></div>
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="scroll-indicator" id="scrollIndicator"></div>
+
+<!-- COMMAND PALETTE -->
+<div class="cmd-overlay" id="cmdOverlay">
+  <div class="cmd-panel">
+    <input type="text" class="cmd-input" id="cmdInput" placeholder="Type a command or search..." autocomplete="off">
+    <div class="cmd-list" id="cmdList"></div>
+    <div class="cmd-hint">
+      <span><span class="kbd">↵</span> to select</span>
+      <span><span class="kbd">↑↓</span> to navigate</span>
+      <span><span class="kbd">esc</span> to close</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="glass-nav fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-[1400px] mx-auto px-6 md:px-12 py-5 flex items-center justify-between">
+    <a href="#home" class="flex items-center gap-2 group">
+      <span class="w-2 h-2 rounded-full accent-dot"></span>
+      <span class="serif text-xl">Dasheng He</span>
+    </a>
+    <div class="hidden lg:flex items-center gap-8 text-sm">
+      <a href="#about" class="nav-link" data-zh="关于" data-en="About">About</a>
+      <a href="#research" class="nav-link" data-zh="研究" data-en="Research">Research</a>
+      <a href="#stack" class="nav-link" data-zh="技术栈" data-en="Stack">Stack</a>
+      <a href="#activity" class="nav-link" data-zh="活动" data-en="Activity">Activity</a>
+      <a href="#education" class="nav-link" data-zh="学历" data-en="Education">Education</a>
+      <a href="#publications" class="nav-link" data-zh="论文" data-en="Papers">Papers</a>
+      <a href="#notes" class="nav-link" data-zh="笔记" data-en="Notes">Notes</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="cmd-btn mono text-xs px-3 py-2 rounded-full hidden md:flex items-center gap-2" id="cmdBtn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <span class="kbd">⌘ K</span>
+      </button>
+      <button class="lang-toggle mono text-xs px-3 py-2 rounded-full" id="langToggle">EN / 中</button>
+      <button class="theme-toggle text-xs px-3 py-2 rounded-full" id="themeToggle" aria-label="toggle theme">
+        <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
     </div>
   </div>
 </nav>
 
-<section id="hero" style="max-width:unset; padding-top:110px; padding-bottom:32px;">
-  <div class="hbg"></div>
-  <div class="hc">
-    <div class="hright">
-      <div class="hphoto">
-        <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
-          <rect width="180" height="180" fill="#1a2236"/>
-          <circle cx="90" cy="70" r="34" fill="#243350"/>
-          <ellipse cx="90" cy="152" rx="56" ry="38" fill="#243350"/>
-          <text x="90" y="81" text-anchor="middle" font-family="Georgia,serif" font-size="28" font-weight="700" fill="#58a6ff" letter-spacing="2">ZH</text>
+<div class="content-layer">
+
+<!-- HERO -->
+<section id="home" class="relative min-h-screen flex items-center px-6 md:px-12 pt-32 pb-20 max-w-[1400px] mx-auto">
+  <div class="w-full">
+    <div class="flex items-center gap-3 mb-8 reveal flex-wrap">
+      <span class="status-dot"></span>
+      <span class="mono text-xs uppercase tracking-widest" style="color: var(--text-dim);" data-zh="AI 方向博士生 · 在读" data-en="PhD student in AI · In progress">PhD student in AI · In progress</span>
+      <span class="mono text-xs" style="color: var(--text-mute);">⌘ K</span>
+    </div>
+
+    <h1 class="serif text-[15vw] md:text-[11vw] leading-[0.9] tracking-tight mb-10 reveal reveal-delay-1">
+      <span data-zh="何大生" data-en="Dasheng">Dasheng</span><br>
+      <span class="italic outlined-text" data-zh="你好。" data-en="He.">He.</span>
+    </h1>
+
+    <div class="grid md:grid-cols-12 gap-8 items-end">
+      <div class="md:col-span-7 reveal reveal-delay-2">
+        <p class="text-lg md:text-xl leading-relaxed max-w-2xl mb-8" style="color: var(--text-dim);">
+          <span data-zh="人工智能方向博士在读。关注大语言模型的内部机制、长上下文推理，以及让复杂系统变得透明的开发者工具。" data-en="PhD student in artificial intelligence. Interested in the internals of large language models, long-context reasoning, and developer tools that make complex systems transparent.">PhD student in artificial intelligence. Interested in the internals of large language models, long-context reasoning, and developer tools that make complex systems transparent.</span>
+        </p>
+        <!-- SOCIAL ROW -->
+        <div class="social-row">
+          <a href="#" target="_blank" class="social-icon" aria-label="Google Scholar">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0.5 9.5 12 1l11.5 8.5-4.742 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
+            <span class="tooltip">Scholar</span>
+          </a>
+          <a href="#" target="_blank" class="social-icon" aria-label="ORCID">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947 0 .525-.422.947-.947.947-.525 0-.946-.422-.946-.947 0-.525.421-.947.946-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.025-5.325 5.025h-3.919V7.416zm1.444 1.303v7.444h2.297c3.272 0 4.022-2.484 4.022-3.722 0-2.016-1.284-3.722-4.097-3.722h-2.222z"/></svg>
+            <span class="tooltip">ORCID</span>
+          </a>
+          <a href="https://github.com/zihenghe04" target="_blank" class="social-icon" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.3-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.49 5.93.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span class="tooltip">GitHub</span>
+          </a>
+          <a href="#" target="_blank" class="social-icon" aria-label="Twitter / X">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span class="tooltip">Twitter</span>
+          </a>
+          <a href="#" target="_blank" class="social-icon" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.063 2.063 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <span class="tooltip">LinkedIn</span>
+          </a>
+          <a href="#" target="_blank" class="social-icon" aria-label="Zhihu">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.75 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.751 0 18.281 0zm1.964 6.474h2.576v6.978h2.766l-.099.144-.595 1.486h-2.072v1.367l2.45 2.45-1.077 1.077-2.45-2.45v4.034H6.583v-4.03l-3.116 2.454-.897-1.14 4.014-3.167v-.595H2.51v-1.63h4.073V8.024H4.15l-.48 1.257-1.44-.547 1.304-3.426 2.092.88-.308.806h4.367v1.63H7.685zm7.148 0h6.617v11.17h-1.894l-1.635 2.179-.598-2.179h-2.49V6.474zm1.63 1.63v8.064h1.273l.238.864.648-.864h1.198V8.104z"/></svg>
+            <span class="tooltip">Zhihu</span>
+          </a>
+          <a href="#" target="_blank" class="social-icon" aria-label="Weibo">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M9.779 18.792c-3.746.371-6.977-1.324-7.221-3.787-.243-2.461 2.595-4.759 6.341-5.129 3.748-.372 6.979 1.324 7.222 3.785.242 2.462-2.594 4.759-6.342 5.131zm8.62-5.735c-.313-.094-.528-.158-.365-.569.358-.899.395-1.677 0-2.236-.739-1.044-2.758-.988-5.073-.021 0 0-.728.319-.542-.259.356-1.139.302-2.094-.251-2.647-1.252-1.257-4.579.046-7.429 2.909C2.608 12.38 1.373 14.646 1.373 16.603c0 3.744 4.793 6.024 9.49 6.024 6.154 0 10.246-3.578 10.246-6.421 0-1.72-1.448-2.693-2.71-3.149zm.818-6.193c-1.203-1.338-2.98-1.854-4.62-1.5-.382.083-.622.461-.54.842.082.382.461.625.842.543 1.164-.252 2.428.114 3.282 1.064.857.951 1.076 2.248.676 3.36-.131.367.063.765.425.894.361.132.765-.063.896-.428.564-1.566.258-3.391-.961-4.747l.003-.028zm-2.223 2.014c-.582-.644-1.449-.893-2.246-.72-.33.071-.538.396-.465.724.072.33.396.538.725.466.39-.083.822.034 1.108.351.288.319.395.744.31 1.135-.073.329.14.655.469.727.33.072.655-.139.728-.468.182-.795-.063-1.68-.641-2.321l.012.106z"/></svg>
+            <span class="tooltip">Weibo</span>
+          </a>
+          <a href="mailto:hello@dasheng.dev" class="social-icon" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+            <span class="tooltip">Email</span>
+          </a>
+        </div>
+      </div>
+      <div class="md:col-span-5 flex flex-col md:items-end gap-4 reveal reveal-delay-3">
+        <div class="flex flex-wrap gap-2 md:justify-end">
+          <span class="tag">LLM Internals</span>
+          <span class="tag">Transformers</span>
+          <span class="tag">Open Source</span>
+        </div>
+        <div class="flex items-center gap-4 mono text-sm">
+          <a href="mailto:hello@dasheng.dev" class="link-arrow">hello@dasheng.dev →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 left-6 md:left-12 flex items-center gap-3 mono text-xs" style="color: var(--text-mute);">
+    <span class="w-8 h-px" style="background: var(--text-mute);"></span>
+    <span data-zh="向下滚动 · 或按 ⌘K 搜索" data-en="Scroll · or press ⌘K">Scroll · or press ⌘K</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<section class="py-10 border-y" style="border-color: var(--border); background: var(--bg-soft);">
+  <div class="overflow-hidden whitespace-nowrap">
+    <div class="marquee-track">
+      <div class="flex items-center gap-16 pr-16 serif text-5xl md:text-7xl italic" style="color: var(--text-dim);">
+        <span>Transformers</span><span class="accent-text">✦</span>
+        <span>Rotary Position</span><span class="accent-text">✦</span>
+        <span>Long Context</span><span class="accent-text">✦</span>
+        <span>Open Source</span><span class="accent-text">✦</span>
+        <span>CCDash</span><span class="accent-text">✦</span>
+      </div>
+      <div class="flex items-center gap-16 pr-16 serif text-5xl md:text-7xl italic" style="color: var(--text-dim);">
+        <span>Transformers</span><span class="accent-text">✦</span>
+        <span>Rotary Position</span><span class="accent-text">✦</span>
+        <span>Long Context</span><span class="accent-text">✦</span>
+        <span>Open Source</span><span class="accent-text">✦</span>
+        <span>CCDash</span><span class="accent-text">✦</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="px-6 md:px-12 py-32 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-12">
+    <div class="md:col-span-4 reveal">
+      <div class="section-num mb-6 mono">— 01 / ABOUT</div>
+      <h2 class="serif text-5xl md:text-6xl leading-none mb-10" data-zh="关于我" data-en="About">About</h2>
+      <!-- MONOGRAM - abstract identity, no photo -->
+      <div class="monogram">
+        <span class="monogram-text">D.</span>
+      </div>
+      <div class="mt-6 mono text-xs" style="color: var(--text-mute);">
+        <div class="mb-1" data-zh="身份 · AI 方向博士生" data-en="Status · PhD student in AI">Status · PhD student in AI</div>
+        <div data-zh="所在 · XX 大学 · XX 实验室" data-en="Affiliation · Placeholder Univ. · Lab">Affiliation · Placeholder Univ. · Lab</div>
+      </div>
+    </div>
+
+    <div class="md:col-span-8 reveal reveal-delay-1">
+      <div class="space-y-5 text-lg leading-relaxed mb-12" style="color: var(--text-dim);">
+        <p data-zh="我是大生，人工智能方向的博士在读学生。研究兴趣横跨大语言模型的数学内核与实际工程——从位置编码到上下文窗口扩展，从注意力机制到可用的开发者工具。" data-en="I'm Dasheng, a PhD student in artificial intelligence. My interests sit at the intersection of LLM mathematics and practical engineering — from positional encodings to context-window extension, from attention mechanisms to usable developer tools.">I'm Dasheng, a PhD student in artificial intelligence. My interests sit at the intersection of LLM mathematics and practical engineering — from positional encodings to context-window extension, from attention mechanisms to usable developer tools.</p>
+        <p data-zh="作为 CCDash 的作者——一个用于聚合 Claude 使用数据的开源仪表盘——我相信：好的工具应该让复杂的系统变得透明。写代码、读论文、做笔记，是我理解世界的三种语言。" data-en="As the author of CCDash — an open-source dashboard for aggregating Claude usage data — I believe good tools should make complex systems transparent. Writing code, reading papers, and keeping notes are my three languages for understanding the world.">As the author of CCDash — an open-source dashboard for aggregating Claude usage data — I believe good tools should make complex systems transparent. Writing code, reading papers, and keeping notes are my three languages for understanding the world.</p>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
+        <div class="stat-box">
+          <div class="stat-num">06</div>
+          <div class="mono text-xs uppercase tracking-widest mt-2" style="color: var(--text-mute);" data-zh="论文" data-en="Papers">Papers</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">142</div>
+          <div class="mono text-xs uppercase tracking-widest mt-2" style="color: var(--text-mute);" data-zh="引用" data-en="Citations">Citations</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">12+</div>
+          <div class="mono text-xs uppercase tracking-widest mt-2" style="color: var(--text-mute);" data-zh="开源项目" data-en="OSS Repos">OSS Repos</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">∞</div>
+          <div class="mono text-xs uppercase tracking-widest mt-2" style="color: var(--text-mute);" data-zh="好奇心" data-en="Curiosity">Curiosity</div>
+        </div>
+      </div>
+
+      <div class="mt-2 flex flex-wrap gap-3">
+        <a href="https://github.com/zihenghe04/CCDash" target="_blank" class="btn-primary magnetic">GitHub — CCDash</a>
+        <a href="#" class="btn-primary magnetic" style="background: transparent; color: var(--text); border: 1px solid var(--border-strong);">Google Scholar →</a>
+        <a href="#" class="btn-primary magnetic" style="background: transparent; color: var(--text); border: 1px solid var(--border-strong);">CV (PDF) →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research" class="px-6 md:px-12 py-32 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-12 mb-16">
+    <div class="md:col-span-4 reveal">
+      <div class="section-num mb-6 mono">— 02 / RESEARCH</div>
+      <h2 class="serif text-5xl md:text-6xl leading-none" data-zh="研究方向" data-en="Research">Research</h2>
+    </div>
+    <div class="md:col-span-8 reveal reveal-delay-1">
+      <p class="text-lg leading-relaxed" style="color: var(--text-dim);" data-zh="三个彼此咬合的研究兴趣，从理论到工程，再到工具。" data-en="Three interlocking research interests — from theory to engineering to tooling.">Three interlocking research interests — from theory to engineering to tooling.</p>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-6">
+    <div class="research-card rounded-xl reveal">
+      <div class="research-num">01</div>
+      <div class="mb-6 relative z-10">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent);">
+          <circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/>
         </svg>
       </div>
-    </div>
-    <div class="hleft">
-      <div class="hname">Ziheng He</div>
-      <div class="hname-cn">何子恒</div>
-      <div class="haffil">
-        <span class="lang-en"><strong>School of Software Engineering</strong> &middot; Southeast University</span>
-        <span class="lang-zh"><strong>软件工程学院</strong> &middot; 东南大学</span>
-      </div>
-      <div class="htags">
-        <span class="tag a"><span class="lang-en">Embodied Intelligence</span><span class="lang-zh">具身智能</span></span>
-        <span class="tag t"><span class="lang-en">World Models</span><span class="lang-zh">世界模型</span></span>
-        <span class="tag p"><span class="lang-en">Robotics</span><span class="lang-zh">机器人学</span></span>
-        <span class="tag"><span class="lang-en">Machine Learning</span><span class="lang-zh">机器学习</span></span>
-      </div>
-      <div class="hbtns">
-        <a href="#publications" class="btn btn-pri">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          <span class="lang-en">Publications</span><span class="lang-zh">论文</span>
-        </a>
-        <a href="#contact" class="btn btn-ghost">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <span class="lang-en">Contact</span><span class="lang-zh">联系我</span>
-        </a>
+      <h3 class="serif text-2xl mb-3 relative z-10" data-zh="LLM 位置编码" data-en="LLM Positional Encoding">LLM Positional Encoding</h3>
+      <p class="text-sm leading-relaxed relative z-10" style="color: var(--text-dim);" data-zh="绝对位置、相对位置、旋转位置编码（RoPE）、ALiBi 等方法的数学基础与实证比较。探索长上下文外推的可能性。" data-en="Mathematical foundations and empirical comparisons of absolute, relative, rotary (RoPE), ALiBi and other encoding schemes. Exploring the limits of long-context extrapolation.">Mathematical foundations and empirical comparisons of absolute, relative, rotary (RoPE), ALiBi and other encoding schemes. Exploring the limits of long-context extrapolation.</p>
+      <div class="mt-6 flex flex-wrap gap-2 relative z-10">
+        <span class="tag">RoPE</span><span class="tag">ALiBi</span><span class="tag">YaRN</span>
       </div>
     </div>
-  </div>
-</section>
 
-<hr class="sep" />
-
-<section id="about">
-  <div class="sh"><span class="snum">01</span><h2 class="stitle"><span class="lang-en">About</span><span class="lang-zh">关于我</span></h2><div class="sline"></div></div>
-  <div class="ag">
-    <div class="at">
-      <p class="lang-en">I am <strong>Ziheng He (何子恒)</strong>, a researcher at the <strong>School of Software Engineering, Southeast University</strong>. My work sits at the intersection of embodied intelligence and world models — I study how autonomous agents can build structured, predictive representations of the physical world to act effectively in complex environments.</p>
-      <p class="lang-zh">我是<strong>何子恒</strong>，就读于<strong>东南大学软件工程学院</strong>。我的研究聚焦于具身智能与世界模型的交叉领域——探索自主智能体如何通过构建结构化、可预测的世界表征，在复杂物理环境中实现高效决策与行动。</p>
-      <p class="lang-en">My long-term goal is to build <strong>general-purpose robotic systems</strong> that can reason about the physical world, transfer knowledge across tasks, and collaborate naturally with humans.</p>
-      <p class="lang-zh">我的长期目标是构建具备通用能力的机器人系统，使其能够推理物理世界、跨任务迁移知识，并与人类自然协作。</p>
-    </div>
-    <ul class="alist">
-      <li class="ai">
-        <span class="ai-icon">&#127979;</span>
-        <div>
-          <span class="ai-lbl"><span class="lang-en">Institution</span><span class="lang-zh">所在机构</span></span>
-          <span class="lang-en">Southeast University &middot; School of Software Engineering</span>
-          <span class="lang-zh">东南大学 &middot; 软件工程学院</span>
-        </div>
-      </li>
-      <li class="ai">
-        <span class="ai-icon">&#128300;</span>
-        <div>
-          <span class="ai-lbl"><span class="lang-en">Research Interests</span><span class="lang-zh">研究方向</span></span>
-          <span class="lang-en">Embodied Intelligence, World Models, Robot Learning</span>
-          <span class="lang-zh">具身智能、世界模型、机器人学习</span>
-        </div>
-      </li>
-      <li class="ai">
-        <span class="ai-icon">&#128205;</span>
-        <div>
-          <span class="ai-lbl"><span class="lang-en">Location</span><span class="lang-zh">所在地</span></span>
-          <span class="lang-en">Nanjing, China</span>
-          <span class="lang-zh">中国 南京</span>
-        </div>
-      </li>
-      <li class="ai">
-        <span class="ai-icon">&#9993;</span>
-        <div>
-          <span class="ai-lbl">Email</span>
-          <a href="mailto:ziheng.he@seu.edu.cn">ziheng.he@seu.edu.cn</a>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<hr class="sep" />
-
-<section id="research">
-  <div class="sh"><span class="snum">02</span><h2 class="stitle"><span class="lang-en">Research</span><span class="lang-zh">研究方向</span></h2><div class="sline"></div></div>
-  <div class="rg">
-    <div class="rc blue">
-      <div class="ri">&#129302;</div>
-      <div class="rt"><span class="lang-en">Embodied Intelligence</span><span class="lang-zh">具身智能</span></div>
-      <div class="rt2"><span class="lang-en">具身智能</span><span class="lang-zh">Embodied Intelligence</span></div>
-      <p class="rd lang-en">Developing agents that perceive, reason, and act in the physical world. Research spans sensorimotor integration, hierarchical planning, and learning from interaction to enable robots to perform complex manipulation and navigation tasks.</p>
-      <p class="rd lang-zh">研究能够感知、推理并在物理世界中行动的智能体。涵盖感觉运动整合、层次化规划以及通过交互学习，使机器人执行复杂操作和导航任务。</p>
-      <div class="rtags">
-        <span class="rtag t-blue">Robot Learning</span>
-        <span class="rtag t-teal">Manipulation</span>
-        <span class="rtag t-orange">RL</span>
-        <span class="rtag t-green">Sim-to-Real</span>
-      </div>
-    </div>
-    <div class="rc purple">
-      <div class="ri">&#127760;</div>
-      <div class="rt"><span class="lang-en">World Models</span><span class="lang-zh">世界模型</span></div>
-      <div class="rt2"><span class="lang-en">世界模型</span><span class="lang-zh">World Models</span></div>
-      <p class="rd lang-en">Building internal models that capture the structure and dynamics of environments. Research focuses on latent-space representations, model-based planning, and leveraging world models to improve sample efficiency and generalization.</p>
-      <p class="rd lang-zh">构建能够捕捉环境结构和动态特性的内部模型。研究重点包括潜空间表征、基于模型的规划，以及利用世界模型提升采样效率和泛化能力。</p>
-      <div class="rtags">
-        <span class="rtag t-purple">Latent Dynamics</span>
-        <span class="rtag t-blue">Model-Based RL</span>
-        <span class="rtag t-teal">Generalization</span>
-        <span class="rtag t-pink">Video Prediction</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="sep" />
-
-<section id="publications">
-  <div class="sh"><span class="snum">03</span><h2 class="stitle"><span class="lang-en">Publications</span><span class="lang-zh">论文发表</span></h2><div class="sline"></div></div>
-  <div class="pl">
-
-    <div class="pi">
-      <span class="py">2025</span>
-      <div class="pthumbnail">
-        <svg viewBox="0 0 128 84" xmlns="http://www.w3.org/2000/svg">
-          <rect width="128" height="84" fill="#0d1f3c"/>
-          <rect x="11" y="11" width="106" height="64" rx="3" fill="#0a1928" opacity=".55"/>
-          <rect x="8" y="7" width="106" height="64" rx="3" fill="#111e35"/>
-          <path d="M100 7 L114 7 L114 21 Z" fill="#0a1826"/>
-          <path d="M100 7 L100 21 L114 21" fill="none" stroke="#1e3a5f" stroke-width="1.2"/>
-          <rect x="16" y="16" width="74" height="5" rx="2" fill="#58a6ff" opacity=".9"/>
-          <rect x="16" y="27" width="82" height="2.5" rx="1.2" fill="#2a4060" opacity=".75"/>
-          <rect x="16" y="33" width="66" height="2.5" rx="1.2" fill="#2a4060" opacity=".75"/>
-          <rect x="16" y="39" width="74" height="2.5" rx="1.2" fill="#2a4060" opacity=".75"/>
-          <rect x="16" y="48" width="40" height="18" rx="3" fill="#0e2240"/>
-          <rect x="60" y="48" width="40" height="18" rx="3" fill="#0e2240"/>
-          <text x="36" y="61" text-anchor="middle" font-family="monospace" font-size="8" fill="#2dd4bf" font-weight="bold">WM</text>
-          <text x="80" y="61" text-anchor="middle" font-family="monospace" font-size="8" fill="#58a6ff" font-weight="bold">EA</text>
-          <line x1="56" y1="57" x2="60" y2="57" stroke="#58a6ff" stroke-width="1" opacity=".6"/>
+    <div class="research-card rounded-xl reveal reveal-delay-1">
+      <div class="research-num">02</div>
+      <div class="mb-6 relative z-10">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent);">
+          <path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/>
         </svg>
       </div>
+      <h3 class="serif text-2xl mb-3 relative z-10" data-zh="长上下文推理" data-en="Long-Context Reasoning">Long-Context Reasoning</h3>
+      <p class="text-sm leading-relaxed relative z-10" style="color: var(--text-dim);" data-zh="从位置插值到 NTK-aware scaling 再到 YaRN——研究长度外推方法的效率、质量与可解释性。" data-en="From Position Interpolation to NTK-aware scaling to YaRN — studying the efficiency, quality, and interpretability of context extension methods.">From Position Interpolation to NTK-aware scaling to YaRN — studying the efficiency, quality, and interpretability of context extension methods.</p>
+      <div class="mt-6 flex flex-wrap gap-2 relative z-10">
+        <span class="tag">NTK</span><span class="tag">Attention</span><span class="tag">Inference</span>
+      </div>
+    </div>
+
+    <div class="research-card rounded-xl reveal reveal-delay-2">
+      <div class="research-num">03</div>
+      <div class="mb-6 relative z-10">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--accent);">
+          <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/><path d="M9 3v6M15 3v6M9 15v6M15 15v6M3 9h6M15 9h6M3 15h6M15 15h6"/>
+        </svg>
+      </div>
+      <h3 class="serif text-2xl mb-3 relative z-10" data-zh="开发者工具与可观测性" data-en="DevTools & Observability">DevTools & Observability</h3>
+      <p class="text-sm leading-relaxed relative z-10" style="color: var(--text-dim);" data-zh="为 AI 开发者构建透明、可自托管的监控与调试工具。主要项目是 CCDash——聚合多来源的 Claude 使用数据。" data-en="Building transparent, self-hostable monitoring and debugging tools for AI developers. My main project CCDash aggregates Claude usage data across sources.">Building transparent, self-hostable monitoring and debugging tools for AI developers. My main project CCDash aggregates Claude usage data across sources.</p>
+      <div class="mt-6 flex flex-wrap gap-2 relative z-10">
+        <span class="tag">CCDash</span><span class="tag">Infra</span><span class="tag">OSS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK — Real brand logos via simple-icons CDN -->
+<section id="stack" class="px-6 md:px-12 py-32 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-12 mb-16">
+    <div class="md:col-span-4 reveal">
+      <div class="section-num mb-6 mono">— 03 / TECH STACK</div>
+      <h2 class="serif text-5xl md:text-6xl leading-none" data-zh="技术栈" data-en="Stack">Stack</h2>
+    </div>
+    <div class="md:col-span-8 reveal reveal-delay-1">
+      <p class="text-lg leading-relaxed" style="color: var(--text-dim);" data-zh="每天都在用的工具链。悬浮查看名称与品牌 Logo。" data-en="The toolchain I use daily. Hover to reveal the brand logo and name.">The toolchain I use daily. Hover to reveal the brand logo and name.</p>
+    </div>
+  </div>
+
+  <div class="space-y-12">
+    <div class="reveal">
+      <div class="mono text-xs uppercase tracking-widest mb-4" style="color: var(--text-mute);" data-zh="AI / 机器学习" data-en="AI / Machine Learning">AI / Machine Learning</div>
+      <div class="grid grid-cols-4 md:grid-cols-8 gap-3" id="stackAI"></div>
+    </div>
+    <div class="reveal reveal-delay-1">
+      <div class="mono text-xs uppercase tracking-widest mb-4" style="color: var(--text-mute);" data-zh="编程语言" data-en="Languages">Languages</div>
+      <div class="grid grid-cols-4 md:grid-cols-8 gap-3" id="stackLang"></div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <div class="mono text-xs uppercase tracking-widest mb-4" style="color: var(--text-mute);" data-zh="工具与环境" data-en="Tools & Environment">Tools & Environment</div>
+      <div class="grid grid-cols-4 md:grid-cols-8 gap-3" id="stackFE"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITY -->
+<section id="activity" class="px-6 md:px-12 py-32 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-12 mb-16">
+    <div class="md:col-span-4 reveal">
+      <div class="section-num mb-6 mono">— 04 / ACTIVITY</div>
+      <h2 class="serif text-5xl md:text-6xl leading-none" data-zh="活动轨迹" data-en="Activity">Activity</h2>
+    </div>
+    <div class="md:col-span-8 reveal reveal-delay-1">
+      <p class="text-lg leading-relaxed" style="color: var(--text-dim);" data-zh="过去一年的代码提交与里程碑。" data-en="Commits and milestones over the past year.">Commits and milestones over the past year.</p>
+    </div>
+  </div>
+
+  <div class="card p-6 md:p-8 rounded-xl mb-10 reveal">
+    <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
       <div>
-        <div class="pt">
-          <span class="lang-en">World Models for Embodied Agents: A Survey of Latent Dynamics and Physical Reasoning</span>
-          <span class="lang-zh">面向具身智能体的世界模型：潜在动态与物理推理综述</span>
+        <div class="flex items-baseline gap-3">
+          <span class="serif text-3xl" id="totalContributions">1,284</span>
+          <span class="text-sm" style="color: var(--text-dim);" data-zh="次代码提交 · 过去一年" data-en="contributions in the past year">contributions in the past year</span>
         </div>
-        <div class="pa"><strong>Ziheng He</strong>, et al.</div>
-        <div class="pv"><span class="lang-en">Under Review</span><span class="lang-zh">审稿中</span></div>
-        <div class="plinks">
-          <span class="plink">[Paper]</span>
-          <span class="plink">[Project]</span>
+      </div>
+      <div class="flex items-center gap-2 mono text-xs" style="color: var(--text-mute);">
+        <span data-zh="少" data-en="Less">Less</span>
+        <span class="w-2.5 h-2.5 rounded-sm" style="background: var(--heat-0); border: 1px solid var(--border);"></span>
+        <span class="w-2.5 h-2.5 rounded-sm" style="background: var(--heat-1);"></span>
+        <span class="w-2.5 h-2.5 rounded-sm" style="background: var(--heat-2);"></span>
+        <span class="w-2.5 h-2.5 rounded-sm" style="background: var(--heat-3);"></span>
+        <span class="w-2.5 h-2.5 rounded-sm" style="background: var(--heat-4);"></span>
+        <span data-zh="多" data-en="More">More</span>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <div class="heatmap-grid" id="heatmapGrid"></div>
+    </div>
+    <div class="mt-4 flex gap-6 flex-wrap text-xs mono" style="color: var(--text-mute);">
+      <div><span style="color: var(--accent);">●</span> <span data-zh="最长连续 · 23 天" data-en="Longest streak · 23 days">Longest streak · 23 days</span></div>
+      <div><span style="color: var(--accent);">●</span> <span data-zh="当前连续 · 7 天" data-en="Current streak · 7 days">Current streak · 7 days</span></div>
+      <div><span style="color: var(--accent);">●</span> <span data-zh="最活跃的日子 · 42 次提交" data-en="Busiest day · 42 commits">Busiest day · 42 commits</span></div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div class="card p-8 rounded-xl reveal">
+      <div class="mono text-xs uppercase tracking-widest mb-6" style="color: var(--text-mute);" data-zh="近期里程碑" data-en="Recent Milestones">Recent Milestones</div>
+      <div class="space-y-8">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="mono text-xs accent-text mb-1">2026 · APR</div>
+          <div class="serif text-xl mb-1" data-zh="完成 RoPE 深度研究笔记" data-en="Completed deep dive on RoPE">Completed deep dive on RoPE</div>
+          <div class="text-sm" style="color: var(--text-dim);" data-zh="覆盖数学基础、与其他方法对比、NTK 连接。" data-en="Covering math foundations, comparisons, and the NTK connection.">Covering math foundations, comparisons, and the NTK connection.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="mono text-xs accent-text mb-1">2026 · MAR</div>
+          <div class="serif text-xl mb-1" data-zh="CCDash v1.6 发布" data-en="CCDash v1.6 shipped">CCDash v1.6 shipped</div>
+          <div class="text-sm" style="color: var(--text-dim);" data-zh="新增多源聚合与 rolling quota 监控。" data-en="Added multi-source aggregation and rolling quota monitoring.">Added multi-source aggregation and rolling quota monitoring.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="mono text-xs accent-text mb-1">2026 · JAN</div>
+          <div class="serif text-xl mb-1" data-zh="论文被 PCNLP 接收" data-en="Paper accepted at PCNLP">Paper accepted at PCNLP</div>
+          <div class="text-sm" style="color: var(--text-dim);" data-zh="关于 Transformer 位置编码的统一视角。" data-en="A unified perspective on Transformer positional encodings.">A unified perspective on Transformer positional encodings.</div>
         </div>
       </div>
     </div>
 
-    <div class="pi">
-      <span class="py">2024</span>
-      <div class="pthumbnail">
-        <svg viewBox="0 0 128 84" xmlns="http://www.w3.org/2000/svg">
-          <rect width="128" height="84" fill="#1a0d3c"/>
-          <rect x="11" y="11" width="106" height="64" rx="3" fill="#130924" opacity=".55"/>
-          <rect x="8" y="7" width="106" height="64" rx="3" fill="#1a1030"/>
-          <path d="M100 7 L114 7 L114 21 Z" fill="#130924"/>
-          <path d="M100 7 L100 21 L114 21" fill="none" stroke="#3d2060" stroke-width="1.2"/>
-          <rect x="16" y="16" width="74" height="5" rx="2" fill="#a78bfa" opacity=".9"/>
-          <rect x="16" y="27" width="82" height="2.5" rx="1.2" fill="#3a2060" opacity=".75"/>
-          <rect x="16" y="33" width="58" height="2.5" rx="1.2" fill="#3a2060" opacity=".75"/>
-          <rect x="16" y="39" width="70" height="2.5" rx="1.2" fill="#3a2060" opacity=".75"/>
-          <circle cx="34" cy="61" r="10" fill="#140a28" stroke="#a78bfa" stroke-width="1.5"/>
-          <circle cx="34" cy="61" r="5" fill="#1e0d40" stroke="#a78bfa" stroke-width="1"/>
-          <line x1="34" y1="56" x2="34" y2="51" stroke="#a78bfa" stroke-width="1.5" stroke-linecap="round"/>
-          <rect x="58" y="49" width="44" height="22" rx="2" fill="#140a28"/>
-          <path d="M62 68 Q70 58 78 62 Q86 66 94 52 Q98 46 102 50" stroke="#a78bfa" stroke-width="1.5" fill="none" stroke-linecap="round"/>
-        </svg>
+    <div class="card p-8 rounded-xl reveal reveal-delay-1">
+      <div class="mono text-xs uppercase tracking-widest mb-6" style="color: var(--text-mute);" data-zh="开源足迹" data-en="Open Source Footprint">Open Source Footprint</div>
+      <div class="space-y-6">
+        <div class="flex items-start justify-between pb-4 border-b" style="border-color: var(--border);">
+          <div>
+            <div class="serif text-xl">CCDash</div>
+            <div class="text-xs mono" style="color: var(--text-mute);" data-zh="自托管 Claude 监控面板" data-en="Self-hosted Claude monitor">Self-hosted Claude monitor</div>
+          </div>
+          <div class="text-right">
+            <div class="serif accent-text text-2xl">★ 284</div>
+            <div class="text-xs mono" style="color: var(--text-mute);">Forks · 38</div>
+          </div>
+        </div>
+        <div class="flex items-start justify-between pb-4 border-b" style="border-color: var(--border);">
+          <div>
+            <div class="serif text-xl">rope-experiments</div>
+            <div class="text-xs mono" style="color: var(--text-mute);" data-zh="RoPE 复现与可视化" data-en="RoPE reproductions & viz">RoPE reproductions & viz</div>
+          </div>
+          <div class="text-right">
+            <div class="serif accent-text text-2xl">★ 67</div>
+            <div class="text-xs mono" style="color: var(--text-mute);">Forks · 9</div>
+          </div>
+        </div>
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="serif text-xl">llm-reading-notes</div>
+            <div class="text-xs mono" style="color: var(--text-mute);" data-zh="LLM 论文阅读笔记" data-en="LLM paper reading notes">LLM paper reading notes</div>
+          </div>
+          <div class="text-right">
+            <div class="serif accent-text text-2xl">★ 41</div>
+            <div class="text-xs mono" style="color: var(--text-mute);">Forks · 5</div>
+          </div>
+        </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION — with university logo slots -->
+<section id="education" class="px-6 md:px-12 py-32 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-12 mb-16">
+    <div class="md:col-span-4 reveal">
+      <div class="section-num mb-6 mono">— 05 / EDUCATION</div>
+      <h2 class="serif text-5xl md:text-6xl leading-none" data-zh="学习经历" data-en="Education">Education</h2>
+    </div>
+    <div class="md:col-span-8 reveal reveal-delay-1">
+      <p class="text-lg leading-relaxed" style="color: var(--text-dim);" data-zh="一段穿过课本、实验室与开源社区的求学路径。" data-en="A path through textbooks, labs, and open-source communities.">A path through textbooks, labs, and open-source communities.</p>
+    </div>
+  </div>
+
+  <div class="space-y-6">
+    <div class="card p-8 md:p-10 rounded-xl reveal">
+      <div class="flex items-start gap-6">
+        <!-- Uni logo placeholder. Replace data-logo-src with a real URL. -->
+        <div class="uni-logo" data-logo-src="">P</div>
+        <div class="grid md:grid-cols-12 gap-6 items-start flex-1">
+          <div class="md:col-span-2">
+            <div class="mono text-sm accent-text">2024 — now</div>
+          </div>
+          <div class="md:col-span-7">
+            <h3 class="serif text-2xl md:text-3xl mb-1" data-zh="博士 · 人工智能" data-en="Ph.D. in Artificial Intelligence">Ph.D. in Artificial Intelligence</h3>
+            <div class="mono text-xs mb-2" style="color: var(--text-mute);" data-zh="XX 大学 · XX 实验室" data-en="Placeholder University · Placeholder Lab">Placeholder University · Placeholder Lab</div>
+            <p class="text-base" style="color: var(--text-dim);" data-zh="研究方向为大语言模型的位置编码、长上下文外推与开发者基础设施。" data-en="Research on positional encodings for LLMs, long-context extrapolation, and developer infrastructure.">Research on positional encodings for LLMs, long-context extrapolation, and developer infrastructure.</p>
+          </div>
+          <div class="md:col-span-3 flex flex-wrap gap-2 md:justify-end">
+            <span class="tag">LLM</span><span class="tag">NLP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-8 md:p-10 rounded-xl reveal reveal-delay-1">
+      <div class="flex items-start gap-6">
+        <div class="uni-logo" data-logo-src="">P</div>
+        <div class="grid md:grid-cols-12 gap-6 items-start flex-1">
+          <div class="md:col-span-2">
+            <div class="mono text-sm accent-text">2022 — 2024</div>
+          </div>
+          <div class="md:col-span-7">
+            <h3 class="serif text-2xl md:text-3xl mb-1" data-zh="硕士 · 计算机科学" data-en="M.Sc. in Computer Science">M.Sc. in Computer Science</h3>
+            <div class="mono text-xs mb-2" style="color: var(--text-mute);" data-zh="XX 大学" data-en="Placeholder University">Placeholder University</div>
+            <p class="text-base" style="color: var(--text-dim);" data-zh="机器学习与自然语言处理方向。研究方向聚焦于 Transformer 架构与位置编码。" data-en="Machine Learning & NLP track. Thesis focused on Transformer architectures and positional encodings.">Machine Learning & NLP track. Thesis focused on Transformer architectures and positional encodings.</p>
+          </div>
+          <div class="md:col-span-3 flex flex-wrap gap-2 md:justify-end">
+            <span class="tag">ML</span><span class="tag">Deep Learning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-8 md:p-10 rounded-xl reveal reveal-delay-2">
+      <div class="flex items-start gap-6">
+        <div class="uni-logo" data-logo-src="">P</div>
+        <div class="grid md:grid-cols-12 gap-6 items-start flex-1">
+          <div class="md:col-span-2">
+            <div class="mono text-sm accent-text">2018 — 2022</div>
+          </div>
+          <div class="md:col-span-7">
+            <h3 class="serif text-2xl md:text-3xl mb-1" data-zh="学士 · 软件工程" data-en="B.Sc. in Software Engineering">B.Sc. in Software Engineering</h3>
+            <div class="mono text-xs mb-2" style="color: var(--text-mute);" data-zh="XX 大学" data-en="Placeholder University">Placeholder University</div>
+            <p class="text-base" style="color: var(--text-dim);" data-zh="主修软件工程与系统架构。毕业设计方向为分布式系统监控与可视化。" data-en="Software engineering and systems architecture. Capstone on distributed systems monitoring.">Software engineering and systems architecture. Capstone on distributed systems monitoring.</p>
+          </div>
+          <div class="md:col-span-3 flex flex-wrap gap-2 md:justify-end">
+            <span class="tag">Systems</span><span class="tag">Distributed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="mono text-xs mt-6" style="color: var(--text-mute);" data-zh="※ 每条学历左侧是校徽占位符。替换 .uni-logo 的 data-logo-src 属性值为真实校徽图片 URL 即可显示。" data-en="※ Each entry has a university logo placeholder. Replace the data-logo-src attribute on .uni-logo with a real logo URL to display it.">※ Each entry has a university logo placeholder. Replace the data-logo-src attribute on .uni-logo with a real logo URL to display it.</p>
+</section>
+
+<!-- PUBLICATIONS — now with thumbnails -->
+<section id="publications" class="px-6 md:px-12 py-32 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-12 mb-16">
+    <div class="md:col-span-4 reveal">
+      <div class="section-num mb-6 mono">— 06 / PUBLICATIONS</div>
+      <h2 class="serif text-5xl md:text-6xl leading-none" data-zh="已发表论文" data-en="Publications">Publications</h2>
+    </div>
+    <div class="md:col-span-8 reveal reveal-delay-1">
+      <p class="text-lg leading-relaxed" style="color: var(--text-dim);" data-zh="选录。完整列表请访问 Google Scholar。" data-en="Selected works. See Google Scholar for the full list.">Selected works. See Google Scholar for the full list.</p>
+    </div>
+  </div>
+
+  <div class="space-y-5">
+    <div class="pub-item reveal">
+      <div class="pub-thumb" style="background: linear-gradient(135deg, #1e3a8a, #6366f1);">
+        <span class="pub-thumb-tag">2025</span>
+        <span class="pub-thumb-label" data-zh="位置编码：统一视角" data-en="Positional Encodings — A Unified View">Positional Encodings — A Unified View</span>
+      </div>
+      <div class="flex flex-col h-full">
+        <div class="mb-2 flex items-center gap-2 flex-wrap">
+          <span class="tag">PCNLP 2025</span>
+          <span class="tag">First Author</span>
+        </div>
+        <h3 class="serif text-2xl md:text-3xl leading-tight mb-3" data-zh="在 Transformer 中重新审视位置编码：一种统一视角" data-en="Revisiting Positional Encodings in Transformers: A Unified Perspective">Revisiting Positional Encodings in Transformers: A Unified Perspective</h3>
+        <p class="text-sm mb-4" style="color: var(--text-dim);"><strong style="color: var(--text);">Dasheng He</strong>, Co-author A, Co-author B · <em>Placeholder Conference on NLP (PCNLP)</em></p>
+        <p class="text-sm leading-relaxed mb-4" style="color: var(--text-dim);" data-zh="我们提出一个统一的代数框架，将绝对位置、相对位置、RoPE 与 ALiBi 置于同一视角下，并给出关于长度外推稳定性的新结论。" data-en="We propose a unified algebraic framework that places absolute, relative, rotary, and ALiBi encodings under the same lens, and derive new results on extrapolation stability.">We propose a unified algebraic framework that places absolute, relative, rotary, and ALiBi encodings under the same lens, and derive new results on extrapolation stability.</p>
+        <div class="flex flex-wrap gap-3 mono text-xs mt-auto">
+          <a href="#" class="link-arrow">PDF →</a>
+          <a href="#" class="link-arrow">arXiv →</a>
+          <a href="#" class="link-arrow">Code →</a>
+          <a href="#" class="link-arrow">BibTeX →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub-item reveal reveal-delay-1">
+      <div class="pub-thumb" style="background: linear-gradient(135deg, #7c2d12, #f97316);">
+        <span class="pub-thumb-tag">2024</span>
+        <span class="pub-thumb-label" data-zh="长上下文扩展实证研究" data-en="Long-Context Extension — Empirical Study">Long-Context Extension — Empirical Study</span>
+      </div>
+      <div class="flex flex-col h-full">
+        <div class="mb-2 flex items-center gap-2 flex-wrap">
+          <span class="tag">Workshop 2024</span>
+          <span class="tag">First Author</span>
+        </div>
+        <h3 class="serif text-2xl md:text-3xl leading-tight mb-3" data-zh="长上下文扩展的实证研究：NTK 感知缩放与插值方法对比" data-en="An Empirical Study on Long-Context Extension: NTK-aware Scaling vs. Interpolation">An Empirical Study on Long-Context Extension: NTK-aware Scaling vs. Interpolation</h3>
+        <p class="text-sm mb-4" style="color: var(--text-dim);"><strong style="color: var(--text);">Dasheng He</strong>, Co-author C · <em>Placeholder Workshop on Efficient LLMs</em></p>
+        <p class="text-sm leading-relaxed mb-4" style="color: var(--text-dim);" data-zh="跨多个模型规模和任务的系统性评测，量化不同长度外推方法的质量衰减曲线。" data-en="A systematic benchmark across multiple model sizes and tasks that quantifies the quality-decay curve of different long-context extension methods.">A systematic benchmark across multiple model sizes and tasks that quantifies the quality-decay curve of different long-context extension methods.</p>
+        <div class="flex flex-wrap gap-3 mono text-xs mt-auto">
+          <a href="#" class="link-arrow">PDF →</a>
+          <a href="#" class="link-arrow">arXiv →</a>
+          <a href="#" class="link-arrow">BibTeX →</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pub-item reveal reveal-delay-2">
+      <div class="pub-thumb" style="background: linear-gradient(135deg, #064e3b, #10b981);">
+        <span class="pub-thumb-tag">2023</span>
+        <span class="pub-thumb-label" data-zh="CCDash 设计笔记" data-en="CCDash Design Notes">CCDash Design Notes</span>
+      </div>
+      <div class="flex flex-col h-full">
+        <div class="mb-2 flex items-center gap-2 flex-wrap">
+          <span class="tag">Tech Report</span>
+          <span class="tag">Solo</span>
+        </div>
+        <h3 class="serif text-2xl md:text-3xl leading-tight mb-3" data-zh="自托管大语言模型使用监控：来自 CCDash 的设计与实践" data-en="Self-Hosted LLM Usage Monitoring: Design Notes from CCDash">Self-Hosted LLM Usage Monitoring: Design Notes from CCDash</h3>
+        <p class="text-sm mb-4" style="color: var(--text-dim);"><strong style="color: var(--text);">Dasheng He</strong> · <em>Technical Report</em></p>
+        <p class="text-sm leading-relaxed mb-4" style="color: var(--text-dim);" data-zh="面向开发者、聚合多源使用数据的自托管面板。本文记录其数据模型、隐私设计与 rolling quota 机制。" data-en="A self-hosted dashboard for developers that aggregates multi-source usage data. Documents the data model, privacy design, and rolling-quota mechanism.">A self-hosted dashboard for developers that aggregates multi-source usage data. Documents the data model, privacy design, and rolling-quota mechanism.</p>
+        <div class="flex flex-wrap gap-3 mono text-xs mt-auto">
+          <a href="#" class="link-arrow">PDF →</a>
+          <a href="https://github.com/zihenghe04/CCDash" target="_blank" class="link-arrow">Repo →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="mono text-xs mt-6" style="color: var(--text-mute);" data-zh="※ 每篇论文的缩略图是渐变占位符。之后把 .pub-thumb 的 background 替换为真实论文首页截图（background-image: url(...)）即可。" data-en="※ Each paper thumbnail is a gradient placeholder. Replace the background of .pub-thumb with a real paper cover (background-image: url(...)) to display it.">※ Each paper thumbnail is a gradient placeholder. Replace the background of .pub-thumb with a real paper cover (background-image: url(...)) to display it.</p>
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="px-6 md:px-12 py-32 max-w-[1400px] mx-auto">
+  <div class="grid md:grid-cols-12 gap-12 mb-16">
+    <div class="md:col-span-4 reveal">
+      <div class="section-num mb-6 mono">— 07 / NOTES</div>
+      <h2 class="serif text-5xl md:text-6xl leading-none" data-zh="个人笔记" data-en="Notes">Notes</h2>
+    </div>
+    <div class="md:col-span-8 reveal reveal-delay-1 flex flex-col justify-between gap-4">
+      <p class="text-lg leading-relaxed" style="color: var(--text-dim);" data-zh="受 Super.so 启发，笔记点击后在本站风格统一的阅读层中打开，而不是跳转到原生 Notion 页面。内容可以在 Notion 中编辑并同步过来。" data-en="Inspired by Super.so — notes open in an in-site reader styled to match this page, not a raw Notion page. Content is written in Notion and synced here.">Inspired by Super.so — notes open in an in-site reader styled to match this page, not a raw Notion page. Content is written in Notion and synced here.</p>
+      <div class="mono text-xs" style="color: var(--text-mute);">
+        <span class="status-dot" style="background: var(--accent); box-shadow: 0 0 10px var(--accent);"></span>
+        <span data-zh="自动随 Notion 更新" data-en="Auto-synced from Notion">Auto-synced from Notion</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5" id="notesGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="px-6 md:px-12 pt-20 pb-10 mt-20 border-t" style="border-color: var(--border); background: var(--bg-soft);">
+  <div class="max-w-[1400px] mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 mb-20">
       <div>
-        <div class="pt">
-          <span class="lang-en">Structured Latent Representations for Generalizable Robot Manipulation</span>
-          <span class="lang-zh">面向可泛化机器人操作的结构化潜在表示</span>
+        <h3 class="serif text-5xl md:text-7xl leading-none mb-6" data-zh="让我们聊聊。" data-en="Let's talk.">Let's talk.</h3>
+        <a href="mailto:hello@dasheng.dev" class="serif italic text-2xl md:text-3xl accent-text link-arrow">hello@dasheng.dev →</a>
+      </div>
+      <div class="grid grid-cols-2 gap-8 md:justify-self-end">
+        <div>
+          <div class="mono text-xs uppercase tracking-widest mb-4" style="color: var(--text-mute);" data-zh="学术" data-en="Academic">Academic</div>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="link-arrow">Google Scholar →</a></li>
+            <li><a href="#" class="link-arrow">ORCID →</a></li>
+            <li><a href="#" class="link-arrow">Semantic Scholar →</a></li>
+            <li><a href="#" class="link-arrow" data-zh="简历" data-en="CV">CV →</a></li>
+          </ul>
         </div>
-        <div class="pa"><strong>Ziheng He</strong>, et al.</div>
-        <div class="pv"><span class="lang-en">Preprint &middot; arXiv 2024</span><span class="lang-zh">预印本 &middot; arXiv 2024</span></div>
-        <div class="plinks">
-          <span class="plink">[arXiv]</span>
-          <span class="plink">[Code]</span>
+        <div>
+          <div class="mono text-xs uppercase tracking-widest mb-4" style="color: var(--text-mute);" data-zh="社交" data-en="Social">Social</div>
+          <ul class="space-y-2 text-sm">
+            <li><a href="https://github.com/zihenghe04" target="_blank" class="link-arrow">GitHub →</a></li>
+            <li><a href="#" class="link-arrow">Twitter / X →</a></li>
+            <li><a href="#" class="link-arrow">Zhihu →</a></li>
+            <li><a href="#" class="link-arrow">LinkedIn →</a></li>
+          </ul>
         </div>
       </div>
     </div>
-
-  </div>
-</section>
-
-<hr class="sep" />
-
-<section id="news">
-  <div class="sh"><span class="snum">04</span><h2 class="stitle"><span class="lang-en">News</span><span class="lang-zh">最新动态</span></h2><div class="sline"></div></div>
-  <div class="nl">
-    <div class="nitem nd-teal">
-      <span class="nd">Mar 2025</span>
-      <span class="nt lang-en"><strong>New preprint</strong> on world models for embodied agents submitted to arXiv.</span>
-      <span class="nt lang-zh"><strong>新预印本</strong>已提交至arXiv，主题为面向具身智能体的世界模型。</span>
-      <span class="nb">New</span>
-    </div>
-    <div class="nitem nd-purple">
-      <span class="nd">Jan 2025</span>
-      <span class="nt lang-en">Started new research project on <strong>generalizable robot manipulation</strong> using structured world models.</span>
-      <span class="nt lang-zh">启动基于结构化世界模型的<strong>可泛化机器人操作</strong>新研究项目。</span>
-    </div>
-    <div class="nitem nd-blue">
-      <span class="nd">Sep 2024</span>
-      <span class="nt lang-en">Joined the research group at <strong>Southeast University, School of Software Engineering</strong>.</span>
-      <span class="nt lang-zh">加入<strong>东南大学软件工程学院</strong>课题组。</span>
-    </div>
-  </div>
-</section>
-
-<hr class="sep" />
-
-<section id="contact">
-  <div class="sh"><span class="snum">05</span><h2 class="stitle"><span class="lang-en">Contact</span><span class="lang-zh">联系方式</span></h2><div class="sline"></div></div>
-  <div class="cc">
-    <div class="cc-title lang-en">Let's build the future of intelligent systems together.</div>
-    <div class="cc-title lang-zh">期待共同探索智能系统的未来。</div>
-    <p class="lang-en">I am always happy to discuss research ideas, collaborations, or anything about embodied AI and robotics. Feel free to reach out!</p>
-    <p class="lang-zh">欢迎就研究想法、合作机会，或有关具身智能与机器人的话题进行交流探讨，期待您的联系！</p>
-    <div class="clinks">
-      <a href="mailto:ziheng.he@seu.edu.cn" class="clink">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-        ziheng.he@seu.edu.cn
-      </a>
-      <a href="https://github.com/zihenghe04" class="clink" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-        GitHub
-      </a>
-      <a href="https://scholar.google.com/citations?user=zihenghe04" class="clink" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10H2l10-8 10 8z"/><path d="M6 10v8a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-8"/><path d="M12 22v-6"/></svg>
-        Google Scholar
-      </a>
-      <a href="https://www.seu.edu.cn" class="clink" target="_blank" rel="noopener">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        <span class="lang-en">Southeast University</span><span class="lang-zh">东南大学</span>
-      </a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-left">
-      <div class="footer-info">
-        <span class="lang-en">&copy; 2025 Ziheng He &middot; Southeast University</span>
-        <span class="lang-zh">&copy; 2025 何子恒 &middot; 东南大学</span>
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-8 border-t mono text-xs" style="border-color: var(--border); color: var(--text-mute);">
+      <div>© 2026 DASHENG HE · <span data-zh="保留所有权利" data-en="All rights reserved">All rights reserved</span></div>
+      <div class="flex items-center gap-6">
+        <span data-zh="手工打造 · 托管于 GitHub Pages" data-en="Handcrafted · Hosted on GitHub Pages">Handcrafted · Hosted on GitHub Pages</span>
       </div>
-      <div class="footer-tagline lang-en">Building intelligent systems that understand and act in the physical world.</div>
-      <div class="footer-tagline lang-zh">构建能够理解并作用于物理世界的智能系统。</div>
-    </div>
-    <div class="footer-links">
-      <a href="#about" class="lang-en">About</a>
-      <a href="#research" class="lang-en">Research</a>
-      <a href="#publications" class="lang-en">Publications</a>
-      <a href="#news" class="lang-en">News</a>
-      <a href="#contact" class="lang-en">Contact</a>
-      <a href="#about" class="lang-zh">关于</a>
-      <a href="#research" class="lang-zh">研究</a>
-      <a href="#publications" class="lang-zh">论文</a>
-      <a href="#news" class="lang-zh">动态</a>
-      <a href="#contact" class="lang-zh">联系</a>
     </div>
   </div>
 </footer>
 
-<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
+</div><!-- /content-layer -->
 
 <script>
-// Theme toggle
-(function() {
-  var saved = localStorage.getItem('theme') || 'dark';
-  document.documentElement.setAttribute('data-theme', saved);
-  var b = document.getElementById('tb');
-  if (b) b.innerHTML = saved === 'dark' ? '&#9728; Light' : '&#9790; Dark';
-})();
+  // ====== TECH STACK — inline brand SVGs (no external CDN) ======
+  // Official brand logos embedded as inline SVG so they always render.
+  const BRAND_SVGS = {
+    pytorch: '<svg viewBox="0 0 24 24"><path fill="#EE4C2C" d="M18.465 4.193c1.854 1.854 1.854 4.833 0 6.687s-4.833 1.854-6.687 0-1.854-4.833 0-6.687c.47-.47 1.012-.82 1.591-1.05V1.125C9.998 1.796 7.25 4.892 7.25 8.63c0 4.201 3.406 7.608 7.608 7.608s7.608-3.406 7.608-7.608c0-3.738-2.748-6.834-6.12-7.505v2.018c.58.23 1.122.58 1.592 1.05zm-3.343-1.862a1.09 1.09 0 1 1 0 2.181 1.09 1.09 0 0 1 0-2.181z"/></svg>',
+    tensorflow: '<svg viewBox="0 0 24 24"><path fill="#FF6F00" d="M1.292 5.856L11.54 0v24l-4.095-2.378V7.603l-6.168 3.568.015-5.315zm21.43 5.331l-4.103-2.382V24l-4.106-2.378V0l8.214 4.751-.005 6.436z"/></svg>',
+    jax: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.8" fill="#5E97F5"/><circle cx="12" cy="4.5" r="1.6" fill="#8E44EC"/><circle cx="12" cy="19.5" r="1.6" fill="#8E44EC"/><circle cx="4.5" cy="12" r="1.6" fill="#26A69A"/><circle cx="19.5" cy="12" r="1.6" fill="#26A69A"/><line x1="12" y1="7" x2="12" y2="9.5" stroke="#888" stroke-width="0.8"/><line x1="12" y1="14.5" x2="12" y2="17" stroke="#888" stroke-width="0.8"/><line x1="7" y1="12" x2="9.5" y2="12" stroke="#888" stroke-width="0.8"/><line x1="14.5" y1="12" x2="17" y2="12" stroke="#888" stroke-width="0.8"/></svg>',
+    huggingface: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#FFD21E"/><circle cx="8.5" cy="10" r="1.5" fill="#3A3B45"/><circle cx="15.5" cy="10" r="1.5" fill="#3A3B45"/><path d="M7.5 13.5 Q12 18 16.5 13.5 Q15 16 12 16 Q9 16 7.5 13.5 Z" fill="#FF6B9D"/><circle cx="6" cy="13" r="1.2" fill="#FF6B9D" opacity="0.6"/><circle cx="18" cy="13" r="1.2" fill="#FF6B9D" opacity="0.6"/></svg>',
+    numpy: '<svg viewBox="0 0 24 24"><path fill="#4DABCF" d="M10.315 6.98a1.2 1.2 0 1 1 0-2.401 1.2 1.2 0 0 1 0 2.401zm-5.3 5.3a1.2 1.2 0 1 1 0-2.4 1.2 1.2 0 0 1 0 2.4z"/><path fill="#4D77CF" d="M12 2 22 7.5v9L12 22 2 16.5v-9L12 2z M12 4.3L4.1 8.5l2.3 1.3 7.9-4.2L12 4.3z M4 10.3v5.9l7 3.7v-5.9L4 10.3z M13 14v5.9l7-3.7V10.3L13 14z" opacity="0.7"/></svg>',
+    pandas: '<svg viewBox="0 0 24 24"><rect x="4" y="3" width="3.5" height="18" fill="#150458"/><rect x="10.25" y="3" width="3.5" height="7" fill="#150458"/><rect x="10.25" y="12" width="3.5" height="9" fill="#E70488"/><rect x="16.5" y="3" width="3.5" height="18" fill="#FFCA00"/></svg>',
+    jupyter: '<svg viewBox="0 0 24 24"><circle cx="12" cy="4.5" r="1.3" fill="#F37626"/><path d="M4 10a8 8 0 0 1 16 0" fill="none" stroke="#F37626" stroke-width="2" stroke-linecap="round"/><path d="M4 14a8 8 0 0 0 16 0" fill="none" stroke="#F37626" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="19.5" r="1.3" fill="#F37626"/></svg>',
+    openai: '<svg viewBox="0 0 24 24"><path fill="#10A37F" d="M22.28 9.82a5.95 5.95 0 0 0-.51-4.91 6.04 6.04 0 0 0-6.5-2.9A6 6 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.95 5.95 0 0 0 .5 4.91 6.06 6.06 0 0 0 6.52 2.9A6 6 0 0 0 19.04 19.82a5.98 5.98 0 0 0 4-2.9 6.04 6.04 0 0 0-.75-7.09zM13.44 20.85a4.47 4.47 0 0 1-2.87-1.03l.14-.08 4.78-2.76a.79.79 0 0 0 .39-.68V9.52l2.02 1.17a.07.07 0 0 1 .04.06v5.58a4.5 4.5 0 0 1-4.5 4.51zM3.77 16.73a4.47 4.47 0 0 1-.53-2.97l.14.08 4.78 2.77a.78.78 0 0 0 .78 0l5.84-3.37v2.33a.06.06 0 0 1-.03.06l-4.84 2.79a4.5 4.5 0 0 1-6.14-1.68zM2.51 7.8a4.5 4.5 0 0 1 2.34-1.97V11.5a.76.76 0 0 0 .4.67l5.8 3.35-2.02 1.16a.07.07 0 0 1-.06 0L4.14 13.9a4.5 4.5 0 0 1-1.64-6.1zm16.5 3.85-5.84-3.37L15.2 7.11a.07.07 0 0 1 .06 0l4.83 2.79a4.5 4.5 0 0 1-.68 8.1v-5.68a.79.79 0 0 0-.39-.67zm2.01-3.04-.14-.09-4.77-2.79a.78.78 0 0 0-.78 0L9.48 9.1V6.76a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66zM8.38 12.8 6.36 11.63a.07.07 0 0 1-.04-.05V6a4.5 4.5 0 0 1 7.38-3.45l-.14.08-4.78 2.76a.78.78 0 0 0-.39.68zm1.1-2.36 2.6-1.5 2.6 1.5v3l-2.6 1.5-2.6-1.5v-3z"/></svg>',
 
-function tt() {
-  var h = document.documentElement;
-  var next = h.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  h.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
-  document.getElementById('tb').innerHTML = next === 'dark' ? '&#9728; Light' : '&#9790; Dark';
-}
+    python: '<svg viewBox="0 0 24 24"><path fill="#3776AB" d="M11.914 0c-2.014.006-3.937.186-5.626.5C1.52 1.397.86 3.213.86 6.554v4.398h10.132v1.297H4.072C.716 12.249.04 14.057.04 17.445c0 3.47.904 5.594 4.056 5.594h2.59V18.94c0-3.503 2.57-6.227 6.227-6.227h5.056c2.996 0 5.388-2.445 5.388-5.464V3.5c0-2.9-2.355-5.12-5.388-5.12-1.598-.194-3.247-.29-4.875-.286-1.635.002-3.257.098-4.86.29zm-1.14 2.925c.78 0 1.41.63 1.41 1.41s-.63 1.41-1.41 1.41-1.41-.63-1.41-1.41.63-1.41 1.41-1.41z"/><path fill="#FFD43B" d="M12.11 24c2.014-.006 3.938-.186 5.626-.5 4.768-.897 5.428-2.713 5.428-6.054v-4.398H12.994v-1.297h6.92c3.356 0 4.032-1.808 4.032-5.196 0-3.47-.904-5.594-4.056-5.594h-2.59v4.099c0 3.503-2.57 6.227-6.227 6.227H6.017c-2.996 0-5.388 2.445-5.388 5.464v3.75c0 2.9 2.355 5.12 5.388 5.12 1.598.194 3.247.29 4.875.286 1.635-.002 3.257-.098 4.86-.29zm1.14-2.925c-.78 0-1.41-.63-1.41-1.41s.63-1.41 1.41-1.41 1.41.63 1.41 1.41-.63 1.41-1.41 1.41z" opacity="0.9"/></svg>',
+    typescript: '<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#3178C6"/><path fill="#fff" d="M9.73 13.36v-1.24h5.65v1.24h-2.09V19h-1.47v-5.64zm8.32 3.47c0 .49-.26.82-.57 1.1-.55.47-1.47.72-2.54.72-.89 0-1.7-.18-2.37-.56v-1.48c.7.51 1.56.75 2.39.75.64 0 1.06-.27 1.06-.63 0-.3-.25-.5-.73-.68l-.88-.33c-.85-.33-1.6-.76-1.6-1.94 0-1.13.95-1.92 2.39-1.92.76 0 1.47.17 2.09.48v1.39c-.62-.41-1.3-.61-2.05-.61-.55 0-.89.2-.89.52 0 .28.23.44.7.62l.83.31c.93.36 1.67.77 1.67 2.03z"/></svg>',
+    javascript: '<svg viewBox="0 0 24 24"><rect width="24" height="24" rx="3" fill="#F7DF1E"/><path fill="#000" d="M7.5 17.93c.37.63.73 1.16 1.5 1.16.74 0 1.22-.29 1.22-1.42v-7.67h1.92v7.7c0 2-1.17 2.9-2.86 2.9-1.53 0-2.42-.79-2.87-1.74zm6.94-.21c.41.67 1.08 1.37 2.28 1.37 1 0 1.65-.5 1.65-1.2 0-.83-.66-1.13-1.77-1.62l-.6-.26c-1.76-.75-2.92-1.69-2.92-3.67 0-1.82 1.39-3.21 3.56-3.21 1.54 0 2.65.54 3.45 1.95l-1.89 1.21c-.42-.75-.87-1.04-1.56-1.04-.7 0-1.15.45-1.15 1.04 0 .73.45 1.02 1.49 1.47l.6.26C20.73 14.74 21.9 15.65 21.9 17.67c0 2.19-1.72 3.39-4.02 3.39-2.25 0-3.7-1.07-4.41-2.47z"/></svg>',
+    rust: '<svg viewBox="0 0 24 24"><path fill="#CE412B" d="M12 1 9.9 4.3 8.1 2.9 7.4 6.7 4.5 4.3 4.9 8.2 1.5 8.4 4 11.3 1 13.5 4.5 15 2.6 18.4 6.4 18 6.4 22 9.5 19.5 11 23 12 19.5 13 23 14.5 19.5 17.6 22 17.6 18 21.4 18.4 19.5 15 23 13.5 20 11.3 22.5 8.4 19.1 8.2 19.5 4.3 16.6 6.7 15.9 2.9 14.1 4.3Z M12 6.5 A5.5 5.5 0 1 1 12 17.5 A5.5 5.5 0 1 1 12 6.5 M9 9 v6 h2 v-2 h1 l1 2 h2 l-1.3-2.3 Q15 12 14.5 10.5 Q14 9 12 9 Z M11 10.5 h1.5 Q13 10.5 13 11.2 Q13 11.9 12.5 11.9 H11 Z" fill-rule="evenodd"/></svg>',
+    cplusplus: '<svg viewBox="0 0 24 24"><path fill="#00599C" d="M22.4 7.3 12 1.3 1.6 7.3v11.4L12 22.7l10.4-6V7.3zM12 19.5c-4.1 0-7.5-3.4-7.5-7.5S7.9 4.5 12 4.5c2.7 0 5.1 1.4 6.5 3.6l-3.3 1.9c-.7-1.1-1.9-1.9-3.2-1.9-2.1 0-3.8 1.7-3.8 3.9s1.7 3.9 3.8 3.9c1.4 0 2.5-.7 3.2-1.9l3.3 1.9c-1.3 2.1-3.7 3.6-6.5 3.6z"/><path fill="#fff" d="M18.5 11.2v.9h-.9v.9h.9v.9h.9v-.9h.9v-.9h-.9v-.9zm2.7 0v.9h-.9v.9h.9v.9h.9v-.9h.9v-.9h-.9v-.9z"/></svg>',
+    go: '<svg viewBox="0 0 24 24"><path fill="#00ADD8" d="M1.5 11.4q-.1 0-.1-.1l.3-.4h1.8l-.1.3h-1.9zm-.9 1.3q-.1 0-.1-.1l.3-.4h2.3l-.1.3h-2.4zm1.3 1.3q-.1 0-.1-.1l.3-.4h1l-.1.3h-1.1zm10.4-3q-.6.2-.9.3-.4.1-.9.1-.7 0-1.2-.4t-.5-1.1q0-.8.6-1.4.6-.6 1.5-.6.5 0 .9.1.3.1.4.2h-.1l-.3.4-.1-.1q-.2-.1-.4-.2t-.6-.1q-.7 0-1.2.4t-.5 1.1q0 .4.2.6.2.3.6.3.2 0 .4-.1.2 0 .4-.1l.3-.4h-.5q-.1 0-.1-.1l.2-.4h1.2l-.6 1.5zM14.5 11q-.7 0-1.2-.4t-.5-1.1q0-.8.6-1.4.6-.6 1.5-.6.6 0 1.1.4.4.4.4 1.1 0 .8-.6 1.4-.6.6-1.3.6zm.3-.6q.4 0 .8-.4.4-.4.4-1 0-.4-.2-.6-.2-.3-.6-.3-.4 0-.8.4-.4.4-.4 1 0 .4.2.6.2.3.6.3zM20 5.6q-.2 0-.3.1-.1.1-.1.3v.7h1.2l-.1.4h-1.1v2.3h-.6V7.1H18.3l.1-.4h.7v-.6q0-.4.3-.7.3-.3.7-.3.3 0 .5.1.1 0 .2.1l-.2.4q-.2-.1-.3-.1zm1.4 1.1q-.3 0-.3.3v2.4h-.5V7.3q0-.3.1-.5.2-.2.4-.2.1 0 .2 0l-.1.1q0 0-.1 0z"/><ellipse cx="16" cy="12" rx="6" ry="5" fill="#00ADD8"/><circle cx="14.5" cy="11" r="0.7" fill="#fff"/><circle cx="17.5" cy="11" r="0.7" fill="#fff"/><circle cx="14.5" cy="11" r="0.3" fill="#000"/><circle cx="17.5" cy="11" r="0.3" fill="#000"/></svg>',
+    latex: '<svg viewBox="0 0 24 24"><path fill="#008080" d="M6.5 4v2h.9c.4 0 .6.2.6.6v10.8c0 .4-.2.6-.6.6h-.9v2h5.8v-2h-.9c-.4 0-.6-.2-.6-.6V6.6c0-.4.2-.6.6-.6h1.9c1.4 0 1.9.6 2.2 2.5l.6-.1V4z"/></svg>',
+    gnubash: '<svg viewBox="0 0 24 24"><path fill="#4EAA25" d="M21.6 6.56c-.73-1.26-1.8-2.24-3.1-2.87l-4.8-2.77c-.42-.24-.9-.36-1.37-.36s-.94.12-1.37.36L6.17 3.69c-1.3.75-2.37 1.75-3.1 3.02-.73 1.26-1.07 2.66-1.07 4.07v2.36c0 1.42.34 2.81 1.07 4.07.73 1.27 1.8 2.27 3.1 3.02l4.8 2.77c.42.24.9.36 1.37.36s.94-.12 1.37-.36l4.79-2.77c1.3-.75 2.37-1.75 3.1-3.02.73-1.26 1.07-2.65 1.07-4.07v-2.36c0-1.41-.34-2.81-1.07-4.23zM7.4 17.8c-.82 0-1.48-.66-1.48-1.48 0-.32.1-.62.29-.88l3.79-5.1c.26-.35.56-.68.9-.97l-.52-.47c-.54-.49-.54-1.3 0-1.79.54-.49 1.3-.49 1.84 0l1.2 1.08c.16-.02.31-.05.48-.05.17 0 .32.03.48.05l1.2-1.08c.54-.49 1.3-.49 1.84 0 .54.49.54 1.3 0 1.79l-.52.47c.34.29.64.62.9.97l3.79 5.1c.19.26.29.56.29.88 0 .82-.66 1.48-1.48 1.48H7.4z"/></svg>',
 
-// Language toggle
-(function() {
-  var saved = localStorage.getItem('lang') || 'en';
-  document.documentElement.setAttribute('data-lang', saved);
-  var b = document.getElementById('lb');
-  if (b) b.textContent = saved === 'en' ? '中文' : 'EN';
-  updateNavLinks(saved);
-})();
+    react: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="2" fill="#61DAFB"/><g fill="none" stroke="#61DAFB" stroke-width="1"><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/></g></svg>',
+    nextjs: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11" fill="#000"/><path fill="#fff" d="M7.5 7v10h1.4V9.7l7.6 9.5a9.5 9.5 0 0 0 2.3-1.8L10 6h-2.5zm7.5 0v5.3l1.4 1.8V7H15z"/></svg>',
+    tailwindcss: '<svg viewBox="0 0 24 24"><path fill="#06B6D4" d="M12 6c-2.7 0-4.3 1.3-5 4 1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.8 1.9 1.4.9 1 2 2.1 4.1 2.1 2.7 0 4.3-1.3 5-4-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.8-1.9-1.4C15.2 7 14.1 6 12 6zM7 12c-2.7 0-4.3 1.3-5 4 1-1.3 2.2-1.8 3.5-1.5.8.2 1.3.8 1.9 1.4.9 1 2 2.1 4.1 2.1 2.7 0 4.3-1.3 5-4-1 1.3-2.2 1.8-3.5 1.5-.8-.2-1.3-.8-1.9-1.4-.9-1-2-2.1-4.1-2.1z"/></svg>',
+    nodejs: '<svg viewBox="0 0 24 24"><path fill="#539E43" d="M12 1.85a1.65 1.65 0 0 0-.82.22L3.78 6.36a1.64 1.64 0 0 0-.82 1.42v8.44c0 .59.31 1.12.82 1.42l1.93 1.11c.94.46 1.27.46 1.69.46 1.4 0 2.21-.85 2.21-2.33V8.56a.17.17 0 0 0-.16-.17H8.52a.17.17 0 0 0-.16.17v8.32c0 .65-.68 1.31-1.77.76l-2.02-1.17a.18.18 0 0 1-.09-.15V7.78c0-.06.04-.12.09-.15l7.4-4.27a.15.15 0 0 1 .16 0l7.4 4.27c.05.03.08.09.08.15v8.56c0 .06-.03.12-.08.15l-7.41 4.28c-.05.02-.1.02-.16 0l-1.91-1.12a.16.16 0 0 0-.15-.01c-.52.3-.62.35-1.11.51-.12.04-.3.1.07.31l2.47 1.46c.25.14.53.22.82.22.3 0 .57-.08.82-.22l7.4-4.28a1.66 1.66 0 0 0 .82-1.42V7.78a1.64 1.64 0 0 0-.82-1.42L12.82 2.07A1.65 1.65 0 0 0 12 1.85zm1.98 5.49c-2.11 0-3.37.89-3.37 2.38 0 1.63 1.26 2.08 3.3 2.28 2.44.24 2.63.6 2.63 1.08 0 .83-.67 1.18-2.23 1.18-1.98 0-2.41-.49-2.55-1.47a.18.18 0 0 0-.17-.15h-.96a.17.17 0 0 0-.17.17c0 1.25.68 2.75 3.85 2.75 2.35 0 3.7-.93 3.7-2.54 0-1.61-1.08-2.02-3.38-2.33-2.31-.3-2.55-.46-2.55-1s.27-.99 2.05-.99c1.59 0 2.18.34 2.42 1.42.02.08.09.14.17.14h.97c.04 0 .09-.02.12-.05.03-.04.05-.08.05-.13-.15-1.8-1.34-2.64-3.74-2.64z"/></svg>',
+    docker: '<svg viewBox="0 0 24 24"><path fill="#2496ED" d="M13.98 11.1h2.15v1.93h1.09c.5 0 1.01-.09 1.49-.26.24-.09.5-.21.73-.37-.3-.4-.46-.9-.5-1.4-.07-.69.07-1.59.53-2.13l.23-.27.28.22c.7.57 1.3 1.58.96 2.85.96.28 2.1.23 2.92-.14l.3-.14.15.29c.56 1.1.62 3.41-1.4 4.61-.63.37-1.73.56-3.07.56-4.15 0-7.24-2.24-8.37-5.21H2v-.54h4.42v-1.93H3.15V7.3h3.27V5.37h2.15V7.3h4.41v1.93h-3.27v1.93h4.27zm-9.3 5.94h.53c.07.01.14-.03.17-.09a.18.18 0 0 0-.09-.24.19.19 0 0 0-.08-.01h-.53a.18.18 0 0 0-.17.17c0 .06.03.12.08.15a.17.17 0 0 0 .09.02zm-.74 0h.54c.07 0 .14-.03.17-.09a.18.18 0 0 0-.09-.24.17.17 0 0 0-.08-.01h-.54a.18.18 0 0 0-.13.07.16.16 0 0 0-.04.1c0 .07.04.13.11.16l.06.01zm-.74 0h.53c.07 0 .14-.04.17-.1a.17.17 0 0 0-.08-.23.17.17 0 0 0-.09-.01h-.53a.17.17 0 0 0-.17.16c0 .1.08.18.17.18zm-.74 0h.53a.17.17 0 0 0 .17-.16c.01-.1-.07-.19-.17-.19h-.53a.17.17 0 0 0-.17.17.18.18 0 0 0 .17.18z"/><rect x="3.3" y="5.6" width="1.8" height="1.6" fill="#2496ED"/><rect x="5.5" y="5.6" width="1.8" height="1.6" fill="#2496ED"/><rect x="7.7" y="5.6" width="1.8" height="1.6" fill="#2496ED"/><rect x="9.9" y="5.6" width="1.8" height="1.6" fill="#2496ED"/><rect x="5.5" y="7.8" width="1.8" height="1.6" fill="#2496ED"/><rect x="7.7" y="7.8" width="1.8" height="1.6" fill="#2496ED"/><rect x="9.9" y="7.8" width="1.8" height="1.6" fill="#2496ED"/><rect x="7.7" y="3.4" width="1.8" height="1.6" fill="#2496ED"/></svg>',
+    git: '<svg viewBox="0 0 24 24"><path fill="#F05032" d="M23.5 11 13 .5c-.6-.6-1.6-.6-2.2 0L8.6 2.7l2.8 2.8a1.9 1.9 0 0 1 2.4 2.4l2.7 2.7a1.9 1.9 0 1 1-1.2 1.1l-2.5-2.5v6.6a1.9 1.9 0 1 1-1.6 0V9.1a1.9 1.9 0 0 1-1-2.5L7.4 3.9.5 10.8c-.6.6-.6 1.6 0 2.2L11 23.5c.6.6 1.6.6 2.2 0L23.5 13.2c.6-.6.6-1.6 0-2.2z"/></svg>',
+    neovim: '<svg viewBox="0 0 24 24"><path fill="#57A143" d="M2 7 12 1l10 6v10l-10 6L2 17V7z"/><path fill="#fff" d="M7.5 6.5l2 1v8l1.5 1V9.5l-3-1.5v-1.5zm9 1.5l-2 1v8l-1.5 1V11l3-1.5V8z"/></svg>',
+    notion: '<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="#fff" stroke="#000" stroke-width="1.5"/><path fill="#000" d="M8 7v10h1.5V10l4 7h1.5V7h-1.5v7l-4-7H8z"/></svg>',
+  };
 
-function tl() {
-  var h = document.documentElement;
-  var next = h.getAttribute('data-lang') === 'en' ? 'zh' : 'en';
-  h.setAttribute('data-lang', next);
-  localStorage.setItem('lang', next);
-  document.getElementById('lb').textContent = next === 'en' ? '中文' : 'EN';
-  updateNavLinks(next);
-}
-
-function updateNavLinks(lang) {
-  document.querySelectorAll('.nav-links a[data-en]').forEach(function(a) {
-    a.textContent = lang === 'en' ? a.dataset.en : a.dataset.zh;
-  });
-}
-
-// Nav scroll glassmorphism + back-to-top
-var nav = document.getElementById('nav');
-var btt = document.getElementById('btt');
-window.addEventListener('scroll', function() {
-  var y = window.scrollY || window.pageYOffset;
-  if (y > 60) {
-    nav.classList.add('scrolled');
-    btt.classList.add('vis');
-  } else {
-    nav.classList.remove('scrolled');
-    btt.classList.remove('vis');
+  const stackAI = [
+    { name: 'PyTorch', slug: 'pytorch' },
+    { name: 'TensorFlow', slug: 'tensorflow' },
+    { name: 'JAX', slug: 'jax' },
+    { name: 'Hugging Face', slug: 'huggingface' },
+    { name: 'NumPy', slug: 'numpy' },
+    { name: 'Pandas', slug: 'pandas' },
+    { name: 'Jupyter', slug: 'jupyter' },
+    { name: 'OpenAI', slug: 'openai' },
+  ];
+  const stackLang = [
+    { name: 'Python', slug: 'python' },
+    { name: 'TypeScript', slug: 'typescript' },
+    { name: 'JavaScript', slug: 'javascript' },
+    { name: 'Rust', slug: 'rust' },
+    { name: 'C++', slug: 'cplusplus' },
+    { name: 'Go', slug: 'go' },
+    { name: 'LaTeX', slug: 'latex' },
+    { name: 'Bash', slug: 'gnubash' },
+  ];
+  const stackFE = [
+    { name: 'React', slug: 'react' },
+    { name: 'Next.js', slug: 'nextjs' },
+    { name: 'Tailwind', slug: 'tailwindcss' },
+    { name: 'Node.js', slug: 'nodejs' },
+    { name: 'Docker', slug: 'docker' },
+    { name: 'Git', slug: 'git' },
+    { name: 'Neovim', slug: 'neovim' },
+    { name: 'Notion', slug: 'notion' },
+  ];
+  function renderStack() {
+    const build = (items) => items.map(s => `
+      <div class="tech-item rounded-xl" title="${s.name}">
+        <div class="tech-logo-wrap">${BRAND_SVGS[s.slug] || ''}</div>
+        <div class="tech-name">${s.name}</div>
+      </div>
+    `).join('');
+    document.getElementById('stackAI').innerHTML = build(stackAI);
+    document.getElementById('stackLang').innerHTML = build(stackLang);
+    document.getElementById('stackFE').innerHTML = build(stackFE);
   }
-}, { passive: true });
 
-// Particle canvas
-var cv = document.getElementById('cvs');
-var cx = cv.getContext('2d');
-var W, H, pts = [];
-
-function rsz() { W = cv.width = innerWidth; H = cv.height = innerHeight; }
-function rnd(a, b) { return a + Math.random() * (b - a); }
-function init() {
-  pts = Array.from({length: 90}, function() {
-    return {x: Math.random()*W, y: Math.random()*H, r: rnd(.6,2.2), vx: rnd(-.18,.18), vy: rnd(-.18,.18), a: rnd(.28,.78)};
-  });
-}
-function draw() {
-  cx.clearRect(0, 0, W, H);
-  var dark = document.documentElement.getAttribute('data-theme') !== 'light';
-  var c = dark ? '88,166,255' : '9,105,218';
-  pts.forEach(function(p) {
-    cx.beginPath();
-    cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    cx.fillStyle = 'rgba(' + c + ',' + p.a + ')';
-    cx.fill();
-    p.x += p.vx; p.y += p.vy;
-    if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
-    if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
-  });
-  var md = 120;
-  for (var i = 0; i < pts.length; i++) {
-    for (var j = i + 1; j < pts.length; j++) {
-      var dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
-      var d = Math.hypot(dx, dy);
-      if (d < md) {
-        cx.beginPath();
-        cx.moveTo(pts[i].x, pts[i].y);
-        cx.lineTo(pts[j].x, pts[j].y);
-        cx.strokeStyle = 'rgba(' + c + ',' + (1 - d/md) * .32 + ')';
-        cx.lineWidth = .6;
-        cx.stroke();
+  // ====== University logo hydration ======
+  function hydrateUniLogos() {
+    document.querySelectorAll('.uni-logo').forEach(el => {
+      const src = el.getAttribute('data-logo-src');
+      if (src && src.trim() !== '') {
+        el.classList.add('has-img');
+        el.innerHTML = `<img src="${src}" alt="University logo">`;
       }
+    });
+  }
+
+  // ====== HEATMAP ======
+  function renderHeatmap() {
+    const grid = document.getElementById('heatmapGrid');
+    const today = new Date();
+    const start = new Date(today);
+    start.setDate(start.getDate() - 364);
+    const startDay = start.getDay();
+    start.setDate(start.getDate() - startDay);
+    const numDays = Math.ceil((today - start) / (1000 * 60 * 60 * 24)) + 1;
+    const cells = [];
+    let total = 0;
+    for (let i = 0; i < numDays; i++) {
+      const d = new Date(start);
+      d.setDate(d.getDate() + i);
+      if (d > today) { cells.push(`<div class="heatmap-cell" style="visibility:hidden"></div>`); continue; }
+      const day = d.getDay();
+      const month = d.getMonth();
+      let r = Math.random();
+      let busy = 0.5 + 0.25 * Math.sin((d.getTime() / 86400000) / 14);
+      if (day === 0 || day === 6) busy -= 0.25;
+      if (month === 11 || month === 0) busy += 0.1;
+      const p = Math.max(0, Math.min(1, busy));
+      let level = 0;
+      if (r < p * 0.22) level = 1;
+      if (r < p * 0.12) level = 2;
+      if (r < p * 0.06) level = 3;
+      if (r < p * 0.025) level = 4;
+      const count = level === 0 ? 0 : level * (2 + Math.floor(Math.random() * 6));
+      total += count;
+      const dateStr = d.toISOString().slice(0, 10);
+      cells.push(`<div class="heatmap-cell" data-level="${level}" title="${count} contributions on ${dateStr}"></div>`);
+    }
+    grid.innerHTML = cells.join('');
+    document.getElementById('totalContributions').textContent = total.toLocaleString();
+  }
+
+  // ====== NEURAL CANVAS ======
+  function initNeuralCanvas() {
+    const canvas = document.getElementById('neuralCanvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, nodes = [];
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+      const count = Math.floor(W * H / 25000);
+      nodes = Array.from({length: count}, () => ({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.2, vy: (Math.random() - 0.5) * 0.2,
+        r: Math.random() * 1.5 + 0.5
+      }));
+    }
+    let mouseX = -1000, mouseY = -1000;
+    window.addEventListener('mousemove', e => { mouseX = e.clientX; mouseY = e.clientY; });
+    window.addEventListener('resize', resize);
+    resize();
+    function getAccent() {
+      return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    }
+    function hexToRgb(hex) {
+      hex = hex.replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+      const num = parseInt(hex, 16);
+      return [num >> 16 & 255, num >> 8 & 255, num & 255];
+    }
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      const rgb = hexToRgb(getAccent() || '#d4ff3a');
+      nodes.forEach(n => {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      });
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 140) {
+            const alpha = (1 - d / 140) * 0.25;
+            ctx.strokeStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          }
+        }
+        const n = nodes[i];
+        const dxm = n.x - mouseX, dym = n.y - mouseY;
+        const dm = Math.sqrt(dxm*dxm + dym*dym);
+        if (dm < 180) {
+          const alpha = (1 - dm / 180) * 0.45;
+          ctx.strokeStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
+          ctx.lineWidth = 0.7;
+          ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(mouseX, mouseY); ctx.stroke();
+        }
+      }
+      nodes.forEach(n => {
+        ctx.fillStyle = `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.5)`;
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
+      });
+      requestAnimationFrame(tick);
+    }
+    tick();
+  }
+
+  // ====== NOTES ======
+  // ============================================================
+  //  NOTION API INTEGRATION
+  // ============================================================
+  //  Set NOTION_API to your deployed Cloudflare Worker URL.
+  //  Leave as '' to use the local fallback data below.
+  //  Worker source code: see homepage setup guide.
+  // ============================================================
+  const NOTION_API = 'https://notion-proxy.qq2281724679.workers.dev';
+  // Local fallback data (used when NOTION_API is empty or fetch fails)
+  const fallbackNotes = [
+    {
+      id: 'rope-math',
+      title_zh: "RoPE 的数学直觉：从复数到旋转矩阵",
+      title_en: "The Math Intuition of RoPE: From Complex Numbers to Rotation Matrices",
+      excerpt_zh: "为什么把位置编码嵌入到注意力里的旋转中，是一种如此优雅的选择？本文从复数乘法开始讲起。",
+      excerpt_en: "Why does embedding positional information as rotations inside attention feel so natural? Starting from complex multiplication.",
+      date: "2026 · 04", tag: "LLM",
+      cover: "linear-gradient(135deg, #1e3a8a, #7c3aed)",
+      notion_url: "https://www.notion.so/your-public-share-link-1",
+      body_zh: `<h1>RoPE 的数学直觉：从复数到旋转矩阵</h1><div class="note-meta">2026 · 04 · 约 8 分钟阅读</div><p>当我第一次读到 <strong>Rotary Position Embedding</strong> (RoPE) 的论文时，被它的优雅击中了。位置信息不是被"加"到 token 表示里，而是作为<em>旋转</em>作用在向量上。本文试图用最直接的语言解释为什么这种设计如此自然。</p><h2>从复数说起</h2><p>考虑二维平面上的一个向量 <code>v = (x, y)</code>。我们可以把它写成复数 <code>z = x + iy</code>。那么"旋转角度 θ"这件事在复数里是什么？</p><div class="math-block">z' = z · e^(iθ) = (x + iy)(cos θ + i sin θ)</div><p>展开后就是我们熟悉的二维旋转矩阵。复数乘法天然就是旋转。</p><h2>RoPE 做了什么</h2><p>RoPE 的核心想法：把 query 和 key 向量两两配对成"复数"，然后用位置 <code>m</code> 对应的相位 <code>mθ</code> 去旋转它们。</p><blockquote>相对位置信息会在 q·k 的内积中自动浮现 —— 这是 RoPE 最魔法的一点。</blockquote><p>具体来说，如果 query 在位置 <code>m</code> 被旋转 <code>mθ</code>，key 在位置 <code>n</code> 被旋转 <code>nθ</code>，那么它们的内积只依赖于 <code>m - n</code>。位置编码从"加法"变成了"相位差"。</p><h2>为什么这很重要</h2><ul><li><strong>相对位置免费</strong>：不需要额外机制就能编码 token 之间的相对距离</li><li><strong>外推潜力</strong>：旋转是周期性的，理论上可以外推到训练时没见过的长度</li><li><strong>数学优雅</strong>：复数/旋转矩阵的框架让整件事看起来像某种"必然"</li></ul><h2>一点代码</h2><pre><code>def apply_rope(q, k, pos):
+    # q, k: (batch, seq, dim)
+    # pos: (seq,) — token positions
+    freqs = 1.0 / (10000 ** (torch.arange(0, dim, 2) / dim))
+    angles = pos[:, None] * freqs[None, :]
+    cos, sin = angles.cos(), angles.sin()
+    q_rot = rotate_half(q) * sin + q * cos
+    k_rot = rotate_half(k) * sin + k * cos
+    return q_rot, k_rot</code></pre><hr><p>下一篇我会写 RoPE 在长上下文外推上的局限，以及 <a href="#">NTK-aware scaling</a> 是如何补救的。</p>`,
+      body_en: `<h1>The Math Intuition of RoPE: From Complex Numbers to Rotation Matrices</h1><div class="note-meta">2026 · 04 · ~8 min read</div><p>When I first read the <strong>Rotary Position Embedding</strong> (RoPE) paper, I was struck by its elegance. Positional information isn't <em>added</em> to token representations — it's applied as a <em>rotation</em>. This post tries to explain, in the most direct terms, why this design feels so natural.</p><h2>Starting from complex numbers</h2><p>Consider a 2D vector <code>v = (x, y)</code>. We can write it as a complex number <code>z = x + iy</code>. What does "rotate by angle θ" look like in the complex plane?</p><div class="math-block">z' = z · e^(iθ) = (x + iy)(cos θ + i sin θ)</div><p>Expanding this gives exactly the familiar 2D rotation matrix. Complex multiplication <em>is</em> rotation.</p><h2>What RoPE actually does</h2><p>The core idea: pair up dimensions of the query and key vectors as complex numbers, and rotate them by a phase <code>mθ</code> corresponding to position <code>m</code>.</p><blockquote>Relative position information emerges automatically in the q·k inner product — the most magical property of RoPE.</blockquote><p>Concretely: if the query at position <code>m</code> is rotated by <code>mθ</code>, and the key at position <code>n</code> is rotated by <code>nθ</code>, their inner product depends only on <code>m − n</code>. Positional encoding turns from "addition" into "phase difference."</p><h2>Why this matters</h2><ul><li><strong>Relative position for free</strong>: no extra mechanism is needed to encode token-to-token distance</li><li><strong>Extrapolation potential</strong>: rotation is periodic, so in principle the model can extend to lengths unseen during training</li><li><strong>Mathematical elegance</strong>: the complex / rotation-matrix framing makes the whole thing feel inevitable</li></ul><h2>A bit of code</h2><pre><code>def apply_rope(q, k, pos):
+    # q, k: (batch, seq, dim)
+    # pos: (seq,) — token positions
+    freqs = 1.0 / (10000 ** (torch.arange(0, dim, 2) / dim))
+    angles = pos[:, None] * freqs[None, :]
+    cos, sin = angles.cos(), angles.sin()
+    q_rot = rotate_half(q) * sin + q * cos
+    k_rot = rotate_half(k) * sin + k * cos
+    return q_rot, k_rot</code></pre><hr><p>In the next post I'll cover RoPE's limitations for long-context extrapolation, and how <a href="#">NTK-aware scaling</a> addresses them.</p>`
+    },
+    {
+      id: 'ntk-scaling',
+      title_zh: "NTK-aware Scaling 笔记：让 RoPE 扩展到更长上下文",
+      title_en: "NTK-aware Scaling Notes: Stretching RoPE to Longer Contexts",
+      excerpt_zh: "位置插值 vs. NTK 感知缩放 vs. YaRN。三种长度外推方法背后的直觉是什么？",
+      excerpt_en: "Position Interpolation vs. NTK-aware scaling vs. YaRN. What is the intuition behind each of these extrapolation methods?",
+      date: "2026 · 03", tag: "LLM",
+      cover: "linear-gradient(135deg, #7c2d12, #f97316)",
+      notion_url: "https://www.notion.so/your-public-share-link-2",
+      body_zh: `<h1>NTK-aware Scaling 笔记：让 RoPE 扩展到更长上下文</h1><div class="note-meta">2026 · 03 · 约 10 分钟阅读</div><p>RoPE 理论上支持任意长度，但实际上 —— 当你把训练时 4K 上下文的模型直接喂给它 16K 的输入，效果会崩。这篇笔记整理三种主流的"续命"方案。</p><h2>方案一：Position Interpolation（PI）</h2><p>最简单的想法：既然模型只见过 [0, 4K) 的位置，那就把 [0, 16K) 的位置<strong>压缩到</strong> [0, 4K) 范围。具体来说，把位置 <code>m</code> 替换为 <code>m × (4K / 16K) = m/4</code>。</p><p>优点：立刻起效。缺点：高频分量被过度压缩，细节信息丢失。</p><h2>方案二：NTK-aware Scaling</h2><blockquote>关键洞察：不要均匀压缩所有频率 —— 低频（远距离信息）压得多，高频（局部信息）几乎不压。</blockquote><p>这个想法来自 Neural Tangent Kernel 理论：模型对不同频率的敏感度是不一样的。所以把 RoPE 的 base（默认 10000）放大，相当于对所有频率做了非均匀的重新分配。</p><h2>方案三：YaRN</h2><p>YaRN 在 NTK-aware 的基础上做了两个精细化：</p><ul><li><strong>按波长分段处理</strong>：对于波长小于训练上下文的维度，完全不处理；对远大于的维度，做 PI；中间区域做插值</li><li><strong>温度修正</strong>：给 attention 加一个全局温度因子，补偿注意力分布的变化</li></ul><h2>实验对比</h2><pre><code>方法          上下文  困惑度
+Base RoPE     16K     26.4  (崩)
+PI            16K     8.2
+NTK-aware     16K     6.9
+YaRN          16K     5.8</code></pre><hr><p>个人感受：这些方法的演化就像在给一个已经训练好的模型"打补丁"。真正解决问题的思路可能在预训练阶段就引入长度外推友好的机制。</p>`,
+      body_en: `<h1>NTK-aware Scaling Notes: Stretching RoPE to Longer Contexts</h1><div class="note-meta">2026 · 03 · ~10 min read</div><p>RoPE theoretically supports any length, but in practice — feed a 16K input to a model trained on 4K and things collapse. These are notes on the three mainstream fixes.</p><h2>Method 1: Position Interpolation (PI)</h2><p>The simplest idea: since the model has only seen positions in [0, 4K), <strong>compress</strong> [0, 16K) back into that range. Replace position <code>m</code> with <code>m × (4K / 16K) = m/4</code>.</p><p>Pros: works immediately. Cons: high-frequency components get over-compressed, losing fine-grained detail.</p><h2>Method 2: NTK-aware Scaling</h2><blockquote>Key insight: don't compress all frequencies uniformly — compress low frequencies (long-range info) more, barely touch high frequencies (local info).</blockquote><p>This comes from Neural Tangent Kernel theory: the model is sensitive to different frequencies in different ways. Scaling RoPE's base (default 10000) redistributes the frequency bands non-uniformly.</p><h2>Method 3: YaRN</h2><p>YaRN refines NTK-aware with two ideas:</p><ul><li><strong>Per-wavelength handling</strong>: dimensions with wavelength shorter than training context are untouched; much longer ones get PI; middle range is interpolated</li><li><strong>Temperature correction</strong>: adds a global temperature on attention to compensate for distribution shifts</li></ul><h2>Empirical comparison</h2><pre><code>Method          Context  Perplexity
+Base RoPE       16K      26.4  (broken)
+PI              16K       8.2
+NTK-aware       16K       6.9
+YaRN            16K       5.8</code></pre><hr><p>Personal take: this is a sequence of patches on a pretrained model. The real fix probably belongs at pretraining time — building length-extrapolation friendliness in from the start.</p>`
+    },
+    {
+      id: 'ccdash-arch',
+      title_zh: "CCDash 架构笔记：如何聚合三种 Claude 使用数据",
+      title_en: "CCDash Architecture Notes: Aggregating Three Flavors of Claude Usage",
+      excerpt_zh: "从本地 JSONL 日志、claude.ai 账户、Anthropic API 三种来源汇总使用量的设计取舍。",
+      excerpt_en: "Design trade-offs when aggregating usage from local JSONL logs, claude.ai accounts, and the Anthropic API.",
+      date: "2026 · 02", tag: "Infra",
+      cover: "linear-gradient(135deg, #064e3b, #10b981)",
+      notion_url: "https://www.notion.so/your-public-share-link-3",
+      body_zh: `<h1>CCDash 架构笔记</h1><div class="note-meta">2026 · 02 · 约 6 分钟阅读</div><p>CCDash 最初只是为了解决一个痛点：<em>我到底用了多少 Claude？</em> 经过几个月迭代，现在它需要同时聚合三种非常不同的数据源。这里记录一下设计决策。</p><h2>三种数据源</h2><ul><li><strong>本地 JSONL 日志</strong>：Claude Code 写在本地的会话文件，结构化最好</li><li><strong>claude.ai 账户使用量</strong>：网页端的 rolling quota，只能从 UI 状态拿</li><li><strong>Anthropic API 用量</strong>：官方 Usage API，最权威但颗粒度粗</li></ul><h2>核心挑战</h2><p>三种数据的<strong>时间粒度</strong>、<strong>字段结构</strong>和<strong>可靠性</strong>都不一样。强行合并会丢信息。</p><h2>解法：分层归一化</h2><pre><code>Raw sources → Normalized events → Aggregated views</code></pre><p>每种数据先归一化成统一的 event 结构（timestamp, tokens_in, tokens_out, source, session_id），然后在查询层做聚合。</p><hr><p>代码在 <a href="https://github.com/zihenghe04/CCDash">GitHub</a>。欢迎 issue 和 PR。</p>`,
+      body_en: `<h1>CCDash Architecture Notes</h1><div class="note-meta">2026 · 02 · ~6 min read</div><p>CCDash started from a simple itch: <em>how much Claude am I actually using?</em> After a few months of iteration, it now aggregates three quite different data sources. Here are the design decisions.</p><h2>Three data sources</h2><ul><li><strong>Local JSONL logs</strong>: session files Claude Code writes locally — most structured</li><li><strong>claude.ai account usage</strong>: rolling quota from the web UI, only accessible via UI state</li><li><strong>Anthropic API usage</strong>: official Usage API — most authoritative but coarse-grained</li></ul><h2>The core challenge</h2><p>These sources differ in <strong>time granularity</strong>, <strong>field schema</strong>, and <strong>reliability</strong>. Merging them naively loses information.</p><h2>Solution: layered normalization</h2><pre><code>Raw sources → Normalized events → Aggregated views</code></pre><p>Each source first normalizes into a unified event struct (timestamp, tokens_in, tokens_out, source, session_id), then aggregation happens at query time.</p><hr><p>Code on <a href="https://github.com/zihenghe04/CCDash">GitHub</a>. Issues and PRs welcome.</p>`
+    },
+    {
+      id: 'attention-history',
+      title_zh: "读论文：从 Attention 到 Multi-Query 到 GQA",
+      title_en: "Paper Reading: From Attention to Multi-Query to GQA",
+      excerpt_zh: "注意力机制的演化史，以及为什么推理性能是一切的终点。",
+      excerpt_en: "A short history of attention mechanisms, and why inference performance is the final boss.",
+      date: "2026 · 01", tag: "LLM",
+      cover: "linear-gradient(135deg, #4c1d95, #a855f7)",
+      notion_url: "https://www.notion.so/your-public-share-link-4",
+      body_zh: `<h1>从 Attention 到 Multi-Query 到 GQA</h1><div class="note-meta">2026 · 01 · 约 7 分钟阅读</div><p>这篇是一个简短的演化史，看注意力机制在七年里是如何被"推理性能"这把刀削成现在的形状的。</p><h2>2017 · Multi-Head Attention</h2><p>原始的 Transformer。每个 head 都有自己的 Q、K、V 投影。漂亮、通用、慢。</p><h2>2019 · Multi-Query Attention</h2><blockquote>所有 head 共享同一个 K 和 V。</blockquote><p>推理时，KV cache 的大小成为瓶颈。MQA 把 K、V 从 <code>n_heads</code> 份压缩到 1 份，KV cache 瞬间小了一个数量级。代价是一点点质量损失。</p><h2>2023 · Grouped-Query Attention</h2><p>MQA 和 MHA 之间的折中：把 heads 分成若干组，组内共享 K、V。现在大多数开源模型都用这个（Llama 3、Qwen 等）。</p><hr><p>推理性能是一切的终点 —— 谁能又快又好，谁就赢。</p>`,
+      body_en: `<h1>From Attention to Multi-Query to GQA</h1><div class="note-meta">2026 · 01 · ~7 min read</div><p>A short history of how the attention mechanism was chiseled into its current shape over seven years — by the blade of inference performance.</p><h2>2017 · Multi-Head Attention</h2><p>The original Transformer. Every head has its own Q, K, V projection. Elegant, general, slow.</p><h2>2019 · Multi-Query Attention</h2><blockquote>All heads share a single K and V.</blockquote><p>At inference time, KV cache size becomes the bottleneck. MQA compresses K, V from <code>n_heads</code> copies down to 1, shrinking the KV cache by an order of magnitude. Cost: a small quality hit.</p><h2>2023 · Grouped-Query Attention</h2><p>A middle ground between MQA and MHA: split heads into groups, share K/V within each group. Most modern open-source models use this (Llama 3, Qwen, etc.).</p><hr><p>Inference performance is the final boss — whoever is both fast and good wins.</p>`
+    },
+    {
+      id: 'flash-attn',
+      title_zh: "Flash Attention 的直觉：当内存带宽成为瓶颈",
+      title_en: "Flash Attention Intuition: When Memory Bandwidth Becomes the Bottleneck",
+      excerpt_zh: "为什么一个看起来不改变 FLOPs 的算法，可以让注意力快好几倍。",
+      excerpt_en: "Why an algorithm that doesn't change the FLOPs count can still make attention several times faster.",
+      date: "2025 · 12", tag: "LLM",
+      cover: "linear-gradient(135deg, #831843, #ec4899)",
+      notion_url: "https://www.notion.so/your-public-share-link-5",
+      body_zh: `<h1>Flash Attention 的直觉</h1><div class="note-meta">2025 · 12 · 约 5 分钟阅读</div><p>Flash Attention 的计算量跟原版完全一样，但它能快 2-4 倍。秘密在哪？</p><h2>瓶颈其实是 HBM</h2><p>GPU 的计算很快，但读写显存（HBM）很慢。原版 attention 需要把巨大的 <code>(seq, seq)</code> 矩阵写回 HBM 再读出来 —— 这才是真正的时间杀手。</p><h2>Flash 的招</h2><ul><li>分块计算，让整个 softmax 在 SRAM 里完成</li><li>用 online softmax 的技巧避免存储完整矩阵</li><li>反向传播时重算而不是存中间值</li></ul><blockquote>FLOPs 是表象，IO 才是本质。</blockquote><hr>`,
+      body_en: `<h1>Flash Attention Intuition</h1><div class="note-meta">2025 · 12 · ~5 min read</div><p>Flash Attention does exactly the same arithmetic as vanilla attention, but runs 2-4× faster. Where's the secret?</p><h2>The real bottleneck is HBM</h2><p>GPU compute is fast, but reading/writing from HBM (GPU memory) is slow. Vanilla attention has to write the huge <code>(seq, seq)</code> matrix to HBM and read it back — that's what really burns time.</p><h2>Flash's tricks</h2><ul><li>Tile the computation so the whole softmax happens in SRAM</li><li>Use the online-softmax trick to avoid materializing the full matrix</li><li>Recompute on backward pass instead of storing intermediates</li></ul><blockquote>FLOPs is the surface, IO is the essence.</blockquote><hr>`
+    },
+    {
+      id: 'oss-year',
+      title_zh: "关于开源独立维护者的一年",
+      title_en: "One Year as an Independent Open-Source Maintainer",
+      excerpt_zh: "在 GitHub、Reddit、Product Hunt、Hacker News 之间穿梭的一年，关于热情、疲惫与社区。",
+      excerpt_en: "A year of bouncing between GitHub, Reddit, Product Hunt, and Hacker News — on passion, burnout, and community.",
+      date: "2025 · 11", tag: "Writing",
+      cover: "linear-gradient(135deg, #1e293b, #475569)",
+      notion_url: "https://www.notion.so/your-public-share-link-6",
+      body_zh: `<h1>关于开源独立维护者的一年</h1><div class="note-meta">2025 · 11 · 约 4 分钟阅读</div><p>去年这个时候，CCDash 只有 3 个 star，都是我自己和两个朋友。今年它有 284 个。这一年我学到一些事。</p><h2>社区反馈比你想的更重要</h2><p>刚开始我以为只要代码写得好就行。其实不是。用户的 issue、吐槽、需求，才是推动项目进化的真正燃料。</p><h2>平台运营消耗巨大</h2><p>写代码一小时，写发布帖要两小时。跨平台发（Twitter、Reddit、HN、PH、知乎、V2EX、Linux DO...）更累。</p><h2>热情是有限的</h2><blockquote>不要把"为爱发电"当成一个借口去消耗自己。</blockquote><hr><p>但我仍然觉得值得。看到有人用 CCDash 监控自己的使用习惯然后说"谢谢你"的时候，一切辛苦就值了。</p>`,
+      body_en: `<h1>One Year as an Independent Open-Source Maintainer</h1><div class="note-meta">2025 · 11 · ~4 min read</div><p>A year ago, CCDash had 3 stars — me and two friends. Today it has 284. A few things I learned.</p><h2>Community feedback matters more than you think</h2><p>At first I thought: just write good code. Wrong. User issues, complaints, feature requests — that's the real fuel that drives the project forward.</p><h2>Platform promotion is exhausting</h2><p>One hour of coding = two hours of writing a launch post. Cross-posting across Twitter, Reddit, HN, PH, Zhihu, V2EX, Linux DO... drains more than the work itself.</p><h2>Passion is finite</h2><blockquote>Don't use "I do this for love" as an excuse to burn yourself out.</blockquote><hr><p>But I still think it's worth it. When someone tells you they use CCDash to understand their own habits and says "thanks" — everything was worth it.</p>`
+    },
+  ];
+
+  // Runtime notes data (either from API or fallback)
+  let notes = fallbackNotes;
+  let notesSource = 'local';
+
+  async function loadNotes() {
+    if (!NOTION_API) return; // use fallback
+    try {
+      const res = await fetch(`${NOTION_API}/notes`);
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      if (data.notes && data.notes.length > 0) {
+        notes = data.notes;
+        notesSource = 'notion';
+      }
+    } catch (err) {
+      console.warn('Notion API failed, using fallback:', err);
     }
   }
-  requestAnimationFrame(draw);
-}
-rsz(); init(); draw();
-window.addEventListener('resize', function() { rsz(); init(); });
+
+  function renderNotes(lang) {
+    const grid = document.getElementById('notesGrid');
+    grid.innerHTML = notes.map((n, i) => `
+      <div class="note-card p-8 rounded-xl flex flex-col gap-4 reveal cursor-pointer" data-note-id="${n.id}" style="transition-delay:${i * 0.05}s">
+        <div class="flex items-center justify-between mono text-xs" style="color: var(--text-mute);">
+          <span class="tag">${n.tag}</span>
+          <span>${n.date}</span>
+        </div>
+        <h3 class="serif text-2xl leading-tight flex-1">${lang === 'zh' ? (n.title_zh || n.title_en) : n.title_en}</h3>
+        <p class="text-sm leading-relaxed" style="color: var(--text-dim);">${lang === 'zh' ? (n.excerpt_zh || n.excerpt_en) : n.excerpt_en}</p>
+        <div class="mt-auto pt-4 mono text-xs flex items-center gap-2 accent-text">
+          <span>${lang === 'zh' ? '阅读全文' : 'Read the full note'}</span> →
+        </div>
+      </div>
+    `).join('');
+    document.querySelectorAll('#notesGrid .reveal').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('[data-note-id]').forEach(el => {
+      el.addEventListener('click', () => openNote(el.getAttribute('data-note-id')));
+    });
+  }
+
+  // ====== NOTE READER ======
+  async function openNote(id) {
+    const note = notes.find(n => n.id === id);
+    if (!note) return;
+    document.getElementById('noteReaderCover').style.background = note.cover || 'linear-gradient(135deg,#1e3a8a,#7c3aed)';
+    document.getElementById('noteReaderCoverLabel').textContent = `${note.tag} · ${note.date}`;
+    document.getElementById('noteReaderCrumb').textContent = currentLang === 'zh' ? (note.title_zh || note.title_en) : note.title_en;
+    document.getElementById('noteReaderNotionLink').href = note.notion_url || '#';
+    document.getElementById('noteReader').classList.add('open');
+    document.body.classList.add('reader-open');
+    document.getElementById('noteReader').scrollTop = 0;
+
+    // Load body
+    const bodyEl = document.getElementById('noteReaderBody');
+    if (notesSource === 'notion') {
+      // Fetch from Worker
+      bodyEl.innerHTML = '<p style="color: var(--text-mute);">Loading…</p>';
+      try {
+        const res = await fetch(`${NOTION_API}/notes/${id}`);
+        const data = await res.json();
+        // Prepend the title and meta
+        const titleHtml = `<h1>${currentLang === 'zh' ? (note.title_zh || note.title_en) : note.title_en}</h1><div class="note-meta">${note.date} · ${note.tag}</div>`;
+        bodyEl.innerHTML = titleHtml + (data.html || '<p>No content.</p>');
+      } catch (err) {
+        bodyEl.innerHTML = '<p>Failed to load note content. Please try again.</p>';
+      }
+    } else {
+      // Use embedded content
+      bodyEl.innerHTML = currentLang === 'zh' ? note.body_zh : note.body_en;
+    }
+  }
+  function closeNote() {
+    document.getElementById('noteReader').classList.remove('open');
+    document.body.classList.remove('reader-open');
+  }
+  document.getElementById('noteReaderClose').addEventListener('click', closeNote);
+  document.getElementById('noteReader').addEventListener('click', (e) => {
+    if (e.target.id === 'noteReader') closeNote();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.getElementById('noteReader').classList.contains('open')) closeNote();
+  });
+
+  // ====== LANG ======
+  let currentLang = 'en';
+  const langToggle = document.getElementById('langToggle');
+  function applyLang(lang) {
+    currentLang = lang;
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+      el.textContent = el.getAttribute(lang === 'zh' ? 'data-zh' : 'data-en');
+    });
+    langToggle.textContent = lang === 'zh' ? '中 / EN' : 'EN / 中';
+    renderNotes(lang);
+  }
+  langToggle.addEventListener('click', () => applyLang(currentLang === 'zh' ? 'en' : 'zh'));
+
+  // ====== THEME ======
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const sunIcon = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
+  const moonIcon = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+  let theme = 'dark';
+  themeToggle.addEventListener('click', () => {
+    theme = theme === 'dark' ? 'light' : 'dark';
+    if (theme === 'light') { document.documentElement.setAttribute('data-theme', 'light'); themeIcon.innerHTML = sunIcon; }
+    else { document.documentElement.removeAttribute('data-theme'); themeIcon.innerHTML = moonIcon; }
+  });
+
+  // ====== REVEAL ======
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); revealObserver.unobserve(entry.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ====== CURSOR GLOW ======
+  const glow = document.getElementById('cursorGlow');
+  document.addEventListener('mousemove', (e) => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+  });
+
+  // ====== SCROLL INDICATOR ======
+  const scrollInd = document.getElementById('scrollIndicator');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (window.scrollY / h) * 100;
+    scrollInd.style.width = pct + '%';
+  });
+
+  // ====== MAGNETIC BUTTONS ======
+  document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', (e) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      btn.style.transform = `translate(${x * 0.15}px, ${y * 0.15}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+  });
+
+  // ====== COMMAND PALETTE ======
+  const cmdOverlay = document.getElementById('cmdOverlay');
+  const cmdInput = document.getElementById('cmdInput');
+  const cmdList = document.getElementById('cmdList');
+  const cmdBtn = document.getElementById('cmdBtn');
+  const cmdItems = [
+    { icon: '👋', label: 'About', labelZh: '关于', hash: '#about' },
+    { icon: '🔬', label: 'Research', labelZh: '研究方向', hash: '#research' },
+    { icon: '🛠', label: 'Tech Stack', labelZh: '技术栈', hash: '#stack' },
+    { icon: '📊', label: 'Activity & Heatmap', labelZh: '活动轨迹', hash: '#activity' },
+    { icon: '🎓', label: 'Education', labelZh: '学习经历', hash: '#education' },
+    { icon: '📄', label: 'Publications', labelZh: '已发表论文', hash: '#publications' },
+    { icon: '📝', label: 'Notes', labelZh: '个人笔记', hash: '#notes' },
+    { icon: '🔗', label: 'GitHub — CCDash', labelZh: 'GitHub — CCDash', url: 'https://github.com/zihenghe04/CCDash' },
+    { icon: '📧', label: 'Email me', labelZh: '发邮件给我', url: 'mailto:hello@dasheng.dev' },
+    { icon: '🌓', label: 'Toggle theme', labelZh: '切换主题', action: () => themeToggle.click() },
+    { icon: '🌐', label: 'Toggle language', labelZh: '切换语言', action: () => langToggle.click() },
+  ];
+  let cmdActive = 0;
+  function openCmd() {
+    cmdOverlay.classList.add('open');
+    cmdInput.value = ''; cmdInput.focus(); renderCmdList('');
+  }
+  function closeCmd() { cmdOverlay.classList.remove('open'); }
+  function renderCmdList(q) {
+    const qLow = q.toLowerCase().trim();
+    const filtered = cmdItems.filter(it =>
+      it.label.toLowerCase().includes(qLow) || (it.labelZh && it.labelZh.toLowerCase().includes(qLow))
+    );
+    cmdActive = 0;
+    cmdList.innerHTML = filtered.map((it, i) => `
+      <div class="cmd-item ${i === 0 ? 'active' : ''}" data-idx="${i}">
+        <div class="cmd-icon">${it.icon}</div>
+        <div>
+          <div>${currentLang === 'zh' ? it.labelZh : it.label}</div>
+        </div>
+      </div>
+    `).join('');
+    cmdList._items = filtered;
+    cmdList.querySelectorAll('.cmd-item').forEach((el, i) => {
+      el.addEventListener('click', () => runCmd(i));
+      el.addEventListener('mouseenter', () => setActive(i));
+    });
+  }
+  function setActive(i) {
+    cmdActive = i;
+    cmdList.querySelectorAll('.cmd-item').forEach((el, idx) => el.classList.toggle('active', idx === i));
+  }
+  function runCmd(i) {
+    const it = cmdList._items[i];
+    if (!it) return;
+    if (it.hash) { document.querySelector(it.hash).scrollIntoView({ behavior: 'smooth' }); closeCmd(); }
+    else if (it.url) { window.open(it.url, '_blank'); closeCmd(); }
+    else if (it.action) { it.action(); closeCmd(); }
+  }
+  cmdInput.addEventListener('input', e => renderCmdList(e.target.value));
+  cmdInput.addEventListener('keydown', e => {
+    const max = (cmdList._items || []).length - 1;
+    if (e.key === 'ArrowDown') { e.preventDefault(); setActive(Math.min(max, cmdActive + 1)); }
+    if (e.key === 'ArrowUp') { e.preventDefault(); setActive(Math.max(0, cmdActive - 1)); }
+    if (e.key === 'Enter') { e.preventDefault(); runCmd(cmdActive); }
+    if (e.key === 'Escape') closeCmd();
+  });
+  cmdBtn.addEventListener('click', openCmd);
+  cmdOverlay.addEventListener('click', e => { if (e.target === cmdOverlay) closeCmd(); });
+  document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openCmd(); }
+  });
+
+  // ====== INIT ======
+  renderStack();
+  hydrateUniLogos();
+  renderHeatmap();
+  renderNotes('en');
+  initNeuralCanvas();
+  // Try loading notes from Notion API (if configured); fall back to embedded data silently.
+  loadNotes().then(() => renderNotes(currentLang));
 </script>
 </body>
 </html>
