@@ -1187,39 +1187,99 @@
   }
 
   // ====== HEATMAP ======
-  function renderHeatmap() {
+  // Real GitHub contributions via an unauthenticated public API
+  // (github-contributions-api.jogruber.de). Falls back to a subtle
+  // synthetic pattern on network failure so the page never breaks.
+  const GITHUB_USERNAME = 'zihenghe04';
+  const GITHUB_CONTRIBUTIONS_API = `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=last`;
+
+  async function renderHeatmap() {
     const grid = document.getElementById('heatmapGrid');
     const today = new Date();
     const start = new Date(today);
     start.setDate(start.getDate() - 364);
     const startDay = start.getDay();
     start.setDate(start.getDate() - startDay);
-    const numDays = Math.ceil((today - start) / (1000 * 60 * 60 * 24)) + 1;
+    const numDays = Math.ceil((today - start) / 86400000) + 1;
+
+    // Fetch real contribution data; if anything fails, byDate stays null
+    // and we fall back to the synthetic pattern below.
+    let byDate = null;
+    try {
+      const res = await fetch(GITHUB_CONTRIBUTIONS_API, { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        byDate = new Map((data.contributions || []).map(d => [d.date, d]));
+      }
+    } catch (_) { /* network/parse failure → fallback */ }
+
     const cells = [];
     let total = 0;
+    let runningStreak = 0, longest = 0;
+    let busiest = { count: 0, date: '' };
+
     for (let i = 0; i < numDays; i++) {
       const d = new Date(start);
       d.setDate(d.getDate() + i);
       if (d > today) { cells.push(`<div class="heatmap-cell" style="visibility:hidden"></div>`); continue; }
-      const day = d.getDay();
-      const month = d.getMonth();
-      let r = Math.random();
-      let busy = 0.5 + 0.25 * Math.sin((d.getTime() / 86400000) / 14);
-      if (day === 0 || day === 6) busy -= 0.25;
-      if (month === 11 || month === 0) busy += 0.1;
-      const p = Math.max(0, Math.min(1, busy));
-      let level = 0;
-      if (r < p * 0.22) level = 1;
-      if (r < p * 0.12) level = 2;
-      if (r < p * 0.06) level = 3;
-      if (r < p * 0.025) level = 4;
-      const count = level === 0 ? 0 : level * (2 + Math.floor(Math.random() * 6));
-      total += count;
       const dateStr = d.toISOString().slice(0, 10);
-      cells.push(`<div class="heatmap-cell" data-level="${level}" title="${count} contributions on ${dateStr}"></div>`);
+
+      let level, count;
+      if (byDate && byDate.has(dateStr)) {
+        const entry = byDate.get(dateStr);
+        level = entry.level;
+        count = entry.count;
+      } else {
+        // Fallback synthetic pattern (only if API unreachable)
+        const day = d.getDay();
+        const month = d.getMonth();
+        let r = Math.random();
+        let busy = 0.5 + 0.25 * Math.sin((d.getTime() / 86400000) / 14);
+        if (day === 0 || day === 6) busy -= 0.25;
+        if (month === 11 || month === 0) busy += 0.1;
+        const p = Math.max(0, Math.min(1, busy));
+        level = 0;
+        if (r < p * 0.22) level = 1;
+        if (r < p * 0.12) level = 2;
+        if (r < p * 0.06) level = 3;
+        if (r < p * 0.025) level = 4;
+        count = level === 0 ? 0 : level * (2 + Math.floor(Math.random() * 6));
+      }
+
+      total += count;
+      if (count > 0) {
+        runningStreak++;
+        if (runningStreak > longest) longest = runningStreak;
+      } else {
+        runningStreak = 0;
+      }
+      if (count > busiest.count) busiest = { count, date: dateStr };
+
+      cells.push(`<div class="heatmap-cell" data-level="${level}" title="${count} contribution${count === 1 ? '' : 's'} on ${dateStr}"></div>`);
     }
+    // Trailing run = current streak
+    const current = runningStreak;
+
     grid.innerHTML = cells.join('');
     document.getElementById('totalContributions').textContent = total.toLocaleString();
+
+    // Re-label the streak / busiest-day stats with real numbers
+    document.querySelectorAll('#activity .mt-4 span[data-zh]').forEach(el => {
+      const en = el.getAttribute('data-en') || '';
+      if (en.startsWith('Longest streak')) {
+        el.setAttribute('data-en', `Longest streak · ${longest} day${longest === 1 ? '' : 's'}`);
+        el.setAttribute('data-zh', `最长连续 · ${longest} 天`);
+      } else if (en.startsWith('Current streak')) {
+        el.setAttribute('data-en', `Current streak · ${current} day${current === 1 ? '' : 's'}`);
+        el.setAttribute('data-zh', `当前连续 · ${current} 天`);
+      } else if (en.startsWith('Busiest day')) {
+        const suffix = busiest.date ? ` (${busiest.date})` : '';
+        el.setAttribute('data-en', `Busiest day · ${busiest.count} commits${suffix}`);
+        el.setAttribute('data-zh', `最活跃的日子 · ${busiest.count} 次提交${suffix}`);
+      }
+      el.textContent = (typeof currentLang !== 'undefined' && currentLang === 'zh')
+        ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+    });
   }
 
   // ====== NEURAL CANVAS ======
