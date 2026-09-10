@@ -76,6 +76,10 @@
     border: 1px solid var(--border-strong); color: var(--text-dim);
     letter-spacing: 0.08em; text-transform: uppercase; background: transparent;
   }
+  .tag.tag-corl { background: #9c3327; border-color: #9c3327; color: #fff; font-weight: 700; }
+  .tag.tag-author { background: #f3dfad; border-color: #a57820; color: #533b0b; font-weight: 700; }
+  [data-theme="dark"] .tag.tag-corl { background: #ba503d; border-color: #ba503d; }
+  [data-theme="dark"] .tag.tag-author { background: #4a3715; border-color: #d9b464; color: #f5d88f; }
   .section-num { font-family: var(--font-mono); color: var(--text-mute); font-size: 11px; letter-spacing: 0.18em; }
   .link-arrow { display: inline-flex; align-items: center; gap: 6px; transition: gap 0.3s ease, color 0.3s ease; }
   .link-arrow:hover { gap: 11px; color: var(--accent); }
@@ -555,7 +559,7 @@
       <div class="mt-2 flex flex-wrap gap-3">
         <a href="https://github.com/zihenghe04/" target="_blank" rel="noopener" class="btn-primary magnetic">GitHub →</a>
         <a href="https://scholar.google.com/citations?user=vBkBpxYAAAAJ&amp;hl=en" target="_blank" rel="noopener" class="btn-primary magnetic" style="background: transparent; color: var(--text); border: 1px solid var(--border-strong);">Google Scholar →</a>
-        <a href="cv/Ziheng-He-CV-en.pdf" target="_blank" rel="noopener" class="btn-primary magnetic" style="background: transparent; color: var(--text); border: 1px solid var(--border-strong);" data-href-zh="cv/Ziheng-He-CV-zh.pdf" data-href-en="cv/Ziheng-He-CV-en.pdf" data-zh="简历（PDF）→" data-en="CV (PDF) →">CV (PDF) →</a>
+        <a href="cv/Ziheng-He-CV-en.pdf?v=20260910-corl" target="_blank" rel="noopener" class="btn-primary magnetic" style="background: transparent; color: var(--text); border: 1px solid var(--border-strong);" data-href-zh="cv/Ziheng-He-CV-zh.pdf?v=20260910-corl" data-href-en="cv/Ziheng-He-CV-en.pdf?v=20260910-corl" data-zh="简历（PDF）→" data-en="CV (PDF) →">CV (PDF) →</a>
       </div>
     </div>
   </div>
@@ -904,9 +908,8 @@
       </div>
       <div class="flex flex-col h-full">
         <div class="mb-2 flex items-center gap-2 flex-wrap">
-          <span class="tag">CoRL 2026</span>
-          <span class="tag">arXiv 2026</span>
-          <span class="tag">First Author</span>
+          <span class="tag tag-corl">CoRL 2026</span>
+          <span class="tag tag-author" data-zh="第一作者" data-en="First Author">First Author</span>
           <span class="tag">cs.RO</span>
         </div>
         <h3 class="serif text-2xl md:text-3xl leading-tight mb-3" data-zh="SKIP：面向高效具身世界模型的稀疏关键帧插值范式" data-en="SKIP: Sparse Keyframe Interpolation Paradigm for Efficient Embodied World Models">SKIP: Sparse Keyframe Interpolation Paradigm for Efficient Embodied World Models</h3>
@@ -1017,7 +1020,7 @@
             <li><a href="https://scholar.google.com/citations?user=vBkBpxYAAAAJ&amp;hl=en" target="_blank" rel="noopener" class="link-arrow">Google Scholar →</a></li>
             <li><a href="#" class="link-arrow">ORCID →</a></li>
             <li><a href="#" class="link-arrow">Semantic Scholar →</a></li>
-            <li><a href="cv/Ziheng-He-CV-en.pdf" target="_blank" rel="noopener" class="link-arrow" data-href-zh="cv/Ziheng-He-CV-zh.pdf" data-href-en="cv/Ziheng-He-CV-en.pdf" data-zh="中文简历 →" data-en="CV →">CV →</a></li>
+            <li><a href="cv/Ziheng-He-CV-en.pdf?v=20260910-corl" target="_blank" rel="noopener" class="link-arrow" data-href-zh="cv/Ziheng-He-CV-zh.pdf?v=20260910-corl" data-href-en="cv/Ziheng-He-CV-en.pdf?v=20260910-corl" data-zh="中文简历 →" data-en="CV →">CV →</a></li>
           </ul>
         </div>
         <div>
