@@ -1,0 +1,13 @@
+{
+  "name": "ziheng-he-homepage",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:cv": "node scripts/build-cv.mjs",
+    "export:cv": "node scripts/export-cv.mjs",
+    "cv": "npm run build:cv && npm run export:cv"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}
