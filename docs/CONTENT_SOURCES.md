@@ -22,6 +22,8 @@ Project descriptions follow the public [AI Bro README](https://github.com/ziheng
 
 The new CV brings all four papers together and foregrounds AI Bro. It uses concise research descriptions instead of the detailed interview-oriented bullets in the old internship CV. Future edits should preserve the distinction between an accepted conference paper, a preprint, an application preview, and a completed product release.
 
+Following the owner's visual feedback on the same day, the CV restores the earlier version's multicolor institution headers, original logos, and portrait. AI Bro uses its existing application icon. This is a presentation change; the updated academic content is retained. Images are embedded into the generated HTML so an edited download keeps its artwork.
+
 ## Verification checklist
 
 - Regenerate English and Chinese HTML/PDF from the shared content source.

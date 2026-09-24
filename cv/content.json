@@ -21,13 +21,17 @@
         "title": "University of Chinese Academy of Sciences",
         "date": "2026 - Present",
         "detail": "Ph.D. in Artificial Intelligence · School of Advanced Interdisciplinary Sciences (SAIS)",
-        "note": "Research affiliation: Institute of Automation, Chinese Academy of Sciences · NLPR"
+        "note": "Research affiliation: Institute of Automation, Chinese Academy of Sciences · NLPR",
+        "brand": "ucas",
+        "logo": "assets/ucas.png"
       },
       {
         "title": "Southeast University | B.Eng. in Software Engineering",
         "date": "2022.09 - 2026.06",
         "detail": "",
-        "note": "Rank: 9/86 · Outstanding Graduate · Merit Student · Outstanding Undergraduate Thesis"
+        "note": "Rank: 9/86 · Outstanding Graduate · Merit Student · Outstanding Undergraduate Thesis",
+        "brand": "seu",
+        "logo": "assets/seu.png"
       }
     ],
     "experience": [
@@ -37,7 +41,9 @@
         "date": "2025.09 - Present",
         "bullets": [
           "GigaBrain-0.7 co-author. Trained System 3, a 5B World Value Model, and designed its visual-subgoal and progress-conditioning interface for the action policy."
-        ]
+        ],
+        "brand": "gigaai",
+        "logo": "assets/gigaai.png"
       },
       {
         "title": "FiveAges",
@@ -46,7 +52,9 @@
         "bullets": [
           "First-author work on SKIP: event-preserving keyframe selection, sparse video generation, and action-conditioned interpolation for efficient embodied world models.",
           "Built FiveagesWAM with sparse-frame inference and historical-image memory for continuous video prediction."
-        ]
+        ],
+        "brand": "fiveages",
+        "logo": "assets/fiveages.png"
       },
       {
         "title": "Huawei Nanjing Research Center · Celia Team",
@@ -54,7 +62,9 @@
         "date": "2025.06 - 2025.09",
         "bullets": [
           "Worked on on-device LLM inference: speculative decoding, KV-cache and parallel-decoding optimization, and CUDA profiling with Nsight."
-        ]
+        ],
+        "brand": "huawei",
+        "logo": "assets/huawei-mark.png"
       }
     ],
     "projects": [
@@ -63,19 +73,25 @@
         "role": "Creator & Maintainer",
         "url": "https://github.com/zihenghe04/AIBro",
         "description": "Local-first AI workspace connecting conversations, project files, source-linked knowledge, tasks, and schedules. Includes retrieval, reviewable file changes, and reusable agent workflows.",
-        "note": "Public macOS preview · v0.7.9 released September 17, 2026"
+        "note": "Public macOS preview · v0.7.9 released September 17, 2026",
+        "brand": "aibro",
+        "logo": "assets/ai-bro.png"
       },
       {
         "title": "CCDash",
         "role": "Creator & Maintainer",
         "url": "https://github.com/zihenghe04/CCDash",
-        "description": "Unified usage dashboard for Claude Code, claude.ai, and API traffic: tokens, quotas, and costs."
+        "description": "Unified usage dashboard for Claude Code, claude.ai, and API traffic: tokens, quotas, and costs.",
+        "brand": "github",
+        "logo": "assets/github.png"
       },
       {
         "title": "AionUi",
         "role": "Contributor",
         "url": "https://github.com/iOfficeAI/AionUi",
-        "description": "Contributed a merged bilingual guide for headless Linux deployment, covering Xvfb, service management, and remote access."
+        "description": "Contributed a merged bilingual guide for headless Linux deployment, covering Xvfb, service management, and remote access.",
+        "brand": "github",
+        "logo": "assets/github.png"
       }
     ],
     "updatedLabel": "Updated September 24, 2026"
@@ -97,13 +113,17 @@
         "title": "中国科学院大学",
         "date": "2026 - 至今",
         "detail": "交叉科学学院（SAIS）· 人工智能方向博士在读",
-        "note": "研究单位：中国科学院自动化研究所 · 模式识别国家重点实验室（NLPR）"
+        "note": "研究单位：中国科学院自动化研究所 · 模式识别国家重点实验室（NLPR）",
+        "brand": "ucas",
+        "logo": "assets/ucas.png"
       },
       {
         "title": "东南大学 | 软件工程 · 工学学士",
         "date": "2022.09 - 2026.06",
         "detail": "",
-        "note": "综合排名 9/86 · 校优秀毕业生 · 校三好学生 · 优秀毕业设计"
+        "note": "综合排名 9/86 · 校优秀毕业生 · 校三好学生 · 优秀毕业设计",
+        "brand": "seu",
+        "logo": "assets/seu.png"
       }
     ],
     "experience": [
@@ -113,7 +133,9 @@
         "date": "2025.09 - 至今",
         "bullets": [
           "GigaBrain-0.7 共同作者。负责 System 3（5B World Value Model）训练，设计面向动作策略的末帧视觉 subgoal 与任务进展条件化接口。"
-        ]
+        ],
+        "brand": "gigaai",
+        "logo": "assets/gigaai.png"
       },
       {
         "title": "中科第五纪 · FiveAges",
@@ -122,7 +144,9 @@
         "bullets": [
           "以第一作者开展 SKIP 研究：通过保留任务事件的关键帧选择、稀疏视频生成与动作条件插值，提高具身世界模型推理效率。",
           "开发 FiveagesWAM 实时交互式世界模型，结合关键帧 / 稀疏帧推理与历史图像记忆，实现跨视频块连续预测。"
-        ]
+        ],
+        "brand": "fiveages",
+        "logo": "assets/fiveages.png"
       },
       {
         "title": "华为南京研究所 · 小艺业务部",
@@ -130,7 +154,9 @@
         "date": "2025.06 - 2025.09",
         "bullets": [
           "参与端侧大模型推理加速，涉及投机解码、KV cache 与并行解码优化，以及基于 Nsight 的 CUDA 性能分析。"
-        ]
+        ],
+        "brand": "huawei",
+        "logo": "assets/huawei-mark.png"
       }
     ],
     "projects": [
@@ -139,19 +165,25 @@
         "role": "创建与维护",
         "url": "https://github.com/zihenghe04/AIBro",
         "description": "本地优先的 AI 工作区，连接对话、项目文件、带来源的知识、任务与日程；支持资料检索、文件修改审阅和可复用的 Agent 工作流。",
-        "note": "macOS 公开预览版 · v0.7.9 发布于 2026 年 9 月 17 日"
+        "note": "macOS 公开预览版 · v0.7.9 发布于 2026 年 9 月 17 日",
+        "brand": "aibro",
+        "logo": "assets/ai-bro.png"
       },
       {
         "title": "CCDash",
         "role": "创建与维护",
         "url": "https://github.com/zihenghe04/CCDash",
-        "description": "Claude Code、claude.ai 与 API 统一用量监控面板，聚合 token、配额与成本。"
+        "description": "Claude Code、claude.ai 与 API 统一用量监控面板，聚合 token、配额与成本。",
+        "brand": "github",
+        "logo": "assets/github.png"
       },
       {
         "title": "AionUi",
         "role": "开源贡献者",
         "url": "https://github.com/iOfficeAI/AionUi",
-        "description": "贡献已合入主仓库的中英文无头 Linux 部署指南，覆盖 Xvfb、服务管理与远程访问。"
+        "description": "贡献已合入主仓库的中英文无头 Linux 部署指南，覆盖 Xvfb、服务管理与远程访问。",
+        "brand": "github",
+        "logo": "assets/github.png"
       }
     ],
     "updatedLabel": "更新于 2026 年 9 月 24 日"
@@ -197,5 +229,6 @@
         "zh": "arXiv 预印本，2026 · 共同作者"
       }
     }
-  ]
+  ],
+  "portrait": "assets/portrait.jpg"
 }

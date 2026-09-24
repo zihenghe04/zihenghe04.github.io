@@ -3,15 +3,25 @@ import { readFile, writeFile } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const data = JSON.parse(await readFile(new URL('cv/content.json', root), 'utf8'));
 const css = await readFile(new URL('cv/style.css', root), 'utf8');
+// Embed original artwork so saved HTML copies retain their portrait and logos.
+const imagePaths = new Set([data.portrait, ...['en', 'zh'].flatMap(lang =>
+  ['education', 'experience', 'projects'].flatMap(section => data[lang][section].map(entry => entry.logo))
+)].filter(Boolean));
+const images = new Map(await Promise.all([...imagePaths].map(async path => {
+  const bytes = await readFile(new URL(`cv/${path}`, root));
+  const type = path.endsWith('.jpg') ? 'image/jpeg' : 'image/png';
+  return [path, `data:${type};base64,${bytes.toString('base64')}`];
+})));
 const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[char]));
 const visibleUrl = url => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 const link = (url, label = visibleUrl(url)) => `<a href="${escape(url)}">${escape(label)}</a>`;
+const logo = entry => entry.logo ? `<img class="brand-logo" src="${images.get(entry.logo)}" alt="" contenteditable="false">` : '';
 
 for (const lang of ['en', 'zh']) {
   const d = data[lang];
   const zh = lang === 'zh';
   const education = d.education.map(e => `<article class="entry">
-    <div class="row"><strong>${escape(e.title)}</strong><span class="date">${escape(e.date)}</span></div>
+    <div class="row brand-row brand-${escape(e.brand)}"><div class="brand-name">${logo(e)}<strong>${escape(e.title)}</strong></div><span class="date">${escape(e.date)}</span></div>
     ${e.detail ? `<p>${escape(e.detail)}</p>` : ''}<p class="detail">${escape(e.note)}</p>
   </article>`).join('\n');
   const publications = data.publications.map(p => `<article class="entry publication">
@@ -21,11 +31,11 @@ for (const lang of ['en', 'zh']) {
     ${p.summary ? `<p class="summary">${escape(p.summary[lang])}</p>` : ''}
   </article>`).join('\n');
   const experience = d.experience.map(e => `<article class="entry">
-    <div class="row"><strong>${escape(e.title)} <span class="entry-role">| ${escape(e.role)}</span></strong><span class="date">${escape(e.date)}</span></div>
+    <div class="row brand-row brand-${escape(e.brand)}"><div class="brand-name">${logo(e)}<strong>${escape(e.title)} <span class="entry-role">| ${escape(e.role)}</span></strong></div><span class="date">${escape(e.date)}</span></div>
     <ul>${e.bullets.map(b => `<li>${escape(b)}</li>`).join('')}</ul>
   </article>`).join('\n');
   const projects = d.projects.map(p => `<article class="entry">
-    <div class="row"><strong>${escape(p.title)} <span class="entry-role">| ${escape(p.role)}</span></strong><span class="project-link">${link(p.url)}</span></div>
+    <div class="row brand-row brand-${escape(p.brand)}"><div class="brand-name">${logo(p)}<strong>${escape(p.title)} <span class="entry-role">| ${escape(p.role)}</span></strong></div><span class="project-link">${link(p.url)}</span></div>
     <p>${escape(p.description)}</p>${p.note ? `<p class="project-note">${escape(p.note)}</p>` : ''}
   </article>`).join('\n');
   const html = `<!doctype html>
@@ -46,9 +56,12 @@ for (const lang of ['en', 'zh']) {
 <main class="sheet">
  <div class="document" contenteditable="false">
   <header class="cv-header">
+   <div class="header-main"><div class="header-copy">
    <h1>${escape(d.name)}</h1><span class="secondary-name">${escape(d.nameSecondary)}</span>
    <p class="role">${escape(d.role)}</p>
+   <p class="affiliation">${escape(d.affiliation)}</p>
    <div class="contacts">${link('mailto:' + data.email, data.email)} ${link(data.website)} ${link(data.github)}</div>
+   </div><img class="portrait" src="${images.get(data.portrait)}" alt="${escape(d.name)}" contenteditable="false"></div>
    <p class="interests">${escape(d.interests)}</p>
   </header>
   <section><h2>${escape(d.headings.education)}</h2>${education}</section>

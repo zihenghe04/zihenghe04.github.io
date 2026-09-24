@@ -7,7 +7,8 @@ Source for [zihenghe04.github.io](https://zihenghe04.github.io/). English and Ch
 - `index.html`: homepage layout and bilingual copy. Update both `data-en` and `data-zh`, plus the visible English text. Keep milestones newest first and link to the underlying release or paper.
 - `imgs/`: profile and publication images.
 - `cv/content.json`: shared facts and bilingual content for the academic CV. Paper titles, author lists, and links are shared by both languages.
-- `cv/style.css`: single-column A4 CV layout.
+- `cv/style.css`: single-column A4 CV layout, with the original colored institution bands.
+- `cv/assets/`: original portrait and institution logos, plus the AI Bro icon. The builder embeds these images in each HTML file so saved copies remain self-contained.
 - `cv/Ziheng-He-CV-{en,zh}.html`: generated, browser-editable CVs.
 - `cv/Ziheng-He-CV-{en,zh}.pdf`: published CV downloads.
 - `docs/CONTENT_SOURCES.md`: verification sources and the most recent content review.
@@ -24,7 +25,7 @@ Open `http://127.0.0.1:8000/`. Check English/Chinese, light/dark appearance, a n
 
 ## Regenerate the CV
 
-The template is a custom, editable single-column academic layout. It does not depend on an external resume template pack. Browser exports use locally available fonts: Times New Roman and Songti SC on macOS, with Noto Serif CJK SC as an alternative for Chinese.
+The template preserves the earlier CV's portrait, blue section headings, institution logos, and individual brand colors while presenting the updated academic content. Color and logo assignments live alongside each entry in `cv/content.json`; layout remains editable in `cv/style.css`. It does not depend on an external resume template pack. Browser exports use locally available fonts: Times New Roman and Songti SC on macOS, with Noto Serif CJK SC as an alternative for Chinese.
 
 ```sh
 npm ci
