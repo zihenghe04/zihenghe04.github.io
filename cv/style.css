@@ -28,6 +28,8 @@ h2 { font-size: 13.2pt; letter-spacing: .1pt; margin: 6pt 0 4pt; padding: 0 0 1p
 .brand-row { --brand: #24292f; --tint: #f2f3f5; min-height: 6.8mm; padding: 1pt 6pt 1pt 3pt; border-left: 2.2pt solid var(--brand); border-radius: 5pt; background: var(--tint); align-items: center; gap: 6pt; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
 .brand-name { display: flex; align-items: center; gap: 6pt; min-width: 0; }
 .brand-logo { width: 6mm; height: 6mm; object-fit: contain; flex-shrink: 0; }
+.education-institute { white-space: nowrap; }
+.education-institute img { width: 4.5mm; height: 4.5mm; object-fit: cover; object-position: left center; vertical-align: middle; }
 .brand-row strong { font-size: 9.7pt; }
 .brand-row .date { color: var(--brand); font-size: 8.6pt; }
 .brand-ucas { --brand: #315aa6; --tint: #eef4ff; }

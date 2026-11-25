@@ -5,7 +5,7 @@ const data = JSON.parse(await readFile(new URL('cv/content.json', root), 'utf8')
 const css = await readFile(new URL('cv/style.css', root), 'utf8');
 // Embed original artwork so saved HTML copies retain their portrait and logos.
 const imagePaths = new Set([data.portrait, ...['en', 'zh'].flatMap(lang =>
-  ['education', 'experience', 'projects'].flatMap(section => data[lang][section].map(entry => entry.logo))
+  ['education', 'experience', 'projects'].flatMap(section => data[lang][section].flatMap(entry => [entry.logo, entry.instituteLogo]))
 )].filter(Boolean));
 const images = new Map(await Promise.all([...imagePaths].map(async path => {
   const bytes = await readFile(new URL(`cv/${path}`, root));
@@ -17,12 +17,15 @@ const bold = value => value.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 const visibleUrl = url => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 const link = (url, label = visibleUrl(url)) => `<a href="${escape(url)}">${escape(label)}</a>`;
 const logo = entry => entry.logo ? `<img class="brand-logo" src="${images.get(entry.logo)}" alt="" contenteditable="false">` : '';
+const institute = entry => entry.institute
+  ? ` | <span class="education-institute"><img src="${images.get(entry.instituteLogo)}" alt="" contenteditable="false"> ${escape(entry.institute)}</span>${escape(entry.degreeSuffix)}`
+  : '';
 
 for (const lang of ['en', 'zh']) {
   const d = data[lang];
   const zh = lang === 'zh';
   const education = d.education.map(e => `<article class="entry">
-    <div class="row brand-row brand-${escape(e.brand)}"><div class="brand-name">${logo(e)}<strong>${escape(e.title)}</strong></div><span class="date">${escape(e.date)}</span></div>
+    <div class="row brand-row brand-${escape(e.brand)}"><div class="brand-name">${logo(e)}<strong>${escape(e.title)}${institute(e)}</strong></div><span class="date">${escape(e.date)}</span></div>
 ${e.detail ? `    <p>${escape(e.detail)}</p>\n` : ''}${e.note ? `    <p class="detail">${escape(e.note)}</p>\n` : ''}  </article>`).join('\n');
   const publications = data.publications.map(p => `<article class="entry publication${p.accepted ? ' publication-accepted' : ''}">
     <h3 class="pub-title">${escape(p.title)}</h3>

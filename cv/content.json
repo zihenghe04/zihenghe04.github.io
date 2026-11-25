@@ -18,12 +18,15 @@
     },
     "education": [
       {
-        "title": "University of Chinese Academy of Sciences | CASIA NLPR",
+        "title": "University of Chinese Academy of Sciences",
         "date": "2026 - Present",
         "detail": "Computer Science and Technology · Ph.D. student",
         "note": "",
         "brand": "ucas",
-        "logo": "assets/ucas.png"
+        "logo": "assets/ucas.png",
+        "institute": "CASIA NLPR",
+        "instituteLogo": "assets/casia.png",
+        "degreeSuffix": ""
       },
       {
         "title": "Southeast University | Software Engineering · Undergraduate",
@@ -110,12 +113,15 @@
     },
     "education": [
       {
-        "title": "中国科学院大学 | 自动化研究所NLPR 计算机科学与技术 · 博士在读",
+        "title": "中国科学院大学",
         "date": "2026 - 至今",
         "detail": "",
         "note": "",
         "brand": "ucas",
-        "logo": "assets/ucas.png"
+        "logo": "assets/ucas.png",
+        "institute": "自动化研究所NLPR",
+        "instituteLogo": "assets/casia.png",
+        "degreeSuffix": " 计算机科学与技术 · 博士在读"
       },
       {
         "title": "东南大学 | 软件工程 · 本科",
