@@ -42,13 +42,14 @@ h2 { font-size: 13.2pt; letter-spacing: .1pt; margin: 6pt 0 4pt; padding: 0 0 1p
 .authors { font-size: 9.1pt; color: var(--muted); }
 .pub-meta { font-size: 9.1pt; }
 .pub-meta a { white-space: nowrap; }
-.publication:first-of-type .venue { font-weight: bold; color: var(--accent); }
+.publication-accepted .pub-meta, .publication-accepted .pub-meta a { font-weight: bold; color: #d11a1a; }
 .summary { font-size: 9.5pt; }
 .entry-role { font-weight: normal; color: var(--muted); }
 ul { margin: 2pt 0 0; padding-left: 12pt; }
 li::marker { color: var(--accent); }
 li { margin-top: 1pt; }
 .project-link { font-size: 9.1pt; white-space: nowrap; }
+.project-stars { background: #fff0c8; color: #77510b; border-radius: 3pt; padding: 1pt 5pt; font: 700 8.8pt/1.25 system-ui, sans-serif; white-space: nowrap; }
 .project-note { font-size: 9pt; color: var(--muted); }
 .footer { position: absolute; bottom: 6mm; left: 10mm; right: 10mm; display: flex; justify-content: space-between; color: var(--muted); font-size: 8pt; border-top: .5pt solid #c9d1d6; padding-top: 4pt; }
 html[lang="zh-CN"] body { font-family: "Times New Roman", "Songti SC", "Noto Serif CJK SC", serif; }

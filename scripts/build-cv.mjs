@@ -13,6 +13,7 @@ const images = new Map(await Promise.all([...imagePaths].map(async path => {
   return [path, `data:${type};base64,${bytes.toString('base64')}`];
 })));
 const escape = value => String(value).replace(/[&<>"']/g, char => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[char]));
+const bold = value => value.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 const visibleUrl = url => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 const link = (url, label = visibleUrl(url)) => `<a href="${escape(url)}">${escape(label)}</a>`;
 const logo = entry => entry.logo ? `<img class="brand-logo" src="${images.get(entry.logo)}" alt="" contenteditable="false">` : '';
@@ -22,22 +23,24 @@ for (const lang of ['en', 'zh']) {
   const zh = lang === 'zh';
   const education = d.education.map(e => `<article class="entry">
     <div class="row brand-row brand-${escape(e.brand)}"><div class="brand-name">${logo(e)}<strong>${escape(e.title)}</strong></div><span class="date">${escape(e.date)}</span></div>
-    ${e.detail ? `<p>${escape(e.detail)}</p>` : ''}<p class="detail">${escape(e.note)}</p>
-  </article>`).join('\n');
-  const publications = data.publications.map(p => `<article class="entry publication">
+${e.detail ? `    <p>${escape(e.detail)}</p>\n` : ''}${e.note ? `    <p class="detail">${escape(e.note)}</p>\n` : ''}  </article>`).join('\n');
+  const publications = data.publications.map(p => `<article class="entry publication${p.accepted ? ' publication-accepted' : ''}">
     <h3 class="pub-title">${escape(p.title)}</h3>
     <p class="authors">${escape(p.authors).replaceAll('Ziheng He', '<strong>Ziheng He</strong>')}</p>
     <p class="pub-meta"><span class="venue">${escape(p.venue[lang])}</span> · ${link(p.url)}</p>
-    ${p.summary ? `<p class="summary">${escape(p.summary[lang])}</p>` : ''}
-  </article>`).join('\n');
+${p.summary ? `    <p class="summary">${escape(p.summary[lang])}</p>\n` : ''}  </article>`).join('\n');
   const experience = d.experience.map(e => `<article class="entry">
     <div class="row brand-row brand-${escape(e.brand)}"><div class="brand-name">${logo(e)}<strong>${escape(e.title)} <span class="entry-role">| ${escape(e.role)}</span></strong></div><span class="date">${escape(e.date)}</span></div>
-    <ul>${e.bullets.map(b => `<li>${escape(b)}</li>`).join('')}</ul>
+    <ul>${e.bullets.map(b => `<li>${bold(escape(b))}</li>`).join('')}</ul>
   </article>`).join('\n');
-  const projects = d.projects.map(p => `<article class="entry">
-    <div class="row brand-row brand-${escape(p.brand)}"><div class="brand-name">${logo(p)}<strong>${escape(p.title)} <span class="entry-role">| ${escape(p.role)}</span></strong></div><span class="project-link">${link(p.url)}</span></div>
+  const projects = d.projects.map(p => {
+    const stars = data.projectStars?.[p.title];
+    const starCount = stars == null ? '' : `<span class="project-stars" title="${zh ? 'GitHub 仓库星标数' : 'GitHub repository stars'}">★ ${stars.toLocaleString('en-US')}</span>`;
+    return `<article class="entry">
+    <div class="row brand-row brand-${escape(p.brand)}"><div class="brand-name">${logo(p)}<strong>${escape(p.title)} <span class="entry-role">| ${escape(p.role)}</span></strong>${starCount}</div><span class="project-link">${link(p.url)}</span></div>
     <p>${escape(p.description)}</p>${p.note ? `<p class="project-note">${escape(p.note)}</p>` : ''}
-  </article>`).join('\n');
+  </article>`;
+  }).join('\n');
   const html = `<!doctype html>
 <!-- Generated from cv/content.json by scripts/build-cv.mjs. -->
 <html lang="${zh ? 'zh-CN' : 'en'}">

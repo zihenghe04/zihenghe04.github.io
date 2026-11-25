@@ -1,5 +1,5 @@
 {
-  "updated": "2026-09-24",
+  "updated": "2026-11-25",
   "email": "heziheng261@mails.ucas.ac.cn",
   "website": "https://zihenghe04.github.io/",
   "github": "https://github.com/zihenghe04",
@@ -7,61 +7,61 @@
   "en": {
     "name": "Ziheng He",
     "nameSecondary": "何子恒",
-    "role": "Ph.D. Student in Artificial Intelligence",
-    "affiliation": "University of Chinese Academy of Sciences · Institute of Automation, CAS",
-    "interests": "Embodied world models, video generation and diffusion, and robot learning from generated data.",
+    "role": "Ph.D. Student in Computer Science and Technology",
+    "affiliation": "University of Chinese Academy of Sciences · Institute of Automation, CAS (NLPR)",
+    "interests": "Research interests: Embodied AI and World Action Models (WAM)",
     "headings": {
       "education": "Education",
       "publications": "Publications & Preprints",
       "experience": "Research Experience",
-      "projects": "Open Source & Research Tools"
+      "projects": "Selected Open Source Work"
     },
     "education": [
       {
-        "title": "University of Chinese Academy of Sciences",
+        "title": "University of Chinese Academy of Sciences | CASIA NLPR",
         "date": "2026 - Present",
-        "detail": "Ph.D. in Artificial Intelligence · School of Advanced Interdisciplinary Sciences (SAIS)",
-        "note": "Research affiliation: Institute of Automation, Chinese Academy of Sciences · NLPR",
+        "detail": "Computer Science and Technology · Ph.D. student",
+        "note": "",
         "brand": "ucas",
         "logo": "assets/ucas.png"
       },
       {
-        "title": "Southeast University | B.Eng. in Software Engineering",
+        "title": "Southeast University | Software Engineering · Undergraduate",
         "date": "2022.09 - 2026.06",
-        "detail": "",
-        "note": "Rank: 9/86 · Outstanding Graduate · Merit Student · Outstanding Undergraduate Thesis",
+        "detail": "National Scholarship · GPA Top 5% · University Merit Student · Outstanding Undergraduate Thesis",
+        "note": "",
         "brand": "seu",
         "logo": "assets/seu.png"
       }
     ],
     "experience": [
       {
-        "title": "GigaAI",
-        "role": "Research Intern",
-        "date": "2025.09 - Present",
-        "bullets": [
-          "GigaBrain-0.7 co-author. Trained System 3, a 5B World Value Model, and designed its visual-subgoal and progress-conditioning interface for the action policy."
-        ],
-        "brand": "gigaai",
-        "logo": "assets/gigaai.png"
-      },
-      {
         "title": "FiveAges",
         "role": "Research Intern",
-        "date": "2025.09 - Present",
+        "date": "2025.12 - Present",
         "bullets": [
-          "First-author work on SKIP: event-preserving keyframe selection, sparse video generation, and action-conditioned interpolation for efficient embodied world models.",
-          "Built FiveagesWAM with sparse-frame inference and historical-image memory for continuous video prediction."
+          "**First author** of **SKIP** (**CoRL 2026**): **event-preserving keyframe selection**, **sparse video generation**, and **action-conditioned interpolation** for embodied world models; **4.16x faster rollout**, **89.0% lower FVD** on LIBERO.",
+          "Built **FiveagesWAM, a real-time interactive world model**, combining sparse-frame inference with **historical-image memory** for **continuous prediction across video chunks**."
         ],
         "brand": "fiveages",
         "logo": "assets/fiveages.png"
+      },
+      {
+        "title": "GigaAI",
+        "role": "Research Intern",
+        "date": "2025.09 - 2025.12",
+        "bullets": [
+          "**GigaBrain-0.7 co-author.** Trained **System 3 (5B World Value Model)**; designed the **last-frame visual subgoal** and **task-progress conditioning interface** for the action policy."
+        ],
+        "brand": "gigaai",
+        "logo": "assets/gigaai.png"
       },
       {
         "title": "Huawei Nanjing Research Center · Celia Team",
         "role": "AI Algorithm Intern",
         "date": "2025.06 - 2025.09",
         "bullets": [
-          "Worked on on-device LLM inference: speculative decoding, KV-cache and parallel-decoding optimization, and CUDA profiling with Nsight."
+          "Worked on **on-device LLM inference acceleration**: **speculative decoding**, **KV-cache** and **parallel-decoding** optimization, and **CUDA profiling with Nsight** to locate bottlenecks."
         ],
         "brand": "huawei",
         "logo": "assets/huawei-mark.png"
@@ -72,88 +72,88 @@
         "title": "AI Bro",
         "role": "Creator & Maintainer",
         "url": "https://github.com/zihenghe04/AIBro",
-        "description": "Local-first AI workspace connecting conversations, project files, source-linked knowledge, tasks, and schedules. Includes retrieval, reviewable file changes, and reusable agent workflows.",
-        "note": "Public macOS preview · v0.7.9 released September 17, 2026",
+        "description": "Built a local-first macOS research app with source-linked document Q&A, editable notes, file change review, and project planning.",
+        "note": "macOS developer preview v0.10.0",
         "brand": "aibro",
         "logo": "assets/ai-bro.png"
       },
       {
-        "title": "CCDash",
-        "role": "Creator & Maintainer",
-        "url": "https://github.com/zihenghe04/CCDash",
-        "description": "Unified usage dashboard for Claude Code, claude.ai, and API traffic: tokens, quotas, and costs.",
+        "title": "CC Switch",
+        "role": "Contributor",
+        "url": "https://github.com/farion1231/cc-switch/pull/8659",
+        "description": "Fixed Codex-to-Anthropic tool schema conversion for Bedrock in Rust, with regression coverage in merged PR #8659.",
         "brand": "github",
         "logo": "assets/github.png"
       },
       {
-        "title": "AionUi",
+        "title": "Mika",
         "role": "Contributor",
-        "url": "https://github.com/iOfficeAI/AionUi",
-        "description": "Contributed a merged bilingual guide for headless Linux deployment, covering Xvfb, service management, and remote access.",
+        "url": "https://github.com/wangzan101/Mika/releases/tag/v0.1.26",
+        "description": "Contributed Kotlin code for xAI device-code sign-in, encrypted token storage, and tests, shipped in v0.1.26.",
         "brand": "github",
         "logo": "assets/github.png"
       }
     ],
-    "updatedLabel": "Updated September 24, 2026"
+    "updatedLabel": "Updated November 25, 2026"
   },
   "zh": {
     "name": "何子恒",
     "nameSecondary": "Ziheng He",
-    "role": "人工智能方向博士生",
-    "affiliation": "中国科学院大学 · 中国科学院自动化研究所",
-    "interests": "研究方向：具身世界模型、视频生成与扩散模型，以及基于生成数据的机器人学习。",
+    "role": "计算机科学与技术博士在读",
+    "affiliation": "中国科学院大学 · 中国科学院自动化研究所 NLPR",
+    "interests": "研究方向：具身智能、WAM",
     "headings": {
       "education": "教育经历",
       "publications": "学术论文与预印本",
       "experience": "研究经历",
-      "projects": "开源项目与研究工具"
+      "projects": "精选开源项目与贡献"
     },
     "education": [
       {
-        "title": "中国科学院大学",
+        "title": "中国科学院大学 | 自动化研究所NLPR 计算机科学与技术 · 博士在读",
         "date": "2026 - 至今",
-        "detail": "交叉科学学院（SAIS）· 人工智能方向博士在读",
-        "note": "研究单位：中国科学院自动化研究所 · 模式识别国家重点实验室（NLPR）",
+        "detail": "",
+        "note": "",
         "brand": "ucas",
         "logo": "assets/ucas.png"
       },
       {
-        "title": "东南大学 | 软件工程 · 工学学士",
+        "title": "东南大学 | 软件工程 · 本科",
         "date": "2022.09 - 2026.06",
-        "detail": "",
-        "note": "综合排名 9/86 · 校优秀毕业生 · 校三好学生 · 优秀毕业设计",
+        "detail": "国家奖学金 · GPA Top 5% · 校三好学生 · 优秀毕业设计",
+        "note": "",
         "brand": "seu",
         "logo": "assets/seu.png"
       }
     ],
     "experience": [
       {
-        "title": "极佳视界 · GigaAI",
-        "role": "研究实习生",
-        "date": "2025.09 - 至今",
-        "bullets": [
-          "GigaBrain-0.7 共同作者。负责 System 3（5B World Value Model）训练，设计面向动作策略的末帧视觉 subgoal 与任务进展条件化接口。"
-        ],
-        "brand": "gigaai",
-        "logo": "assets/gigaai.png"
-      },
-      {
         "title": "中科第五纪 · FiveAges",
         "role": "研究实习生",
-        "date": "2025.09 - 至今",
+        "date": "2025.12 - 至今",
         "bullets": [
-          "以第一作者开展 SKIP 研究：通过保留任务事件的关键帧选择、稀疏视频生成与动作条件插值，提高具身世界模型推理效率。",
-          "开发 FiveagesWAM 实时交互式世界模型，结合关键帧 / 稀疏帧推理与历史图像记忆，实现跨视频块连续预测。"
+          "以**第一作者**开展 **SKIP**（**CoRL 2026**）研究：针对具身世界模型逐帧稠密生成开销大的问题，提出**保留任务事件的关键帧选择**、**稀疏视频生成**与**动作条件插值**的稀疏到稠密范式，LIBERO 上相较密集基线**推理加速 4.16 倍**、**FVD 降低 89.0%**。",
+          "开发 **FiveagesWAM 实时交互式世界模型**：结合关键帧 / 稀疏帧推理与**历史图像记忆**，实现**跨视频块的连续预测**，面向实时交互场景。"
         ],
         "brand": "fiveages",
         "logo": "assets/fiveages.png"
+      },
+      {
+        "title": "极佳视界 · GigaAI",
+        "role": "研究实习生",
+        "date": "2025.09 - 2025.12",
+        "bullets": [
+          "**GigaBrain-0.7 共同作者**。负责三系统架构中 **System 3（5B World Value Model）**的训练；设计面向动作策略的**末帧视觉 subgoal** 与**任务进展条件化接口**，为策略提供目标图像与任务进度信号。"
+        ],
+        "brand": "gigaai",
+        "logo": "assets/gigaai.png"
       },
       {
         "title": "华为南京研究所 · 小艺业务部",
         "role": "AI 算法实习生",
         "date": "2025.06 - 2025.09",
         "bullets": [
-          "参与端侧大模型推理加速，涉及投机解码、KV cache 与并行解码优化，以及基于 Nsight 的 CUDA 性能分析。"
+          "参与**端侧大模型推理加速**：涉及**投机解码**、**KV cache** 与**并行解码**优化，并基于 **Nsight** 进行 **CUDA 性能分析**以定位瓶颈。"
         ],
         "brand": "huawei",
         "logo": "assets/huawei-mark.png"
@@ -164,29 +164,29 @@
         "title": "AI Bro",
         "role": "创建与维护",
         "url": "https://github.com/zihenghe04/AIBro",
-        "description": "本地优先的 AI 工作区，连接对话、项目文件、带来源的知识、任务与日程；支持资料检索、文件修改审阅和可复用的 Agent 工作流。",
-        "note": "macOS 公开预览版 · v0.7.9 发布于 2026 年 9 月 17 日",
+        "description": "开发本地优先的 macOS 学习与研究工作区，支持带原文引用的资料问答、可编辑笔记、AI 修改审阅和任务日程。",
+        "note": "macOS 开发预览版 v0.10.0",
         "brand": "aibro",
         "logo": "assets/ai-bro.png"
       },
       {
-        "title": "CCDash",
-        "role": "创建与维护",
-        "url": "https://github.com/zihenghe04/CCDash",
-        "description": "Claude Code、claude.ai 与 API 统一用量监控面板，聚合 token、配额与成本。",
+        "title": "CC Switch",
+        "role": "开源贡献者",
+        "url": "https://github.com/farion1231/cc-switch/pull/8659",
+        "description": "用 Rust 修复 Codex 转 Anthropic 工具定义时导致 Bedrock 拒绝请求的问题，并补充回归测试，PR #8659 已合入。",
         "brand": "github",
         "logo": "assets/github.png"
       },
       {
-        "title": "AionUi",
+        "title": "Mika",
         "role": "开源贡献者",
-        "url": "https://github.com/iOfficeAI/AionUi",
-        "description": "贡献已合入主仓库的中英文无头 Linux 部署指南，覆盖 Xvfb、服务管理与远程访问。",
+        "url": "https://github.com/wangzan101/Mika/releases/tag/v0.1.26",
+        "description": "用 Kotlin 实现 xAI 设备码登录、令牌加密存储与测试，相关代码由维护者保留署名并随 v0.1.26 发布。",
         "brand": "github",
         "logo": "assets/github.png"
       }
     ],
-    "updatedLabel": "更新于 2026 年 9 月 24 日"
+    "updatedLabel": "更新于 2026 年 11 月 25 日"
   },
   "publications": [
     {
@@ -200,7 +200,18 @@
       "summary": {
         "en": "Event-preserving sparse-to-dense world modeling; 4.16x faster rollout and 89.0% lower FVD on LIBERO versus a dense baseline.",
         "zh": "保留任务事件的稀疏到稠密世界模型；相较密集基线，LIBERO 上推理加速 4.16 倍、FVD 降低 89.0%。"
-      }
+      },
+      "accepted": true
+    },
+    {
+      "title": "WAM-Nav: Asymmetric Latent World-Action Modeling for Unified Visual Navigation",
+      "authors": "Ning Yang, Yan Huang, Kaiwen Peng, Ziheng He, et al.",
+      "url": "https://arxiv.org/abs/2606.04907",
+      "venue": {
+        "en": "Conference on Robot Learning (CoRL) 2026 · Accepted · Co-author",
+        "zh": "CoRL 2026 · 已录用 · 共同作者"
+      },
+      "accepted": true
     },
     {
       "title": "GigaBrain-0.7: Scaling Embodied Foundation Models to Emergent Capabilities with a Three-System Architecture",
@@ -219,16 +230,12 @@
         "en": "arXiv preprint, 2026 · Co-author",
         "zh": "arXiv 预印本，2026 · 共同作者"
       }
-    },
-    {
-      "title": "WAM-Nav: Asymmetric Latent World-Action Modeling for Unified Visual Navigation",
-      "authors": "Ning Yang, Yan Huang, Kaiwen Peng, Ziheng He, et al.",
-      "url": "https://arxiv.org/abs/2606.04907",
-      "venue": {
-        "en": "arXiv preprint, 2026 · Co-author",
-        "zh": "arXiv 预印本，2026 · 共同作者"
-      }
     }
   ],
-  "portrait": "assets/portrait.jpg"
+  "portrait": "assets/portrait.jpg",
+  "projectStars": {
+    "AI Bro": 1153,
+    "CC Switch": 156929,
+    "Mika": 9881
+  }
 }
